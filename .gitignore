@@ -1,0 +1,33 @@
+# --- Entornos virtuales y compilados ---
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# --- Configuración del IDE (PyCharm) ---
+.idea/
+
+# --- Seguridad ---
+.env
+api_keys.txt
+
+# --- Datos ---
+*.pdf
+*_test.json
+# --- Logs y temporales ---
+*.log
+
+# --- SO ---
+.DS_Store
+Thumbs.db
+
+# --- Cache de herramientas ---
+.pytest_cache/
+.mypy_cache/
+
+# --- Temporales / debug del proyecto ---
+Proyecto/_tmp_extract/
+Proyecto/debug_respuesta.txt
+Proyecto/test_modelos.py
+README(antiguo).md
+requirements-gemini.txt
