@@ -1,19 +1,14 @@
-# extractor_pdf.py
 # Extracción de horarios (rejilla mañana/tarde) desde PDF con texto seleccionable.
 # Salida: JSON estructurado con eventos (día, inicio, fin, turno, titulo) + validación básica.
-#
-# Requisitos: pip install pdfplumber
 
 from __future__ import annotations
-
-import json
+from pathlib import Path
 import re
 from typing import Dict, List, Tuple, Any, Optional
 
 import pdfplumber
 
-
-PDF_PATH_DEFAULT = "../data/HORARIO.pdf"
+PDF_PATH_DEFAULT = str(Path(__file__).resolve().parent.parent / "data" / "HORARIO.pdf")
 
 DAY_NAMES = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
 TIME_RE = re.compile(r"^\d{1,2}:\d{2}$")
@@ -68,7 +63,6 @@ def fix_split_group_codes(s: str) -> str:
     s = re.sub(r"(~[A-Z0-9-]{2,})\s*-\s+([A-Z0-9]{2,})\b", r"\1\2", s)
 
     return s
-
 
 
 # -----------------------------
@@ -128,8 +122,8 @@ def extract_time_ticks(words: List[Dict[str, Any]], x_left_max: float = 90.0) ->
 
 
 def split_ticks_into_grids(
-    time_ticks: List[Tuple[float, str]],
-    big_gap: float = 90.0
+        time_ticks: List[Tuple[float, str]],
+        big_gap: float = 90.0
 ) -> List[List[Tuple[float, str]]]:
     """
     Separa ticks en rejillas (normalmente mañana y tarde) por saltos grandes en Y.
@@ -179,7 +173,7 @@ def dedup_grid_ticks(grid_ticks: List[Tuple[float, str]], min_y_sep: float = 1.0
 
 def grid_y_limits(grid_ticks: List[Tuple[float, str]], margin: float = 25.0) -> Tuple[float, float]:
     ys = [y for y, _ in grid_ticks]
-    return (min(ys) - margin, max(ys) + margin)
+    return min(ys) - margin, max(ys) + margin
 
 
 def build_slots_from_ticks(grid_ticks: List[Tuple[float, str]]) -> List[Dict[str, Any]]:
@@ -221,11 +215,11 @@ def word_in_slot(w: Dict[str, Any], slot: Dict[str, Any]) -> bool:
 
 
 def extract_slot_texts(
-    words: List[Dict[str, Any]],
-    day_bounds: List[Tuple[str, float, float]],
-    slots: List[Dict[str, Any]],
-    y_min: float,
-    y_max: float,
+        words: List[Dict[str, Any]],
+        day_bounds: List[Tuple[str, float, float]],
+        slots: List[Dict[str, Any]],
+        y_min: float,
+        y_max: float,
 ) -> Dict[str, List[str]]:
     """
     Devuelve por día una lista de textos (uno por slot). Texto normalizado.
@@ -244,34 +238,39 @@ def extract_slot_texts(
         day_words.append((day, w))
 
     for day in out:
-        ws = [w for d, w in day_words if d == day]
+        ws = [word for d, word in day_words if d == day]
+
         for i, slot in enumerate(slots):
             in_slot = [w for w in ws if word_in_slot(w, slot)]
+
             if not in_slot:
                 continue
-            in_slot.sort(key=lambda w: (w["top"], w["x0"]))
-            text = " ".join(w["text"] for w in in_slot)
 
-            # DEBUG: antes de normalizar
-            # if "BIG-D" in text.upper():
-            #     print("DEBUG RAW SLOT:", repr(text))
+            in_slot.sort(key=lambda word: (word["top"], word["x0"]))
+            text = " ".join(word["text"] for word in in_slot)
 
             norm = normalize_text(text)
-
-             # DEBUG: después de normalizar
-             # if "BIG-D" in norm:
-             #     print("DEBUG NORM SLOT:", repr(norm))
-
             out[day][i] = norm
-
 
     return out
 
 
+def determine_turno(hora_inicio: str) -> str:
+    """
+    Determina si un slot es de mañana o tarde basándose en la hora de inicio.
+    Asume que la tarde comienza a partir de las 15:00.
+    """
+    try:
+        h, m = map(int, hora_inicio.split(":"))
+        hora_decimal = h + m / 60.0
+        return "tarde" if hora_decimal >= 15.0 else "mañana"
+    except (ValueError, AttributeError):
+        return "mañana"  # fallback
+
+
 def merge_consecutive(
-    day_slot_texts: Dict[str, List[str]],
-    slots: List[Dict[str, Any]],
-    turno: str
+        day_slot_texts: Dict[str, List[str]],
+        slots: List[Dict[str, Any]]
 ) -> List[Dict[str, Any]]:
     """
     Fusiona slots consecutivos del mismo día cuando el texto es exactamente igual.
@@ -286,10 +285,14 @@ def merge_consecutive(
             j = i
             while j + 1 < len(arr) and arr[j + 1] == arr[i]:
                 j += 1
+
+            # Determinar el turno basándose en la hora de inicio
+            turno_real = determine_turno(slots[i]["t_ini"])
+
             eventos.append(
                 {
                     "dia": day,
-                    "turno": turno,
+                    "turno": turno_real,
                     "inicio": slots[i]["t_ini"],
                     "fin": slots[j]["t_fin"],
                     "titulo": arr[i],
@@ -300,7 +303,7 @@ def merge_consecutive(
 
 
 # -----------------------------
-# Limpieza: unir “continuaciones” de una misma celda (versión segura)
+# Limpieza: unir "continuaciones" de una misma celda
 # -----------------------------
 
 def looks_like_room(s: str) -> bool:
@@ -345,7 +348,7 @@ def merge_continuations(eventos: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     Une eventos adyacentes SOLO si el segundo es un complemento corto.
     Evita mezclar reunión con clases, o clases distintas entre sí.
     """
-    eventos = sorted(eventos, key=lambda e: (e["dia"], e["turno"], e["inicio"]))
+    eventos = sorted(eventos, key=lambda ev: (ev["dia"], ev["turno"], ev["inicio"]))
     out: List[Dict[str, Any]] = []
 
     for e in eventos:
@@ -367,7 +370,7 @@ def merge_continuations(eventos: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             out.append(e)
             continue
 
-        # Reunión: solo complemento corto no “principal”
+        # Reunión: solo complemento corto no "principal"
         if "REUNIÓN" in t_prev or "REUNION" in t_prev:
             if _is_short_complement(t_cur) and not _is_major_activity_title(t_cur):
                 prev["titulo"] = (prev["titulo"] + " / " + e["titulo"]).strip()
@@ -401,6 +404,7 @@ def filter_events(eventos: List[Dict[str, Any]], drop_recreo: bool = True) -> Li
         return eventos
     return [e for e in eventos if (e.get("titulo") or "").strip().upper() != "RECREO"]
 
+
 def fix_titles(eventos: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
     Reparación final de títulos:
@@ -420,6 +424,8 @@ def fix_titles(eventos: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
         e["titulo"] = t
     return eventos
+
+
 # -----------------------------
 # API principal del extractor
 # -----------------------------
@@ -454,79 +460,13 @@ def extract_schedule(pdf_path: str = PDF_PATH_DEFAULT) -> Dict[str, Any]:
 
             y_min, y_max = grid_y_limits(g2)
             slots = build_slots_from_ticks(g2)
-            turno = "mañana" if idx == 0 else "tarde"
 
             day_slot_texts = extract_slot_texts(words, day_bounds, slots, y_min, y_max)
-            eventos.extend(merge_consecutive(day_slot_texts, slots, turno))
+            eventos.extend(merge_consecutive(day_slot_texts, slots))
 
     # Limpieza post-proceso (orden importante)
-    eventos = filter_events(eventos, drop_recreo=True)   # primero fuera recreos
-    eventos = merge_continuations(eventos)               # luego fusiones seguras
-    eventos = filter_events(eventos, drop_recreo=True)   # blindaje
+    eventos = filter_events(eventos, drop_recreo=True)  # primero fuera recreos
+    eventos = merge_continuations(eventos)  # luego fusiones seguras
+    eventos = filter_events(eventos, drop_recreo=True)  # blindaje
     eventos = fix_titles(eventos)
     return {"profesor": teacher, "eventos": eventos}
-
-
-# -----------------------------
-# Validación (útil en main.py)
-# -----------------------------
-
-def hhmm_to_minutes(hhmm: str) -> int:
-    h, m = map(int, hhmm.split(":"))
-    return h * 60 + m
-
-
-def validate_schedule(data: Dict[str, Any]) -> List[str]:
-    errors: List[str] = []
-
-    prof = data.get("profesor", {}) or {}
-    if not prof.get("nombre"):
-        errors.append("Falta profesor.nombre")
-    if not prof.get("codigo"):
-        errors.append("Falta profesor.codigo")
-
-    eventos = data.get("eventos")
-    if not isinstance(eventos, list) or len(eventos) == 0:
-        errors.append("No hay eventos (eventos está vacío o no es lista)")
-        return errors
-
-    for i, e in enumerate(eventos):
-        dia = e.get("dia")
-        ini = e.get("inicio")
-        fin = e.get("fin")
-
-        if dia not in DAY_NAMES:
-            errors.append(f"Evento {i}: dia inválido: {dia}")
-        if not ini or not fin:
-            errors.append(f"Evento {i}: falta inicio/fin")
-            continue
-
-        try:
-            mi = hhmm_to_minutes(ini)
-            mf = hhmm_to_minutes(fin)
-            if mf <= mi:
-                errors.append(f"Evento {i}: fin <= inicio ({ini}–{fin})")
-        except Exception:
-            errors.append(f"Evento {i}: formato hora inválido ({ini}, {fin})")
-
-        if not e.get("titulo"):
-            errors.append(f"Evento {i}: falta titulo")
-
-    return errors
-
-
-# -----------------------------
-# Ejecución directa (opcional)
-# -----------------------------
-
-if __name__ == "__main__":
-    data = extract_schedule(PDF_PATH_DEFAULT)
-    print(json.dumps(data, ensure_ascii=False, indent=2))
-
-    errs = validate_schedule(data)
-    if errs:
-        print("\n=== VALIDACIÓN: ERRORES ===")
-        for e in errs:
-            print("-", e)
-    else:
-        print("\n=== VALIDACIÓN: OK ===")
