@@ -1,16 +1,18 @@
 import json
-from datetime import datetime
+from pathlib import Path
 
 from Proyecto.extractor_pdf import extract_schedule
 
 DAY_NAMES = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
 
+
 def hhmm_to_minutes(hhmm: str) -> int:
     h, m = map(int, hhmm.split(":"))
     return h * 60 + m
 
+
 def validate_schedule(data: dict) -> list[str]:
-    errors = []
+    errors: list[str] = []
 
     # Profesor
     prof = data.get("profesor", {})
@@ -49,8 +51,31 @@ def validate_schedule(data: dict) -> list[str]:
 
     return errors
 
+
+def resolve_pdf_path() -> Path:
+    """
+    Devuelve la ruta ABSOLUTA al PDF de horarios, independiente del working directory.
+
+    Estructura esperada:
+      D:\\Proyecto_Horarios\\
+        data\\HORARIO.pdf
+        Proyecto\\main.py
+    """
+    repo_root = Path(__file__).resolve().parent.parent  # ...\\Proyecto_Horarios
+    pdf_path = repo_root / "data" / "HORARIO.pdf"
+    return pdf_path
+
+
 if __name__ == "__main__":
-    data = extract_schedule("./data/HORARIO.pdf")
+    pdf_path = resolve_pdf_path()
+
+    if not pdf_path.exists():
+        raise FileNotFoundError(
+            f"No se encontró el PDF en: {pdf_path}\n"
+            f"Comprueba que existe 'data/HORARIO.pdf' en la raíz del proyecto."
+        )
+
+    data = extract_schedule(str(pdf_path))
 
     # 1) Imprimir JSON (para inspección)
     print(json.dumps(data, ensure_ascii=False, indent=2))
