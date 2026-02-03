@@ -12,6 +12,8 @@ class Hueco:
     def num_profesores(self):
         return len(self.profesores_disponibles)
 
+def clave_num_profesores(hueco):
+    return hueco.num_profesores
 
 class BuscadorHuecos:
     slot_minutos = 5
@@ -74,13 +76,42 @@ class BuscadorHuecos:
         slots_necesarios = duracion // self.slot_minutos
         inicio_dia = self.hora_inicio * 60
 
-        
+        for dia in self.dias:
+            dia_libre = self.disponibilidad[dia]
+            
+            if not dia_libre:
+                continue
 
+            for slot_inicial in range(0, self.num_slots - slots_necesarios + 1):
+                slot_final = slot_inicial + slots_necesarios
+                
+                profesores_disponibles = []
 
+                for i in range(len(self.profesores_json)):
+                    profesor_actual = self.profesores_json[i]
+                    slots_profesor = dia_libre[i]
+                    intervalo_libre = True
+                    
+                    for slot in range(slot_inicial, slot_final):
+                        if not slots_profesor[slot]:
+                            intervalo_libre = False
+                            break
+                    
+                    if intervalo_libre:
+                        profesores_disponibles.append(profesor_actual["profesor"]["nombre"])
+
+                if profesores_disponibles:
+                    hora_inicio = inicio_dia + slot_inicial * self.slot_minutos
+                    hora_fin = inicio_dia + slot_final * self.slot_minutos
+
+                    hueco = Hueco(dia = dia, hora_inicio = self.min_a_hora(hora_inicio), hora_fin = self.min_a_hora(hora_fin), profesores_disponibles = profesores_disponibles)
+                    huecos.append(hueco)
+
+        huecos.sort(key=clave_num_profesores, reverse=True)
 
         return huecos
 
-    def buscar_huecos(self, duracion=60):
+    def buscar_hueco_comun(self, duracion=60):
         huecos = self.buscar_huecos_por_profesor(duracion=duracion)
         if not huecos:
             return None
