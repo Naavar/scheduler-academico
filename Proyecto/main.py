@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
 
-from Proyecto.extractor_pdf import extract_schedule
-from Proyecto.validacion import validate_schedule
+from extractor_pdf import extract_schedule
+from validacion import validate_schedule
 
 
 def resolve_pdf_path(filename: str = "HORARIO.pdf") -> Path:
