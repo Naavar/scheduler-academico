@@ -1,6 +1,5 @@
 import json
 from pathlib import Path
-
 from extractor_pdf import extract_schedule
 from validacion import validate_schedule
 
