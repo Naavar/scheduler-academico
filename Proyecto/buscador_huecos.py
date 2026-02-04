@@ -12,6 +12,8 @@ class Hueco:
     def num_profesores(self):
         return len(self.profesores_disponibles)
 
+def clave_num_profesores(hueco):
+    return hueco.num_profesores
 
 class BuscadorHuecos:
     slot_minutos = 5
@@ -44,6 +46,7 @@ class BuscadorHuecos:
 
         for profe in self.profesores_json:
             libre_por_dia ={}
+
             for dia in self.dias:
                 libre_por_dia[dia] = [True] * self.num_slots
             
@@ -69,28 +72,90 @@ class BuscadorHuecos:
         return disponibilidad
 
 
-    def buscar_huecos_por_profesor(self, duracion=60):
+    def buscar_huecos_por_profesor(
+        self,
+        duracion=60,
+        filtro_dia=None,
+        turno=None,
+        hora_min=None,
+        hora_max=None):
+
         huecos = []
         slots_necesarios = duracion // self.slot_minutos
         inicio_dia = self.hora_inicio * 60
 
-        
+        min_slot = 0
+        max_slot = self.num_slots
 
+        if turno == "mañana":
+            limite = self.hora_a_min("14:15")
+            max_slot = (limite - inicio_dia) // self.slot_minutos
+        elif turno == "tarde":
+            limite = self.hora_a_min("14:15")
+            min_slot = (limite - inicio_dia) // self.slot_minutos 
 
+        if hora_min is not None:
+            min_slot = max(min_slot, (self.hora_a_min(hora_min) - inicio_dia) // self.slot_minutos)
+
+        if hora_max is not None:
+            max_slot = min(max_slot, (self.hora_a_min(hora_max) - inicio_dia) // self.slot_minutos)
+
+        end_slot = max_slot - slots_necesarios + 1
+
+        for dia in self.dias:
+            if filtro_dia and dia != filtro_dia:
+                continue
+
+            dia_libre = self.disponibilidad[dia]
+            
+            if not dia_libre:
+                continue
+
+            for slot_inicial in range(min_slot, end_slot):
+                slot_final = slot_inicial + slots_necesarios
+                
+                profesores_disponibles = []
+
+                for i in range(len(self.profesores_json)):
+                    profesor_actual = self.profesores_json[i]
+                    slots_profesor = dia_libre[i]
+                    intervalo_libre = True
+                    
+                    for slot in range(slot_inicial, slot_final):
+                        if not slots_profesor[slot]:
+                            intervalo_libre = False
+                            break
+                    
+                    if intervalo_libre:
+                        profesores_disponibles.append(profesor_actual["profesor"]["nombre"])
+
+                if profesores_disponibles:
+                    hora_inicio = inicio_dia + slot_inicial * self.slot_minutos
+                    hora_fin = inicio_dia + slot_final * self.slot_minutos
+
+                    hueco = Hueco(dia = dia, hora_inicio = self.min_a_hora(hora_inicio), hora_fin = self.min_a_hora(hora_fin), profesores_disponibles = profesores_disponibles)
+                    huecos.append(hueco)
+
+        huecos.sort(key=clave_num_profesores, reverse=True)
 
         return huecos
 
-    def buscar_huecos(self, duracion=60):
+    def buscar_huecos_n(self, duracion = 60, n=5):
         huecos = self.buscar_huecos_por_profesor(duracion=duracion)
+        return huecos[:n]
+
+
+    def buscar_hueco_comun(self, duracion=60):
+        huecos = self.buscar_huecos_n(duracion=duracion, n=1)
         if not huecos:
             return None
 
-        mejor = huecos[0]
+        mejor_hueco = huecos[0]
 
         return {
-            "dia": mejor.dia,
-            "hora_inicio": mejor.hora_inicio,
-            "hora_fin": mejor.hora_fin,
-            "profesores_disponibles": mejor.profesores_disponibles,
-            "num_profesores": mejor.num_profesores,
+            "dia": mejor_hueco.dia,
+            "hora_inicio": mejor_hueco.hora_inicio,
+            "hora_fin": mejor_hueco.hora_fin,
+            "profesores_disponibles": mejor_hueco.profesores_disponibles,
+            "num_profesores": mejor_hueco.num_profesores,
         }
