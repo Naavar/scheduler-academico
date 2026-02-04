@@ -114,11 +114,20 @@ class BuscadorHuecos:
             for slot_inicial in range(min_slot, end_slot):
                 slot_final = slot_inicial + slots_necesarios
                 
+                profesores_candidatos = 0
+
+                for profesor in range(len(self.profesores_json)):
+                    if dia_libre[profesor][slot_inicial]:
+                        profesores_candidatos += 1
+                
+                if profesores_candidatos < 3:
+                    continue
+                
                 profesores_disponibles = []
 
-                for i in range(len(self.profesores_json)):
-                    profesor_actual = self.profesores_json[i]
-                    slots_profesor = dia_libre[i]
+                for profesor in range(len(self.profesores_json)):
+                    profesor_actual = self.profesores_json[profesor]
+                    slots_profesor = dia_libre[profesor]
                     intervalo_libre = True
                     
                     for slot in range(slot_inicial, slot_final):
