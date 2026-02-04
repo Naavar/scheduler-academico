@@ -1,6 +1,6 @@
-
 import unittest
-from Proyecto.buscador_huecos import BuscadorHuecos
+from buscador_huecos import BuscadorHuecos
+
 
 class TestBuscadorHuecos(unittest.TestCase):
     def test_basic_overlap(self):
@@ -13,13 +13,13 @@ class TestBuscadorHuecos(unittest.TestCase):
             {
                 "profesor": {"nombre": "Prof A", "codigo": "A"},
                 "eventos": [
-                    {"dia": "Lunes", "inicio": "08:00", "fin": "10:00", "titulo": "C1"}
+                    {"dia": "Lunes", "inicio": "07:00", "fin": "10:00", "titulo": "C1"}
                 ]
             },
             {
                 "profesor": {"nombre": "Prof B", "codigo": "B"},
                 "eventos": [
-                    {"dia": "Lunes", "inicio": "09:00", "fin": "11:00", "titulo": "C2"}
+                    {"dia": "Lunes", "inicio": "07:00", "fin": "11:00", "titulo": "C2"}
                 ]
             }
         ]
@@ -48,7 +48,7 @@ class TestBuscadorHuecos(unittest.TestCase):
             {
                 "profesor": {"nombre": "Prof A", "codigo": "A"},
                 "eventos": [
-                    {"dia": "Lunes", "inicio": "08:00", "fin": "22:00", "titulo": "Full"}
+                    {"dia": "Lunes", "inicio": "07:00", "fin": "22:00", "titulo": "Full"}
                 ]
             },
             {
@@ -57,6 +57,7 @@ class TestBuscadorHuecos(unittest.TestCase):
             }
         ]
         finder = BuscadorHuecos(data)
+        finder.dias = ["Lunes"]
         result = finder.buscar_hueco_comun(duracion=60)
         print("\nResult Test 2:", result)
         self.assertEqual(result["num_profesores"], 1)
