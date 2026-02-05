@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-
 @dataclass
 class Hueco:
     dia: str
@@ -24,7 +23,17 @@ class BuscadorHuecos:
     def __init__(self, profesores_json):
         self.profesores_json = profesores_json
         self.num_slots = ((self.hora_fin - self.hora_inicio) * 60) // self.slot_minutos
+        self.horas = self._precalcular_horas()
         self.disponibilidad = self.construir_disponibilidad()
+
+    def _precalcular_horas(self):
+        horas = []
+        minutos = self.hora_inicio * 60
+        for slot in range(self.num_slots + 1):
+            horas.append(self.min_a_hora(minutos))
+            minutos += self.slot_minutos
+        return horas
+
 
     def hora_a_min(self, h):
         hh, mm = map(int, h.split(":"))
@@ -124,25 +133,17 @@ class BuscadorHuecos:
                     continue
                 
                 profesores_disponibles = []
-
                 for profesor in range(len(self.profesores_json)):
-                    profesor_actual = self.profesores_json[profesor]
-                    slots_profesor = dia_libre[profesor]
-                    intervalo_libre = True
-                    
-                    for slot in range(slot_inicial, slot_final):
-                        if not slots_profesor[slot]:
-                            intervalo_libre = False
-                            break
-                    
-                    if intervalo_libre:
-                        profesores_disponibles.append(profesor_actual["profesor"]["nombre"])
+                    if dia_libre[profesor][slot_inicial]:
+                        if all(dia_libre[profesor][slot] for slot in range(slot_inicial, slot_final)):
+                            profesores_disponibles.append(self.profesores_json[profesor]["profesor"]["nombre"])
+
 
                 if profesores_disponibles:
-                    hora_inicio = inicio_dia + slot_inicial * self.slot_minutos
-                    hora_fin = inicio_dia + slot_final * self.slot_minutos
+                    hora_inicio = self.horas[slot_inicial]
+                    hora_fin = self.horas[slot_final]
 
-                    hueco = Hueco(dia = dia, hora_inicio = self.min_a_hora(hora_inicio), hora_fin = self.min_a_hora(hora_fin), profesores_disponibles = profesores_disponibles)
+                    hueco = Hueco(dia = dia, hora_inicio = hora_inicio, hora_fin = hora_fin, profesores_disponibles = profesores_disponibles)
                     huecos.append(hueco)
 
         huecos.sort(key=clave_num_profesores, reverse=True)
