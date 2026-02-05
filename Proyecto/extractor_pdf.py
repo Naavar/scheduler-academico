@@ -1,472 +1,309 @@
-# Extracción de horarios (rejilla mañana/tarde) desde PDF con texto seleccionable.
-# Salida: JSON estructurado con eventos (día, inicio, fin, turno, titulo) + validación básica.
-
-from __future__ import annotations
-from pathlib import Path
-import re
-from typing import Dict, List, Tuple, Any, Optional
-
 import pdfplumber
+import re
+import json
+import os
+import glob
+from pathlib import Path
 
-PDF_PATH_DEFAULT = str(Path(__file__).resolve().parent.parent / "data" / "HORARIO.pdf")
+# --- IMPORTS PROPIOS ---
+try:
+    from validacion import validate_schedule
+    # Importamos las herramientas desde el nuevo archivo utils.py
+    from utils import (
+        es_color_valido,
+        colores_son_iguales,
+        textos_son_similares,
+        limpiar_texto,
+        sumar_55_minutos,
+        es_hora_recreo
+    )
+except ImportError as e:
+    print(f"❌ ERROR CRÍTICO: Falta un archivo necesario ({e}). Asegúrate de tener 'utils.py' y 'validacion.py'.")
+    exit()
 
-DAY_NAMES = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
-TIME_RE = re.compile(r"^\d{1,2}:\d{2}$")
-
-# Patrones auxiliares
-CODE_RE = re.compile(r"^\d{4}~[A-Z0-9]+$")
-ROOM_RE = re.compile(r"^[A-Z]\d{2}$")
-
-
-# -----------------------------
-# Utilidades básicas
-# -----------------------------
-
-def parse_teacher_header(text: str) -> Dict[str, Optional[str]]:
-    """
-    Extrae:
-      'APELLIDOS, NOMBRE (codigo)' -> {"nombre": "...", "codigo": "..."}
-    """
-    m = re.search(r"([A-ZÁÉÍÓÚÑ,\s]+)\s+\(([^)]+)\)", text or "")
-    if not m:
-        return {"nombre": None, "codigo": None}
-    return {"nombre": m.group(1).strip(), "codigo": m.group(2).strip()}
-
-
-def word_center_x(w: Dict[str, Any]) -> float:
-    return (w["x0"] + w["x1"]) / 2.0
-
-
-def normalize_text(s: str) -> str:
-    s = re.sub(r"\s+", " ", (s or "").strip()).upper()
-
-    # Reparación específica para grupos con '~':
-    # "BIG-D~BIGD- C03" -> "BIG-D~BIGDC03"
-    s = re.sub(r"(~[A-Z0-9-]+)-\s+([A-Z0-9]{2,})\b", r"\1\2", s)
-
-    return s
+# --- CONFIGURACIÓN ---
+COLUMNAS_X = {
+    "Lunes": (80, 175), "Martes": (175, 270), "Miércoles": (270, 365),
+    "Jueves": (365, 460), "Viernes": (460, 555),
+}
+COLUMNA_HORAS_X = (0, 80)
 
 
-def fix_split_group_codes(s: str) -> str:
-    """
-    Repara casos donde el PDF parte códigos de grupo tras '~' en dos tokens:
-      "BIG-D~BIGD- C03" -> "BIG-D~BIGDC03"
-    Aplica solo cuando hay '~', para no romper "RDP - DPTO INF".
-    """
-    if "~" not in s:
-        return s
+# ==============================================================================
+# LÓGICA DE EXTRACCIÓN (Ahora usa funciones de utils.py)
+# ==============================================================================
 
-    # Caso: ...~XXXX- C03  (guion pegado al token anterior)
-    s = re.sub(r"(~[A-Z0-9-]{2,})-\s+([A-Z0-9]{2,})\b", r"\1\2", s)
-
-    # Caso: ...~XXXX - C03 (guion separado por espacios)
-    s = re.sub(r"(~[A-Z0-9-]{2,})\s*-\s+([A-Z0-9]{2,})\b", r"\1\2", s)
-
-    return s
-
-
-# -----------------------------
-# Días (columnas) y horas (ticks)
-# -----------------------------
-
-def compute_day_bounds(words: List[Dict[str, Any]]) -> List[Tuple[str, float, float]]:
-    """
-    Calcula límites X por cada día (L..V) usando la posición de las cabeceras.
-    Devuelve [(dia, x_left, x_right), ...]
-    """
-    day_x: Dict[str, float] = {}
-    for w in words:
-        if w.get("text") in DAY_NAMES:
-            day_x[w["text"]] = word_center_x(w)
-
-    if len(day_x) != 5:
-        raise ValueError(f"No se han encontrado las 5 cabeceras de días. Encontradas: {day_x}")
-
-    bounds: List[Tuple[str, float, float]] = []
-    for i, d in enumerate(DAY_NAMES):
-        cx = day_x[d]
-        if i == 0:
-            left = -1e9
-            right = (cx + day_x[DAY_NAMES[i + 1]]) / 2.0
-        elif i == len(DAY_NAMES) - 1:
-            left = (day_x[DAY_NAMES[i - 1]] + cx) / 2.0
-            right = 1e9
+def extraer_color_fondo(crop):
+    try:
+        if crop.width < 6 or crop.height < 6:
+            crop_seguro = crop
         else:
-            left = (day_x[DAY_NAMES[i - 1]] + cx) / 2.0
-            right = (cx + day_x[DAY_NAMES[i + 1]]) / 2.0
-        bounds.append((d, left, right))
+            crop_seguro = crop.crop((2, 2, crop.width - 2, crop.height - 2), relative=True)
 
-    return bounds
+        rects = sorted(crop_seguro.rects, key=lambda r: r['width'] * r['height'], reverse=True)
+        for rect in rects:
+            c = rect.get("non_stroking_color")
+            if c and es_color_valido(c): return c  # Usa función de utils
 
-
-def assign_day(day_bounds: List[Tuple[str, float, float]], w: Dict[str, Any]) -> Optional[str]:
-    cx = word_center_x(w)
-    for day, left, right in day_bounds:
-        if left <= cx < right:
-            return day
+        if hasattr(crop_seguro, 'curves'):
+            for curve in crop_seguro.curves:
+                if curve.get("fill"):
+                    c = curve.get("non_stroking_color")
+                    if c and es_color_valido(c): return c  # Usa función de utils
+    except Exception:
+        pass
     return None
 
 
-def extract_time_ticks(words: List[Dict[str, Any]], x_left_max: float = 90.0) -> List[Tuple[float, str]]:
-    """
-    Extrae ticks de horas (columna izquierda).
-    Devuelve [(y_top, 'HH:MM'), ...] ordenados por y.
-    """
-    ticks: List[Tuple[float, str]] = []
-    for w in words:
-        t = (w.get("text") or "").strip()
-        if TIME_RE.match(t) and w["x0"] < x_left_max:
-            ticks.append((w["top"], t))
-    ticks.sort(key=lambda x: x[0])
-    return ticks
-
-
-def split_ticks_into_grids(
-        time_ticks: List[Tuple[float, str]],
-        big_gap: float = 90.0
-) -> List[List[Tuple[float, str]]]:
-    """
-    Separa ticks en rejillas (normalmente mañana y tarde) por saltos grandes en Y.
-    """
-    time_ticks = sorted(time_ticks, key=lambda x: x[0])
-    grids: List[List[Tuple[float, str]]] = []
-    cur: List[Tuple[float, str]] = []
-    for y, t in time_ticks:
-        if not cur:
-            cur = [(y, t)]
-        elif (y - cur[-1][0]) > big_gap:
-            grids.append(cur)
-            cur = [(y, t)]
-        else:
-            cur.append((y, t))
-    if cur:
-        grids.append(cur)
-    return grids
-
-
-def dedup_grid_ticks(grid_ticks: List[Tuple[float, str]], min_y_sep: float = 1.0) -> List[Tuple[float, str]]:
-    """
-    Dedup dentro de una rejilla:
-      - elimina duplicados exactos muy cercanos
-      - y se queda con el primer tick por hora si se repite en esa rejilla
-    """
-    grid_ticks = sorted(grid_ticks, key=lambda x: x[0])
-    out: List[Tuple[float, str]] = []
-    for y, t in grid_ticks:
-        if not out:
-            out.append((y, t))
-            continue
-        y_prev, t_prev = out[-1]
-        if abs(y - y_prev) < min_y_sep and t == t_prev:
-            continue
-        out.append((y, t))
-
-    seen = set()
-    out2: List[Tuple[float, str]] = []
-    for y, t in out:
-        if t in seen:
-            continue
-        out2.append((y, t))
-        seen.add(t)
-    return out2
-
-
-def grid_y_limits(grid_ticks: List[Tuple[float, str]], margin: float = 25.0) -> Tuple[float, float]:
-    ys = [y for y, _ in grid_ticks]
-    return min(ys) - margin, max(ys) + margin
-
-
-def build_slots_from_ticks(grid_ticks: List[Tuple[float, str]]) -> List[Dict[str, Any]]:
-    """
-    Crea slots consecutivos a partir de ticks.
-    """
-    grid_ticks = sorted(grid_ticks, key=lambda x: x[0])
-    slots: List[Dict[str, Any]] = []
-    for i in range(len(grid_ticks) - 1):
-        y0, t0 = grid_ticks[i]
-        y1, t1 = grid_ticks[i + 1]
-        slots.append({"t_ini": t0, "t_fin": t1, "y_top": y0, "y_bottom": y1})
-    return slots
-
-
-# -----------------------------
-# Extracción de texto por slot
-# -----------------------------
-
-def is_noise(w: Dict[str, Any]) -> bool:
-    txt = (w.get("text") or "").strip()
-    if TIME_RE.match(txt):
-        return True
-    if txt in DAY_NAMES:
-        return True
-    if txt in {"Horario", "semanal:", "Profesores"}:
-        return True
-    if txt.isdigit() and len(txt) <= 2:
-        return True
-    return False
-
-
-def word_in_slot(w: Dict[str, Any], slot: Dict[str, Any]) -> bool:
-    """
-    Criterio: centro vertical dentro del slot.
-    """
-    cy = (w["top"] + w["bottom"]) / 2.0
-    return slot["y_top"] <= cy < slot["y_bottom"]
-
-
-def extract_slot_texts(
-        words: List[Dict[str, Any]],
-        day_bounds: List[Tuple[str, float, float]],
-        slots: List[Dict[str, Any]],
-        y_min: float,
-        y_max: float,
-) -> Dict[str, List[str]]:
-    """
-    Devuelve por día una lista de textos (uno por slot). Texto normalizado.
-    """
-    out: Dict[str, List[str]] = {d: [""] * len(slots) for d, _, _ in day_bounds}
-
-    day_words: List[Tuple[str, Dict[str, Any]]] = []
-    for w in words:
-        if is_noise(w):
-            continue
-        if w["top"] < y_min or w["top"] > y_max:
-            continue
-        day = assign_day(day_bounds, w)
-        if day is None:
-            continue
-        day_words.append((day, w))
-
-    for day in out:
-        ws = [word for d, word in day_words if d == day]
-
-        for i, slot in enumerate(slots):
-            in_slot = [w for w in ws if word_in_slot(w, slot)]
-
-            if not in_slot:
-                continue
-
-            in_slot.sort(key=lambda word: (word["top"], word["x0"]))
-            text = " ".join(word["text"] for word in in_slot)
-
-            norm = normalize_text(text)
-            out[day][i] = norm
-
-    return out
-
-
-def determine_turno(hora_inicio: str) -> str:
-    """
-    Determina si un slot es de mañana o tarde basándose en la hora de inicio.
-    Asume que la tarde comienza a partir de las 15:00.
-    """
+def obtener_filas_horas(page):
     try:
-        h, m = map(int, hora_inicio.split(":"))
-        hora_decimal = h + m / 60.0
-        return "tarde" if hora_decimal >= 15.0 else "mañana"
-    except (ValueError, AttributeError):
-        return "mañana"  # fallback
+        filas = []
+        Y_INICIO_TABLA = 145
+        lineas = sorted([l['top'] for l in page.lines if l['width'] > 50])
+
+        lineas_filtradas = []
+        if lineas:
+            lineas_validas = [y for y in lineas if y > Y_INICIO_TABLA]
+            if not lineas_validas: return []
+            lineas_filtradas.append(Y_INICIO_TABLA + 2)
+            for y in lineas_validas:
+                if abs(y - lineas_filtradas[-1]) > 5: lineas_filtradas.append(y)
+
+        if lineas_filtradas:
+            ultima_altura = 35
+            if len(lineas_filtradas) >= 2:
+                ultima_altura = lineas_filtradas[-1] - lineas_filtradas[-2]
+            lineas_filtradas.append(lineas_filtradas[-1] + ultima_altura)
+
+        crop_col_horas = page.crop((COLUMNA_HORAS_X[0], 0, COLUMNA_HORAS_X[1], page.height))
+        for i in range(len(lineas_filtradas) - 1):
+            top, bottom = lineas_filtradas[i], lineas_filtradas[i + 1]
+            if top >= bottom: continue
+
+            zona_hora = crop_col_horas.crop((0, top, crop_col_horas.width, bottom))
+            texto = zona_hora.extract_text()
+            texto_limpio = " ".join(texto.split()) if texto else ""
+
+            if texto_limpio:
+                horas = re.findall(r'\d{1,2}:\d{2}', texto_limpio)
+                horas_unicas = []
+                for hora in horas:
+                    if not horas_unicas or hora != horas_unicas[-1]: horas_unicas.append(hora)
+                if horas_unicas: texto_limpio = ' '.join(horas_unicas)
+
+            if not texto_limpio: texto_limpio = f"[{top:.0f}-{bottom:.0f}]"
+            filas.append({'top': top, 'bottom': bottom, 'texto_hora': texto_limpio})
+        return filas
+    except Exception as e:
+        print(f"      ⚠️ Error detectando filas: {e}")
+        return []
 
 
-def merge_consecutive(
-        day_slot_texts: Dict[str, List[str]],
-        slots: List[Dict[str, Any]]
-) -> List[Dict[str, Any]]:
-    """
-    Fusiona slots consecutivos del mismo día cuando el texto es exactamente igual.
-    """
-    eventos: List[Dict[str, Any]] = []
-    for day, arr in day_slot_texts.items():
-        i = 0
-        while i < len(arr):
-            if not arr[i]:
-                i += 1
-                continue
-            j = i
-            while j + 1 < len(arr) and arr[j + 1] == arr[i]:
-                j += 1
-
-            # Determinar el turno basándose en la hora de inicio
-            turno_real = determine_turno(slots[i]["t_ini"])
-
-            eventos.append(
-                {
-                    "dia": day,
-                    "turno": turno_real,
-                    "inicio": slots[i]["t_ini"],
-                    "fin": slots[j]["t_fin"],
-                    "titulo": arr[i],
-                }
-            )
-            i = j + 1
-    return eventos
+def extraer_info_profesor(page):
+    try:
+        cabecera = page.crop((0, 0, page.width, 130))
+        texto_cabecera = cabecera.extract_text()
+        if not texto_cabecera: return "Desconocido", "N/A"
+        texto_unido = limpiar_texto(texto_cabecera)  # Usa función de utils
+        match = re.search(r"([A-ZÁÉÍÓÚÑ, ]+)\s*\(([^)]+)\)", texto_unido)
+        if match:
+            nombre = match.group(1).strip().lstrip(",")
+            return nombre, match.group(2).strip()
+        return texto_unido[:50], "N/A"
+    except Exception:
+        return "Error Lectura", "ERR"
 
 
-# -----------------------------
-# Limpieza: unir "continuaciones" de una misma celda
-# -----------------------------
-
-def looks_like_room(s: str) -> bool:
-    s = (s or "").strip().upper()
-    if ROOM_RE.match(s):
-        return True
-    if re.match(r"^[A-Z]\d{2},", s):  # "B23, INF.SAI..."
-        return True
-    return False
+def ajustar_bloque(bloque):
+    try:
+        if bloque and bloque.get("hora_inicio") == bloque.get("hora_fin"):
+            # Usa función de utils
+            bloque["hora_fin"] = sumar_55_minutos(bloque["hora_inicio"])
+    except:
+        pass
+    return bloque
 
 
-def looks_like_code(s: str) -> bool:
-    return bool(CODE_RE.match((s or "").strip().upper()))
+def procesar_pagina(page):
+    horario_interno = {"profesor": "Desconocido", "codigo": "N/A", "horario": {dia: [] for dia in COLUMNAS_X}}
+
+    try:
+        horario_interno["profesor"], horario_interno["codigo"] = extraer_info_profesor(page)
+        filas_horas = obtener_filas_horas(page)
+
+        if not filas_horas: return horario_interno
+
+        for dia, (x0, x1) in COLUMNAS_X.items():
+            bloque_actual = None
+            for fila in filas_horas:
+                try:
+                    bbox = (x0, fila['top'], x1, fila['bottom'])
+                    celda = page.crop(bbox)
+                    # Usa funciones de utils
+                    texto = limpiar_texto(celda.extract_text() or "")
+                    if texto.lower().startswith("recreo "): texto = texto[7:].strip()
+                    color = extraer_color_fondo(celda)
+
+                    if es_hora_recreo(fila['texto_hora'], texto):  # Utils
+                        if bloque_actual:
+                            ajustar_bloque(bloque_actual)
+                            horario_interno["horario"][dia].append(bloque_actual)
+                            bloque_actual = None
+                        continue
+
+                    if not texto:
+                        if color is not None:
+                            # Utils
+                            if bloque_actual and colores_son_iguales(bloque_actual["color"], color):
+                                bloque_actual["hora_fin"] = fila['texto_hora']
+                            else:
+                                if bloque_actual:
+                                    ajustar_bloque(bloque_actual)
+                                    horario_interno["horario"][dia].append(bloque_actual)
+                                bloque_actual = {"asignatura": "", "hora_inicio": fila['texto_hora'],
+                                                 "hora_fin": fila['texto_hora'], "color": color, "raw_text": []}
+                        else:
+                            if bloque_actual:
+                                ajustar_bloque(bloque_actual)
+                                horario_interno["horario"][dia].append(bloque_actual)
+                                bloque_actual = None
+                        continue
+
+                    if bloque_actual:
+                        debe_agrupar = False
+                        # Utils
+                        if colores_son_iguales(bloque_actual["color"], color):
+                            if color:
+                                texto_act = bloque_actual.get("asignatura", "")
+                                debe_agrupar = not (len(texto) < 20 and len(texto_act) < 20 and texto != texto_act)
+                            elif textos_son_similares(bloque_actual.get("asignatura", ""), texto):  # Utils
+                                debe_agrupar = True
+
+                        if debe_agrupar:
+                            bloque_actual["hora_fin"] = fila['texto_hora']
+                            if texto and texto not in bloque_actual["raw_text"]:
+                                bloque_actual["raw_text"].append(texto)
+                                bloque_actual["asignatura"] = " ".join(bloque_actual["raw_text"])
+                        else:
+                            if bloque_actual["asignatura"]:
+                                ajustar_bloque(bloque_actual)
+                                horario_interno["horario"][dia].append(bloque_actual)
+                            bloque_actual = {"asignatura": texto, "hora_inicio": fila['texto_hora'],
+                                             "hora_fin": fila['texto_hora'], "color": color,
+                                             "raw_text": [texto] if texto else []}
+                    else:
+                        bloque_actual = {"asignatura": texto, "hora_inicio": fila['texto_hora'],
+                                         "hora_fin": fila['texto_hora'],
+                                         "color": color, "raw_text": [texto] if texto else []}
+
+                except Exception:
+                    continue
+
+            if bloque_actual and bloque_actual["asignatura"]:
+                ajustar_bloque(bloque_actual)
+                horario_interno["horario"][dia].append(bloque_actual)
+
+        # POST-PROCESAMIENTO Y TRANSFORMACIÓN
+        eventos_lista = []
+        for dia in COLUMNAS_X:
+            for evento in horario_interno["horario"][dia]:
+                try:
+                    h_inicio_todas = re.findall(r'\d{1,2}:\d{2}', str(evento.get("hora_inicio", "")))
+                    h_fin_todas = re.findall(r'\d{1,2}:\d{2}', str(evento.get("hora_fin", "")))
+
+                    h_inicio_limpia = h_inicio_todas[0] if h_inicio_todas else evento.get("hora_inicio", "")
+                    h_fin_limpia = h_fin_todas[-1] if h_fin_todas else evento.get("hora_fin", "")
+
+                    eventos_lista.append({
+                        "dia": dia,
+                        "asignatura": evento.get("asignatura", "Desconocida"),
+                        "inicio": h_inicio_limpia,
+                        "fin": h_fin_limpia
+                    })
+                except Exception:
+                    continue
+
+        return {
+            "profesor": {
+                "nombre": horario_interno["profesor"],
+                "codigo": horario_interno["codigo"]
+            },
+            "eventos": eventos_lista
+        }
+
+    except Exception as e:
+        print(f"      ❌ Error crítico procesando página: {e}")
+        return horario_interno
 
 
-def looks_like_groups(s: str) -> bool:
-    s = (s or "").strip().upper()
-    if not re.search(r"\b[A-Z0-9-]{1,12}~[A-Z0-9-]{1,12}\b", s):
-        return False
-    non_group_words = [w for w in re.findall(r"[A-ZÁÉÍÓÚÑ]{4,}", s) if "~" not in w]
-    return len(non_group_words) <= 1
+# ==============================================================================
+# ORQUESTADOR
+# ==============================================================================
+
+def procesar_todo_automaticamente(carpeta_data):
+    todos_los_horarios = []
+    if not os.path.exists(carpeta_data):
+        print(f"❌ Error crítico: La carpeta no existe: {carpeta_data}")
+        return []
+
+    patron = os.path.join(carpeta_data, "*.pdf")
+    archivos_pdf = glob.glob(patron)
+
+    if not archivos_pdf:
+        print(f"⚠️ Aviso: No se encontraron archivos PDF en: {carpeta_data}")
+        return []
+
+    print(f"📂 Encontrados {len(archivos_pdf)} archivos PDF.")
+    print("-" * 50)
+
+    for ruta_pdf in archivos_pdf:
+        nombre_archivo = os.path.basename(ruta_pdf)
+        print(f"🔄 Procesando: {nombre_archivo} ...")
+
+        try:
+            with pdfplumber.open(ruta_pdf) as pdf:
+                if not pdf.pages:
+                    print("   ⚠️ El PDF no tiene páginas.")
+                    continue
+
+                print(f"   📄 Detectadas {len(pdf.pages)} páginas.")
+                for i, page in enumerate(pdf.pages):
+                    try:
+                        horario = procesar_pagina(page)
+                        errores = validate_schedule(horario)  # Validador
+
+                        if errores:
+                            print(f"      ⚠️ Pág {i + 1} DESCARTADA por calidad insuficiente:")
+                            for err in errores: print(f"         - {err}")
+                        else:
+                            todos_los_horarios.append(horario)
+
+                    except Exception as e:
+                        print(f"      ❌ Error en pág {i + 1}: {str(e)}")
+
+        except Exception as e:
+            print(f"   ❌ Error abriendo el archivo (posiblemente corrupto): {str(e)}")
+
+    return todos_los_horarios
 
 
-def _is_major_activity_title(t: str) -> bool:
-    t = (t or "").strip().upper()
-    return any(k in t for k in [
-        "DESARROLLO WEB", "PROGRAMACIÓN", "MONTAJE Y MANTENIMIENTO",
-        "GUARDIA", "REUNIÓN", "REUNION"
-    ])
+if __name__ == "__main__":
+    carpeta_data = os.path.join(os.path.dirname(__file__), "..", "data")
+    try:
+        print("🚀 INICIANDO ESCANEO COMPLETO DE PDFs")
+        horarios_consolidados = procesar_todo_automaticamente(carpeta_data)
 
-
-def _is_short_complement(t: str) -> bool:
-    t = (t or "").strip().upper()
-    if looks_like_room(t) or looks_like_code(t) or looks_like_groups(t):
-        return True
-    # detalle breve tipo "RDP - DPTO INF"
-    return len(t) <= 28 and ("-" in t)
-
-
-def merge_continuations(eventos: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """
-    Une eventos adyacentes SOLO si el segundo es un complemento corto.
-    Evita mezclar reunión con clases, o clases distintas entre sí.
-    """
-    eventos = sorted(eventos, key=lambda ev: (ev["dia"], ev["turno"], ev["inicio"]))
-    out: List[Dict[str, Any]] = []
-
-    for e in eventos:
-        if not out:
-            out.append(e)
-            continue
-
-        prev = out[-1]
-
-        if e["dia"] != prev["dia"] or e["turno"] != prev["turno"] or e["inicio"] != prev["fin"]:
-            out.append(e)
-            continue
-
-        t_prev = (prev.get("titulo") or "").strip().upper()
-        t_cur = (e.get("titulo") or "").strip().upper()
-
-        # Nunca mezclar recreo
-        if t_prev == "RECREO" or t_cur == "RECREO":
-            out.append(e)
-            continue
-
-        # Reunión: solo complemento corto no "principal"
-        if "REUNIÓN" in t_prev or "REUNION" in t_prev:
-            if _is_short_complement(t_cur) and not _is_major_activity_title(t_cur):
-                prev["titulo"] = (prev["titulo"] + " / " + e["titulo"]).strip()
-                prev["fin"] = e["fin"]
-                continue
-            out.append(e)
-            continue
-
-        # Guardia: permite complemento corto
-        if "GUARDIA" in t_prev:
-            if _is_short_complement(t_cur) and not _is_major_activity_title(t_cur):
-                prev["titulo"] = (prev["titulo"] + " " + e["titulo"]).strip()
-                prev["fin"] = e["fin"]
-                continue
-            out.append(e)
-            continue
-
-        # Lectiva u otras: solo si es complemento corto no principal
-        if _is_short_complement(t_cur) and not _is_major_activity_title(t_cur):
-            prev["titulo"] = (prev["titulo"] + " " + e["titulo"]).strip()
-            prev["fin"] = e["fin"]
-            continue
-
-        out.append(e)
-
-    return out
-
-
-def filter_events(eventos: List[Dict[str, Any]], drop_recreo: bool = True) -> List[Dict[str, Any]]:
-    if not drop_recreo:
-        return eventos
-    return [e for e in eventos if (e.get("titulo") or "").strip().upper() != "RECREO"]
-
-
-def fix_titles(eventos: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """
-    Reparación final de títulos:
-    - Une patrones tipo "~BIGD- C03" -> "~BIGDC03" (por seguridad).
-    - Elimina guion colgante al final de un token de grupo "~XXXX-" -> "~XXXX"
-      (caso: el PDF dejó el sufijo en otro slot, pero si no está, no queremos un '-' colgando).
-    """
-    for e in eventos:
-        t = (e.get("titulo") or "").strip()
-
-        # 1) unión típica
-        t = re.sub(r"(~[A-Z0-9-]+)-\s+([A-Z0-9]{2,})\b", r"\1\2", t)
-
-        # 2) guion colgante justo antes de fin de string
-        #    "... BIG-D~BIGD-" -> "... BIG-D~BIGD"
-        t = re.sub(r"(~[A-Z0-9-]+)-\b(?=\s*$)", r"\1", t)
-
-        e["titulo"] = t
-    return eventos
-
-
-# -----------------------------
-# API principal del extractor
-# -----------------------------
-
-def extract_schedule(pdf_path: str = PDF_PATH_DEFAULT) -> Dict[str, Any]:
-    """
-    Función principal: devuelve dict listo para serializar a JSON:
-      {"profesor": {...}, "eventos": [...]}
-    """
-    with pdfplumber.open(pdf_path) as pdf:
-        page = pdf.pages[0]
-
-        full_text = page.extract_text() or ""
-        teacher = parse_teacher_header(full_text)
-
-        words = page.extract_words(
-            keep_blank_chars=False,
-            use_text_flow=True,
-            extra_attrs=["size", "fontname"],
-        )
-
-        day_bounds = compute_day_bounds(words)
-        time_ticks = extract_time_ticks(words)
-
-        grids = split_ticks_into_grids(time_ticks, big_gap=90.0)
-
-        eventos: List[Dict[str, Any]] = []
-        for idx, g in enumerate(grids[:2]):  # normalmente 2: mañana/tarde
-            g2 = dedup_grid_ticks(g)
-            if len(g2) < 2:
-                continue
-
-            y_min, y_max = grid_y_limits(g2)
-            slots = build_slots_from_ticks(g2)
-
-            day_slot_texts = extract_slot_texts(words, day_bounds, slots, y_min, y_max)
-            eventos.extend(merge_consecutive(day_slot_texts, slots))
-
-    # Limpieza post-proceso (orden importante)
-    eventos = filter_events(eventos, drop_recreo=True)  # primero fuera recreos
-    eventos = merge_continuations(eventos)  # luego fusiones seguras
-    eventos = filter_events(eventos, drop_recreo=True)  # blindaje
-    eventos = fix_titles(eventos)
-    return {"profesor": teacher, "eventos": eventos}
+        if horarios_consolidados:
+            ruta_salida = os.path.join(carpeta_data, "horarios_consolidados.json")
+            try:
+                with open(ruta_salida, 'w', encoding='utf-8') as f:
+                    json.dump(horarios_consolidados, f, indent=4, ensure_ascii=False)
+                print("-" * 50)
+                print(f"✅ ¡ÉXITO! Se han consolidado {len(horarios_consolidados)} horarios válidos.")
+                print(f"💾 Resultado guardado en: {ruta_salida}")
+            except IOError as e:
+                print(f"❌ Error al escribir el archivo JSON final: {e}")
+        else:
+            print("\n⚠️ No se extrajo ningún horario válido.")
+    except Exception as e:
+        print(f"\n❌ Error fatal inesperado en el programa principal: {e}")

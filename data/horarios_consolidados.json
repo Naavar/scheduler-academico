@@ -1,0 +1,906 @@
+[
+    {
+        "profesor": {
+            "nombre": "ABRISQUETA VALCARCEL, CARLOS MANUEL",
+            "codigo": "inf.inf.CAV35F"
+        },
+        "eventos": [
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~REAP",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~CTVP",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Montaje y mantenimiento de sistemas y co 1FPB~1IFON B23, inf.sai.JGN650",
+                "inicio": "12:25",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~RTUT",
+                "inicio": "13:20",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "REUNIÓN RDP - Dpto INF",
+                "inicio": "14:25",
+                "fin": "15:20"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Desarrollo web en entorno servidor 2DAW~2DAWM, 2DAW~2DAWN C06",
+                "inicio": "15:20",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "GUARDIA G. TARDE",
+                "inicio": "18:35",
+                "fin": "19:30"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Programación de inteligencia Artificial BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "19:30",
+                "fin": "21:20"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Desarrollo web en entorno servidor 2DAW~2DAWM, 2DAW~2DAWN 2DAW~2DAWM, 2DAW~2DAWN C06",
+                "inicio": "15:20",
+                "fin": "17:10"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "GUARDIA G. TARDE",
+                "inicio": "17:10",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Programación de inteligencia Artificial BIG-D~BIGD- C03",
+                "inicio": "18:35",
+                "fin": "21:20"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "REUNIÓN Tutores FP Tarde - CT2F",
+                "inicio": "15:20",
+                "fin": "16:15"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "1104~CPPL",
+                "inicio": "17:10",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Programación de inteligencia Artificial BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "18:35",
+                "fin": "20:25"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~CTVP",
+                "inicio": "17:10",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Desarrollo web en entorno servidor 2DAW~2DAWM, 2DAW~2DAWN C06",
+                "inicio": "18:35",
+                "fin": "21:20"
+            }
+        ]
+    },
+    {
+        "profesor": {
+            "nombre": "ALCAZAR TORRES, JOSE ANTONIO",
+            "codigo": "eca.se.JAT08Z"
+        },
+        "eventos": [
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~CTVP",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Instalaciones de radiocomunicaciones 2ITE~2ITEM, 2ITE~2ITEN 2ITE~2ITEM, 2ITE~2ITEN C13",
+                "inicio": "11:30",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Sistemas integrados y hogar digital 2STI~2STIM, 2STI~2STIN C04",
+                "inicio": "13:20",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "REUNIÓN RDP - Dpto INF",
+                "inicio": "14:25",
+                "fin": "15:20"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Sistemas de aprendizaje automático BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "16:15",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Sistemas de aprendizaje automático BIG-D~BIGD-",
+                "inicio": "18:35",
+                "fin": "19:30"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Instalaciones de radiocomunicaciones 2ITE~2ITEM, 2ITE~2ITEN C13",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Instalaciones de radiocomunicaciones 2ITE~2ITEM, 2ITE~2ITEN C13",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Sistemas integrados y hogar digital 2STI~2STIM, 2STI~2STIN 2STI~2STIM, 2STI~2STIN C04",
+                "inicio": "12:25",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "REUNIÓN RDP - Dpto ECA",
+                "inicio": "14:25",
+                "fin": "15:20"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "GUARDIA CERO",
+                "inicio": "7:45",
+                "fin": "08:40"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Instalaciones de radiocomunicaciones 2ITE~2ITEM, 2ITE~2ITEN 2ITE~2ITEM, 2ITE~2ITEN C13",
+                "inicio": "8:15",
+                "fin": "10:05"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Elementos de sistemas de telecomunicacio 1STI~1STIM, 1STI~1STIN, 1STI~1STIR C03",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Elementos de sistemas de telecomunicacio 1STI~1STIM, 1STI~1STIN, 1STI~1STIR C03",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "1104~CRCE",
+                "inicio": "12:25",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Instalaciones de radiocomunicaciones 2ITE~2ITEM, 2ITE~2ITEN C13",
+                "inicio": "8:15",
+                "fin": "09:10"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Sistemas integrados y hogar digital 2STI~2STIM, 2STI~2STIN C04",
+                "inicio": "9:10",
+                "fin": "10:05"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~CRCE",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "GUARDIA G. MAÑANA BIBLIOTECA",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Elementos de sistemas de telecomunicacio 1STI~1STIM, 1STI~1STIN, 1STI~1STIR 1STI~1STIM, 1STI~1STIN, 1STI~1STIR C03",
+                "inicio": "12:25",
+                "fin": "14:15"
+            }
+        ]
+    },
+    {
+        "profesor": {
+            "nombre": "CALVO TORREJON, ANTONIO JAVIER",
+            "codigo": "inf.sai.ACT720"
+        },
+        "eventos": [
+            {
+                "dia": "Lunes",
+                "asignatura": "GUARDIA G. TARDE",
+                "inicio": "15:20",
+                "fin": "16:15"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Sistemas de Big Data BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "16:15",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Sistemas de Big Data BIG-D~BIGD- C03",
+                "inicio": "18:35",
+                "fin": "19:30"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Aplicaciones ofimáticas 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ C15",
+                "inicio": "12:25",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "REUNIÓN RDP - Dpto INF",
+                "inicio": "14:25",
+                "fin": "15:20"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Aplicaciones ofimáticas 1SMV~1SMVM, 1SMV~1SMVN 1SMV~1SMVM, 1SMV~1SMVN C15",
+                "inicio": "16:15",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Aplicaciones ofimáticas 1SMV~1SMVM, 1SMV~1SMVN C15",
+                "inicio": "18:35",
+                "fin": "19:30"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Aplicaciones ofimáticas 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ C15",
+                "inicio": "12:25",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Big Data aplicado BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "16:15",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "GUARDIA G. TARDE",
+                "inicio": "15:20",
+                "fin": "16:15"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Big Data aplicado BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "16:15",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Aplicaciones ofimáticas 1SMV~1SMVM, 1SMV~1SMVN C15",
+                "inicio": "18:35",
+                "fin": "21:20"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Aplicaciones ofimáticas 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ C15",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Aplicaciones ofimáticas 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ C15",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "GUARDIA G. MAÑANA",
+                "inicio": "12:25",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~CTVP",
+                "inicio": "13:20",
+                "fin": "14:15"
+            }
+        ]
+    },
+    {
+        "profesor": {
+            "nombre": "PELEGRIN PARDO, ANTONIO F",
+            "codigo": "inf.inf.APP54H"
+        },
+        "eventos": [
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~CRCE",
+                "inicio": "16:15",
+                "fin": "17:10"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~RCBL",
+                "inicio": "17:10",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~RMI",
+                "inicio": "18:35",
+                "fin": "19:30"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Modelos de Inteligencia Artificial BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "19:30",
+                "fin": "21:20"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "1104~RCBL",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "1104~REAP",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Servicios de red e internet 2ASI~2ASIM, 2ASI~2ASIN 2ASI~2ASIM, 2ASI~2ASIN B01",
+                "inicio": "12:25",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "REUNIÓN RDP - Dpto INF",
+                "inicio": "14:25",
+                "fin": "15:20"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Fundamentos de hardware 1ASI~1ASIM, 1ASI~1ASIN, 1ASI~1ASIR C14",
+                "inicio": "8:15",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "1104~CTVP",
+                "inicio": "11:30",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "REUNIÓN Tutores FP Mañana - CT2F",
+                "inicio": "13:20",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Servicios de red e internet 2ASI~2ASIM, 2ASI~2ASIN B01",
+                "inicio": "8:15",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Servicios de red e internet 2ASI~2ASIM, 2ASI~2ASIN B01",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "REUNIÓN Bil ASIR - CCBI",
+                "inicio": "12:25",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~RTUT",
+                "inicio": "9:10",
+                "fin": "10:05"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~RMI",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~REAP",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~CRCE",
+                "inicio": "12:25",
+                "fin": "13:20"
+            }
+        ]
+    },
+    {
+        "profesor": {
+            "nombre": "ABRISQUETA VALCARCEL, CARLOS MANUEL",
+            "codigo": "inf.inf.CAV35F"
+        },
+        "eventos": [
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~REAP",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~CTVP",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Montaje y mantenimiento de sistemas y co 1FPB~1IFON B23, inf.sai.JGN650",
+                "inicio": "12:25",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~RTUT",
+                "inicio": "13:20",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "REUNIÓN RDP - Dpto INF",
+                "inicio": "14:25",
+                "fin": "15:20"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Desarrollo web en entorno servidor 2DAW~2DAWM, 2DAW~2DAWN C06",
+                "inicio": "15:20",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "GUARDIA G. TARDE",
+                "inicio": "18:35",
+                "fin": "19:30"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Programación de inteligencia Artificial BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "19:30",
+                "fin": "21:20"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Desarrollo web en entorno servidor 2DAW~2DAWM, 2DAW~2DAWN 2DAW~2DAWM, 2DAW~2DAWN C06",
+                "inicio": "15:20",
+                "fin": "17:10"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "GUARDIA G. TARDE",
+                "inicio": "17:10",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Programación de inteligencia Artificial BIG-D~BIGD- C03",
+                "inicio": "18:35",
+                "fin": "21:20"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "REUNIÓN Tutores FP Tarde - CT2F",
+                "inicio": "15:20",
+                "fin": "16:15"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "1104~CPPL",
+                "inicio": "17:10",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Programación de inteligencia Artificial BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "18:35",
+                "fin": "20:25"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~CTVP",
+                "inicio": "17:10",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Desarrollo web en entorno servidor 2DAW~2DAWM, 2DAW~2DAWN C06",
+                "inicio": "18:35",
+                "fin": "21:20"
+            }
+        ]
+    },
+    {
+        "profesor": {
+            "nombre": "ALCAZAR TORRES, JOSE ANTONIO",
+            "codigo": "eca.se.JAT08Z"
+        },
+        "eventos": [
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~CTVP",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Instalaciones de radiocomunicaciones 2ITE~2ITEM, 2ITE~2ITEN 2ITE~2ITEM, 2ITE~2ITEN C13",
+                "inicio": "11:30",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Sistemas integrados y hogar digital 2STI~2STIM, 2STI~2STIN C04",
+                "inicio": "13:20",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "REUNIÓN RDP - Dpto INF",
+                "inicio": "14:25",
+                "fin": "15:20"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Sistemas de aprendizaje automático BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "16:15",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Sistemas de aprendizaje automático BIG-D~BIGD-",
+                "inicio": "18:35",
+                "fin": "19:30"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Instalaciones de radiocomunicaciones 2ITE~2ITEM, 2ITE~2ITEN C13",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Instalaciones de radiocomunicaciones 2ITE~2ITEM, 2ITE~2ITEN C13",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Sistemas integrados y hogar digital 2STI~2STIM, 2STI~2STIN 2STI~2STIM, 2STI~2STIN C04",
+                "inicio": "12:25",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "REUNIÓN RDP - Dpto ECA",
+                "inicio": "14:25",
+                "fin": "15:20"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "GUARDIA CERO",
+                "inicio": "7:45",
+                "fin": "08:40"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Instalaciones de radiocomunicaciones 2ITE~2ITEM, 2ITE~2ITEN 2ITE~2ITEM, 2ITE~2ITEN C13",
+                "inicio": "8:15",
+                "fin": "10:05"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Elementos de sistemas de telecomunicacio 1STI~1STIM, 1STI~1STIN, 1STI~1STIR C03",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Elementos de sistemas de telecomunicacio 1STI~1STIM, 1STI~1STIN, 1STI~1STIR C03",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "1104~CRCE",
+                "inicio": "12:25",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Instalaciones de radiocomunicaciones 2ITE~2ITEM, 2ITE~2ITEN C13",
+                "inicio": "8:15",
+                "fin": "09:10"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Sistemas integrados y hogar digital 2STI~2STIM, 2STI~2STIN C04",
+                "inicio": "9:10",
+                "fin": "10:05"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~CRCE",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "GUARDIA G. MAÑANA BIBLIOTECA",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Elementos de sistemas de telecomunicacio 1STI~1STIM, 1STI~1STIN, 1STI~1STIR 1STI~1STIM, 1STI~1STIN, 1STI~1STIR C03",
+                "inicio": "12:25",
+                "fin": "14:15"
+            }
+        ]
+    },
+    {
+        "profesor": {
+            "nombre": "CALVO TORREJON, ANTONIO JAVIER",
+            "codigo": "inf.sai.ACT720"
+        },
+        "eventos": [
+            {
+                "dia": "Lunes",
+                "asignatura": "GUARDIA G. TARDE",
+                "inicio": "15:20",
+                "fin": "16:15"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Sistemas de Big Data BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "16:15",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Sistemas de Big Data BIG-D~BIGD- C03",
+                "inicio": "18:35",
+                "fin": "19:30"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Aplicaciones ofimáticas 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ C15",
+                "inicio": "12:25",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "REUNIÓN RDP - Dpto INF",
+                "inicio": "14:25",
+                "fin": "15:20"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Aplicaciones ofimáticas 1SMV~1SMVM, 1SMV~1SMVN 1SMV~1SMVM, 1SMV~1SMVN C15",
+                "inicio": "16:15",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Aplicaciones ofimáticas 1SMV~1SMVM, 1SMV~1SMVN C15",
+                "inicio": "18:35",
+                "fin": "19:30"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Aplicaciones ofimáticas 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ C15",
+                "inicio": "12:25",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Big Data aplicado BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "16:15",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "GUARDIA G. TARDE",
+                "inicio": "15:20",
+                "fin": "16:15"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Big Data aplicado BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "16:15",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Aplicaciones ofimáticas 1SMV~1SMVM, 1SMV~1SMVN C15",
+                "inicio": "18:35",
+                "fin": "21:20"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Aplicaciones ofimáticas 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ C15",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "Aplicaciones ofimáticas 1SMR~1SMRM, 1SMR~1SMRN, 1SMR~ C15",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "GUARDIA G. MAÑANA",
+                "inicio": "12:25",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~CTVP",
+                "inicio": "13:20",
+                "fin": "14:15"
+            }
+        ]
+    },
+    {
+        "profesor": {
+            "nombre": "PELEGRIN PARDO, ANTONIO F",
+            "codigo": "inf.inf.APP54H"
+        },
+        "eventos": [
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~CRCE",
+                "inicio": "16:15",
+                "fin": "17:10"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~RCBL",
+                "inicio": "17:10",
+                "fin": "18:05"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "1104~RMI",
+                "inicio": "18:35",
+                "fin": "19:30"
+            },
+            {
+                "dia": "Lunes",
+                "asignatura": "Modelos de Inteligencia Artificial BIG-D~BIGD- BIG-D~BIGD- C03",
+                "inicio": "19:30",
+                "fin": "21:20"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "1104~RCBL",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "1104~REAP",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "Servicios de red e internet 2ASI~2ASIM, 2ASI~2ASIN 2ASI~2ASIM, 2ASI~2ASIN B01",
+                "inicio": "12:25",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Martes",
+                "asignatura": "REUNIÓN RDP - Dpto INF",
+                "inicio": "14:25",
+                "fin": "15:20"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "Fundamentos de hardware 1ASI~1ASIM, 1ASI~1ASIN, 1ASI~1ASIR C14",
+                "inicio": "8:15",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "1104~CTVP",
+                "inicio": "11:30",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Miércoles",
+                "asignatura": "REUNIÓN Tutores FP Mañana - CT2F",
+                "inicio": "13:20",
+                "fin": "14:15"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Servicios de red e internet 2ASI~2ASIM, 2ASI~2ASIN B01",
+                "inicio": "8:15",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "Servicios de red e internet 2ASI~2ASIM, 2ASI~2ASIN B01",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Jueves",
+                "asignatura": "REUNIÓN Bil ASIR - CCBI",
+                "inicio": "12:25",
+                "fin": "13:20"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~RTUT",
+                "inicio": "9:10",
+                "fin": "10:05"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~RMI",
+                "inicio": "10:05",
+                "fin": "11:00"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~REAP",
+                "inicio": "11:30",
+                "fin": "12:25"
+            },
+            {
+                "dia": "Viernes",
+                "asignatura": "1104~CRCE",
+                "inicio": "12:25",
+                "fin": "13:20"
+            }
+        ]
+    }
+]

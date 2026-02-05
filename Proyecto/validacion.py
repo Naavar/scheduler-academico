@@ -1,50 +1,81 @@
 from __future__ import annotations
+import re
+from typing import Any, List, Dict
 
-from typing import Any
-
+# Constantes
 DAY_NAMES = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+REGEX_HORA = r"^\d{1,2}:\d{2}$"  # Acepta "9:00" y "09:00"
 
 
 def hhmm_to_minutes(hhmm: str) -> int:
-    hours, minutes = map(int, hhmm.split(":"))
-    return hours * 60 + minutes
+    """Convierte HH:MM a minutos totales."""
+    try:
+        hours, minutes = map(int, hhmm.split(":"))
+        return hours * 60 + minutes
+    except ValueError:
+        return -1  # Retorno de error seguro
 
 
-def validate_schedule(schedule: dict[str, Any]) -> list[str]:
-    errors: list[str] = []
+def validate_schedule(schedule: Dict[str, Any]) -> List[str]:
+    """
+    Valida un objeto horario completo.
+    Retorna una lista de errores (vacía si es válido).
+    """
+    errors: List[str] = []
 
-    prof = schedule.get("profesor", {}) or {}
-    if not prof.get("nombre"):
-        errors.append("Falta profesor.nombre")
-    if not prof.get("codigo"):
-        errors.append("Falta profesor.codigo")
+    # 1. Validar Profesor
+    prof = schedule.get("profesor", {})
+    if not isinstance(prof, dict):
+        errors.append("La clave 'profesor' debe ser un objeto")
+        return errors  # Error crítico, paramos aquí
 
+    if not prof.get("nombre") or prof.get("nombre") == "Desconocido":
+        errors.append("Falta nombre del profesor válido")
+    if not prof.get("codigo") or prof.get("codigo") == "N/A":
+        errors.append("Falta código del profesor válido")
+
+    # 2. Validar Eventos
     events = schedule.get("eventos")
-    if not isinstance(events, list) or not events:
-        errors.append("No hay eventos (eventos está vacío o no es lista)")
+    if not isinstance(events, list):
+        errors.append("'eventos' debe ser una lista")
         return errors
+
+    if not events:
+        # Nota: Un horario vacío podría ser válido técnicamente, pero sospechoso.
+        # Lo marcamos como advertencia o error según prefieras.
+        errors.append("Advertencia: La lista de eventos está vacía")
 
     for idx, event in enumerate(events):
         day = event.get("dia")
         start = event.get("inicio")
         end = event.get("fin")
+        asignatura = event.get("asignatura")  # Tu consolidador usa 'asignatura', no 'titulo'
 
+        # Validar Día
         if day not in DAY_NAMES:
-            errors.append(f"Evento {idx}: dia inválido: {day}")
+            errors.append(f"Evento {idx}: día inválido '{day}'")
 
+        # Validar Asignatura
+        if not asignatura:
+            errors.append(f"Evento {idx}: falta asignatura")
+
+        # Validar Horas
         if not start or not end:
-            errors.append(f"Evento {idx}: falta inicio/fin")
+            errors.append(f"Evento {idx}: falta hora inicio/fin")
             continue
 
-        try:
-            start_min = hhmm_to_minutes(start)
-            end_min = hhmm_to_minutes(end)
-            if end_min <= start_min:
-                errors.append(f"Evento {idx}: fin <= inicio ({start}–{end})")
-        except ValueError:
-            errors.append(f"Evento {idx}: formato hora inválido ({start}, {end})")
+        # Chequeo de formato con Regex (más rápido que try-except para formato visual)
+        if not re.match(REGEX_HORA, str(start)) or not re.match(REGEX_HORA, str(end)):
+            errors.append(f"Evento {idx}: formato hora inválido ({start} - {end})")
+            continue
 
-        if not event.get("titulo"):
-            errors.append(f"Evento {idx}: falta titulo")
+        # Chequeo lógico (Fin > Inicio)
+        start_min = hhmm_to_minutes(str(start))
+        end_min = hhmm_to_minutes(str(end))
+
+        if start_min == -1 or end_min == -1:
+            errors.append(f"Evento {idx}: horas no numéricas")
+        elif end_min <= start_min:
+            errors.append(f"Evento {idx}: fin <= inicio ({start} - {end})")
 
     return errors
