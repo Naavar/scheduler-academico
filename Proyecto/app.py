@@ -9,7 +9,7 @@ import pandas as pd
 from extractor_pdf import procesar_todo_automaticamente
 from buscador_huecos import BuscadorHuecos
 
-st.set_page_config(page_title="Buscador de huecos")
+st.set_page_config(page_title="Buscador de huecos", layout="wide")
 st.title("Sistema de Búsqueda de Huecos en Horarios")
 
 if "datos_horarios" not in st.session_state:
@@ -117,8 +117,15 @@ with col_buscar:
                     )
 
                 df_top = pd.DataFrame(filas_top)
-                st.subheader("Top 5 mejores huecos")
-                st.dataframe(df_top)
+
+                st.subheader("Mejores huecos")
+
+                st.dataframe(
+                    df_top,
+                    use_container_width=True,
+                    hide_index=True,
+                    height=min(600, 60 + 35 * len(df_top)),
+                )
 
                 with st.expander("Ver lista completa de profesores por hueco"):
                     for h in huecos:
@@ -129,30 +136,33 @@ with col_buscar:
                         st.write(", ".join(h.profesores_disponibles))
 
 with col_exportar:
-    if st.button("Exportar a Excel"):
-        huecos = st.session_state.get("ultimo_resultado", [])
-        if not huecos:
-            st.error("No hay resultados que exportar. Busca huecos primero.")
-        else:
-            filas_excel = []
-            for h in huecos:
-                filas_excel.append(
-                    {
-                        "Día": h.dia,
-                        "Hora Inicio": h.hora_inicio,
-                        "Hora Fin": h.hora_fin,
-                        "Profesores": ", ".join(h.profesores_disponibles),
-                        "Total": h.num_profesores,
-                    }
-                )
-            df_excel = pd.DataFrame(filas_excel)
-            buffer = io.BytesIO()
-            with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
-                df_excel.to_excel(writer, index=False, sheet_name="Huecos")
-            buffer.seek(0)
-            st.download_button(
-                label="Descargar Excel",
-                data=buffer,
-                file_name="huecos_comunes.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    huecos = st.session_state.get("ultimo_resultado", [])
+    hay_resultados = bool(huecos)
+
+    if not hay_resultados:
+        st.button("Exportar a Excel", disabled=True)
+    else:
+        filas_excel = []
+        for h in huecos:
+            filas_excel.append(
+                {
+                    "Día": h.dia,
+                    "Hora Inicio": h.hora_inicio,
+                    "Hora Fin": h.hora_fin,
+                    "Profesores": ", ".join(h.profesores_disponibles),
+                    "Total": h.num_profesores,
+                }
             )
+        df_excel = pd.DataFrame(filas_excel)
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
+            df_excel.to_excel(writer, index=False, sheet_name="Huecos")
+        buffer.seek(0)
+
+        st.download_button(
+            label="Exportar a Excel",
+            data=buffer,
+            file_name="huecos_comunes.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+
