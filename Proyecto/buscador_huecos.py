@@ -390,7 +390,7 @@ class BuscadorHuecos:
         if not huecos:
             return None
 
-        mejor = huecos[0]
+        mejor_hueco = huecos[0]
         return {
             "dia": mejor.dia,
             "hora_inicio": mejor.hora_inicio,
