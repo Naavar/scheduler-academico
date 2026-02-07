@@ -11,10 +11,7 @@ from buscador_huecos import BuscadorHuecos
 
 st.set_page_config(page_title="Buscador de huecos", layout="wide")
 
-st.markdown(
-    "<h1 style='color:#0b3c5d;'>Sistema de Búsqueda de Huecos en Horarios</h1>",
-    unsafe_allow_html=True,
-)
+st.title("Sistema de Búsqueda de Huecos en Horarios")
 
 if "datos_horarios" not in st.session_state:
     st.session_state["datos_horarios"] = None
@@ -22,10 +19,7 @@ if "datos_horarios" not in st.session_state:
 if "ultimo_resultado" not in st.session_state:
     st.session_state["ultimo_resultado"] = []
 
-st.markdown(
-    "<h3 style='color:#444444;'>1. Cargar horarios en PDF</h3>",
-    unsafe_allow_html=True,
-)
+st.header("1. Cargar horarios en PDF")
 
 archivos_pdf = st.file_uploader(
     "Selecciona uno o varios PDFs de horarios de profesores",
@@ -63,20 +57,14 @@ if st.button("Cargar horarios desde PDF"):
                 st.session_state["datos_horarios"] = {"profesores": profesores}
                 nombres = [p["profesor"].get("nombre", "SIN_NOMBRE") for p in profesores]
                 st.success(f"Se han cargado {len(profesores)} profesores desde PDF.")
-                st.markdown(
-                    "<span style='color:#1f77b4; font-weight:600;'>Profesores detectados:</span>",
-                    unsafe_allow_html=True,
-                )
+                st.subheader("Profesores detectados:")
                 st.write(nombres)
         except Exception as e:
             st.error(f"Error al procesar los PDFs: {e}")
 
 datos = st.session_state.get("datos_horarios")
 
-st.markdown(
-    "<h3 style='color:#444444;'>2. Parámetros de búsqueda</h3>",
-    unsafe_allow_html=True,
-)
+st.header("2. Parámetros de búsqueda")
 
 col_filtros, col_resumen = st.columns([2, 1])
 
@@ -92,10 +80,7 @@ with col_resumen:
     st.write(f"- Día: {dia_seleccionado}")
     st.write(f"- Turno: {turno}")
 
-st.markdown(
-    "<h3 style='color:#444444;'>3. Búsqueda de huecos y resultados</h3>",
-    unsafe_allow_html=True,
-)
+st.header("3. Búsqueda de huecos comunes")
 
 col_buscar, col_exportar = st.columns([2, 1])
 
