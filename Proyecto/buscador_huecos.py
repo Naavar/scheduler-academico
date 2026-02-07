@@ -72,23 +72,10 @@ class BuscadorHuecos:
         Args:
             profesores_json: Lista de dicts con estructura [{"profesor":..., "eventos":...}]
         """
-        self._validar_json(profesores_json)
         self.profesores_json = profesores_json
         self.num_slots = ((self.hora_fin - self.hora_inicio) * 60) // self.slot_minutos
         self.horas = self._precalcular_horas()
         self.disponibilidad = self.construir_disponibilidad()
-
-    def _validar_json(self, data: List[Dict[str, Any]]) -> None:
-
-        """Valida estructura básica del JSON."""
-
-        if not isinstance(data, list):
-            raise ValueError("JSON debe ser una lista")
-        for p in data:
-            if "profesor" not in p or "eventos" not in p:
-                raise ValueError("Faltan claves 'profesor' o 'eventos'")
-            if "nombre" not in p["profesor"]:
-                raise ValueError("Falta nombre del profesor")
 
     def _precalcular_horas(self) -> List[str]:
 
