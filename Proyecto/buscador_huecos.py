@@ -67,8 +67,6 @@ class BuscadorHuecos:
 
     def __init__(self, profesores_json: List[Dict[str, Any]]) -> None:
         """
-        Inicializa buscador validando estructura JSON.
-        
         Args:
             profesores_json: Lista de dicts con estructura [{"profesor":..., "eventos":...}]
         """
