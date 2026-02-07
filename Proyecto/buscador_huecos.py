@@ -57,7 +57,7 @@ class BuscadorHuecos:
     NumPy porque para matrices de este tamaño (~180×50=9000 elementos), las
     listas son más rápidas debido al overhead de importación y conversión de
     NumPy. Verificado empíricamente con cProfile.
-    
+
     """
     
     slot_minutos = 5
@@ -67,18 +67,33 @@ class BuscadorHuecos:
 
     def __init__(self, profesores_json: List[Dict[str, Any]]) -> None:
         """
-        Inicializa buscador.
+        Inicializa buscador validando estructura JSON.
         
         Args:
             profesores_json: Lista de dicts con estructura [{"profesor":..., "eventos":...}]
         """
+        self._validar_json(profesores_json)
         self.profesores_json = profesores_json
         self.num_slots = ((self.hora_fin - self.hora_inicio) * 60) // self.slot_minutos
         self.horas = self._precalcular_horas()
         self.disponibilidad = self.construir_disponibilidad()
 
+    def _validar_json(self, data: List[Dict[str, Any]]) -> None:
+
+        """Valida estructura básica del JSON."""
+
+        if not isinstance(data, list):
+            raise ValueError("JSON debe ser una lista")
+        for p in data:
+            if "profesor" not in p or "eventos" not in p:
+                raise ValueError("Faltan claves 'profesor' o 'eventos'")
+            if "nombre" not in p["profesor"]:
+                raise ValueError("Falta nombre del profesor")
+
     def _precalcular_horas(self) -> List[str]:
+
         """Precalcula marcas horarias HH:MM para cada slot."""
+
         horas = []
         minutos = self.hora_inicio * 60
         for _ in range(self.num_slots + 1):
@@ -87,50 +102,59 @@ class BuscadorHuecos:
         return horas
 
     def hora_a_min(self, h: str) -> int:
+
         """HH:MM -> minutos desde 00:00."""
+
         hh, mm = map(int, h.split(":"))
         return hh * 60 + mm
 
     def min_a_hora(self, m: int) -> str:
+
         """Minutos desde 00:00 -> HH:MM."""
+
         hh = m // 60
         mm = m % 60
         return f"{hh:02d}:{mm:02d}"
 
     def construir_disponibilidad(self) -> Dict[str, List[List[bool]]]:
+
         """
         Construye matriz de disponibilidad bool[P][S] donde True = libre.
     
         Algoritmo:
         1. Inicializa matriz P×S a True (todos libres)
         2. Para cada evento de cada profesor:
-           - Convierte inicio/fin a índices de slots
-           - Marca slots ocupados como False
+       - Convierte inicio/fin a índices de slots
+       - Marca slots ocupados como False
     
         Returns:
-            Dict[dia -> List[List[bool]]]: Matriz por día donde:
-            - Primera dimensión: índice de profesor
-            - Segunda dimensión: índice de slot (cada 5 min)
-            - True = profesor libre en ese slot
+        Dict[dia -> List[List[bool]]]: Matriz por día donde:
+        - Primera dimensión: índice de profesor
+        - Segunda dimensión: índice de slot (cada 5 min)
+        - True = profesor libre en ese slot
     
         Complejidad: O(D * P * E * S_avg)
-            - D = días (5)
-            - P = profesores
-            - E = eventos promedio por profesor
-            - S_avg = slots promedio ocupados por evento (~12 para clase de 1h)
-            Simplificado: O(P * E) ya que D y S_avg son constantes pequeñas
+        - D = días (5)
+        - P = profesores
+        - E = eventos promedio por profesor
+        - S_avg = slots promedio ocupados por evento (~12 para clase de 1h)
+        Simplificado: O(P * E) ya que D y S_avg son constantes pequeñas
 
         Nota de rendimiento: Se utilizan listas nativas de Python en lugar de
         NumPy porque para matrices de este tamaño (~180×50), las listas son
         más rápidas debido al overhead de NumPy. Verificado con cProfile.
+
         """
+
         disponibilidad = {}
         inicio_dia = self.hora_inicio * 60
         fin_dia = self.hora_fin * 60
         num_prof = len(self.profesores_json)
 
         for dia in self.dias:
+
             # Inicializar todo a True (libre)
+
             disp_dia = [[True] * self.num_slots for _ in range(num_prof)]
             
             for p_idx, profe in enumerate(self.profesores_json):
@@ -148,6 +172,7 @@ class BuscadorHuecos:
                     s_fin = (fin_e - inicio_dia + self.slot_minutos - 1) // self.slot_minutos
                     
                     # Marcar ocupado
+
                     for s in range(s_inicio, min(s_fin, self.num_slots)):
                         disp_dia[p_idx][s] = False
             
@@ -163,6 +188,7 @@ class BuscadorHuecos:
         seleccion_actual: List[int],
         mejor: Dict[str, Any],
     ) -> None:
+
         """
         Backtracking recursivo para encontrar máximo subconjunto de profesores libres.
     
@@ -183,53 +209,51 @@ class BuscadorHuecos:
             mejor: Dict mutable con {'num_profesores': int, 'profesores': List[int]}
         
         Complejidad: O(2^P) en el peor caso (todos libres, sin poda)
-                     O(P) en el mejor caso (poda inmediata)
-                     Típicamente O(P * log P) con poda efectiva
+                    O(P) en el mejor caso (poda inmediata)
+                    Típicamente O(P * log P) con poda efectiva
         """
+
         num_profesores = len(dia_libre_dia)
 
-        # Caso base: todos los profesores ya fueron evaluados
+        # Caso base: todos revisados
+
         if prof_idx == num_profesores:
-            # Actualizar mejor solución si encontramos un conjunto mayor
+            
+            # Actualizamos la solucion si encontramos un conjunto con mayor numeros de profesores (mejor)
+
             if len(seleccion_actual) > mejor["num_profesores"]:
                 mejor["num_profesores"] = len(seleccion_actual)
-                mejor["profesores"] = seleccion_actual.copy()  # Copiar para evitar mutación
+                mejor["profesores"] = seleccion_actual.copy()
             return
 
-        # Poda por cota superior: Si aun incluyendo todos los restantes
-        # no podemos superar la mejor solución actual, cortamos esta rama
+        # Poda: Si lo que queda no puede superar al mejor
+
         restantes = num_profesores - prof_idx
         if len(seleccion_actual) + restantes <= mejor["num_profesores"]:
             return
 
-        # EXPLORACIÓN DEL ÁRBOL: Cada profesor genera 2 ramas (incluir/excluir)
-        
-        # Rama 1: Intentar INCLUIR al profesor actual
+        # Rama 1: Intentar INCLUIR profesor
+
         slots_profesor = dia_libre_dia[prof_idx]
         libre_todo = True
         
-        # Verificar disponibilidad completa en [slot_inicial, slot_final)
-        # El profesor solo se puede incluir si está libre TODO el intervalo
+        # Verificar si libre en todo el intervalo [slot_inicial, slot_final)
+
         for slot in range(slot_inicial, slot_final):
             if not slots_profesor[slot]:
                 libre_todo = False
                 break
 
         if libre_todo:
-            # Añadir profesor a la solución parcial
             seleccion_actual.append(prof_idx)
-            # Recursión: explorar con este profesor incluido
             self._backtracking_intervalo(
                 dia_libre_dia, slot_inicial, slot_final, prof_idx + 1, seleccion_actual, mejor
             )
-            # Backtracking: deshacer decisión para explorar rama EXCLUIR
-            seleccion_actual.pop()
+            seleccion_actual.pop()  # Backtracking, deshacer la solucion para explorar otra rama
 
-        # Rama 2: EXCLUIR profesor (siempre se explora, esté libre o no)
-        # Esto garantiza explorar todas las combinaciones posibles
-        self._backtracking_intervalo(
-            dia_libre_dia, slot_inicial, slot_final, prof_idx + 1, seleccion_actual, mejor
-        )
+        # Rama 2: EXCLUIR profesor
+
+        self._backtracking_intervalo(dia_libre_dia, slot_inicial, slot_final, prof_idx + 1, seleccion_actual, mejor)
 
     def buscar_huecos_por_profesor(
         self,
@@ -239,48 +263,47 @@ class BuscadorHuecos:
         hora_min: Optional[str] = None,
         hora_max: Optional[str] = None,
     ) -> List[Hueco]:
+
         """
         Busca huecos aplicando filtros y backtracking.
     
         Algoritmo:
         1. Aplica filtros para determinar rango de slots válidos
         2. Para cada día y ventana deslizante de 'duracion':
-           a. Poda rápida: cuenta candidatos en slot inicial
-           b. Si ≥3 candidatos, ejecuta backtracking completo
-           c. Guarda huecos con ≥3 profesores disponibles
-        3. Deduplica huecos por (día, hora_inicio, hora_fin)
-        4. Ordena resultados por num_profesores descendente
+       a. Poda rápida: cuenta candidatos en slot inicial
+       b. Si ≥3 candidatos, ejecuta backtracking completo
+       c. Guarda huecos con ≥3 profesores disponibles
+        3. Ordena resultados por num_profesores descendente
     
         Args:
-            duracion: Minutos del hueco (default 60).
-            filtro_dia: Día específico ("Lunes") o None.
-            turno: "mañana" (07:00-14:15) / "tarde" (14:20-22:00) / None.
-            hora_min: Hora mínima inicio ("HH:MM") / None.
-            hora_max: Hora máxima inicio ("HH:MM") / None.
+        duracion: Minutos del hueco (default 60).
+        filtro_dia: Día específico ("Lunes") o None.
+        turno: "mañana" (07:00-14:15) / "tarde" (14:15-22:00) / None.
+        hora_min: Hora mínima inicio ("HH:MM") / None.
+        hora_max: Hora máxima inicio ("HH:MM") / None.
         
         Returns:
-            Lista de Hueco ordenada por num_profesores descendente (sin duplicados).
+        Lista de Hueco ordenada por num_profesores descendente.
     
         Complejidad: O(D * W * (P + 2^P_candidatos))
-            - D = días analizados (1-5 según filtro_dia)
-            - W = ventanas de tiempo posibles (~170 para día completo)
-            - P = profesores totales
-            - P_candidatos = profesores que pasan poda (típicamente << P)
+        - D = días analizados (1-5 según filtro_dia)
+        - W = ventanas de tiempo posibles (~170 para día completo)
+        - P = profesores totales
+        - P_candidatos = profesores que pasan poda (típicamente << P)
         
         Ejemplo práctico (50 profesores, 1 día):
-            - Ventanas: ~170
-            - Poda reduce candidatos a ~10-15 por ventana
-            - Backtracking: O(2^10) = 1024 nodos máximo
-            - Total: ~170 * 1024 = 174k operaciones
-            - Tiempo real: ~0.10s (medido con cProfile)
+        - Ventanas: ~170
+        - Poda reduce candidatos a ~10-15 por ventana
+        - Backtracking: O(2^10) = 1024 nodos máximo
+        - Total: ~170 * 1024 = 174k operaciones
+        - Tiempo real: ~0.10s (medido con cProfile)
         
         Optimizaciones clave:
-            - Poda temprana (if profesores_candidatos < 3: continue)
-            - Backtracking con poda (cota superior)
-            - Matriz precalculada (no recalcular disponibilidad)
-            - Deduplicación por clave (día, hora_inicio, hora_fin)
+        - Poda temprana (if profesores_candidatos < 3: continue)
+        - Backtracking con poda (cota superior)
+        - Matriz precalculada (no recalcular disponibilidad)
         """
-        huecos_dict: Dict[tuple, Hueco] = {}  # Usar dict para deduplicar
+        huecos: List[Hueco] = []
         slots_necesarios = duracion // self.slot_minutos
         inicio_dia = self.hora_inicio * 60
 
@@ -289,15 +312,16 @@ class BuscadorHuecos:
         max_slot = self.num_slots
 
         # Filtro TURNO
+
         if turno == "mañana":
             limite = self.hora_a_min("14:15")
             max_slot = (limite - inicio_dia) // self.slot_minutos
         elif turno == "tarde":
             limite = self.hora_a_min("14:15")
-            # Turno tarde empieza en 14:15
             min_slot = (limite - inicio_dia) // self.slot_minutos
 
         # Filtro RANGO HORARIO (hora_min / hora_max)
+
         if hora_min is not None:
             slot_hmin = (self.hora_a_min(hora_min) - inicio_dia) // self.slot_minutos
             min_slot = max(min_slot, slot_hmin)
@@ -318,10 +342,12 @@ class BuscadorHuecos:
                 continue
 
             # Barrido de ventanas (intervalos fijos)
+
             for slot_inicial in range(min_slot, end_slot):
                 slot_final = slot_inicial + slots_necesarios
 
                 # Poda rápida: contar candidatos en slot inicial
+
                 profesores_candidatos = 0
                 for p_idx in range(num_profesores):
                     if dia_libre[p_idx][slot_inicial]:
@@ -331,38 +357,35 @@ class BuscadorHuecos:
                     continue
 
                 # Backtracking para encontrar máximo conjunto libre en intervalo completo
+
                 mejor = {"num_profesores": 0, "profesores": []}
                 self._backtracking_intervalo(
                     dia_libre, slot_inicial, slot_final, 0, [], mejor
                 )
 
-                if mejor["num_profesores"] >= 1:
+                if mejor["num_profesores"] >= 3:
                     h_inicio = self.horas[slot_inicial]
                     h_fin = self.horas[slot_final]
-                    
-                    # Usar clave única para deduplicar
-                    clave = (dia, h_inicio, h_fin)
-                    
-                    # Solo agregar si no existe o si tiene más profesores
-                    if clave not in huecos_dict or mejor["num_profesores"] > huecos_dict[clave].num_profesores:
-                        nombres = [
-                            self.profesores_json[i]["profesor"]["nombre"]
-                            for i in mejor["profesores"]
-                        ]
-                        huecos_dict[clave] = Hueco(dia, h_inicio, h_fin, nombres)
+                    nombres = [
+                        self.profesores_json[i]["profesor"]["nombre"]
+                        for i in mejor["profesores"]
+                    ]
+                    huecos.append(Hueco(dia, h_inicio, h_fin, nombres))
 
-        # Convertir dict a lista y ordenar
-        huecos = list(huecos_dict.values())
         huecos.sort(key=clave_num_profesores, reverse=True)
         return huecos
 
     def buscar_huecos_n(self, duracion: int = 60, n: int = 5) -> List[Hueco]:
+
         """Retorna los N mejores huecos."""
+
         huecos = self.buscar_huecos_por_profesor(duracion=duracion)
         return huecos[:n]
 
     def buscar_hueco_comun(self, duracion: int = 60) -> Optional[Dict[str, Any]]:
+
         """Retorna el mejor hueco en formato dict o None."""
+
         huecos = self.buscar_huecos_n(duracion=duracion, n=1)
         if not huecos:
             return None
