@@ -294,8 +294,8 @@ class BuscadorHuecos:
             max_slot = (limite - inicio_dia) // self.slot_minutos
         elif turno == "tarde":
             limite = self.hora_a_min("14:15")
-            # Turno tarde empieza en 14:20 (slot + 1) para evitar solapamiento
-            min_slot = (limite - inicio_dia) // self.slot_minutos + 1
+            # Turno tarde empieza en 14:15
+            min_slot = (limite - inicio_dia) // self.slot_minutos
 
         # Filtro RANGO HORARIO (hora_min / hora_max)
         if hora_min is not None:
@@ -336,7 +336,7 @@ class BuscadorHuecos:
                     dia_libre, slot_inicial, slot_final, 0, [], mejor
                 )
 
-                if mejor["num_profesores"] >= 3:
+                if mejor["num_profesores"] >= 1:
                     h_inicio = self.horas[slot_inicial]
                     h_fin = self.horas[slot_final]
                     
