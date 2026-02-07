@@ -10,14 +10,22 @@ from extractor_pdf import procesar_todo_automaticamente
 from buscador_huecos import BuscadorHuecos
 
 st.set_page_config(page_title="Buscador de huecos", layout="wide")
-st.title("Sistema de Búsqueda de Huecos en Horarios")
+
+st.markdown(
+    "<h1 style='color:#0b3c5d;'>Sistema de Búsqueda de Huecos en Horarios</h1>",
+    unsafe_allow_html=True,
+)
 
 if "datos_horarios" not in st.session_state:
     st.session_state["datos_horarios"] = None
+
 if "ultimo_resultado" not in st.session_state:
     st.session_state["ultimo_resultado"] = []
 
-st.header("1. Cargar horarios en PDF")
+st.markdown(
+    "<h3 style='color:#444444;'>1. Cargar horarios en PDF</h3>",
+    unsafe_allow_html=True,
+)
 
 archivos_pdf = st.file_uploader(
     "Selecciona uno o varios PDFs de horarios de profesores",
@@ -55,22 +63,39 @@ if st.button("Cargar horarios desde PDF"):
                 st.session_state["datos_horarios"] = {"profesores": profesores}
                 nombres = [p["profesor"].get("nombre", "SIN_NOMBRE") for p in profesores]
                 st.success(f"Se han cargado {len(profesores)} profesores desde PDF.")
+                st.markdown(
+                    "<span style='color:#1f77b4; font-weight:600;'>Profesores detectados:</span>",
+                    unsafe_allow_html=True,
+                )
                 st.write(nombres)
         except Exception as e:
             st.error(f"Error al procesar los PDFs: {e}")
 
 datos = st.session_state.get("datos_horarios")
 
-st.header("2. Parámetros de búsqueda")
+st.markdown(
+    "<h3 style='color:#444444;'>2. Parámetros de búsqueda</h3>",
+    unsafe_allow_html=True,
+)
 
-duracion = st.slider("Duración de la reunión (minutos):", 30, 120, 60, 15)
+col_filtros, col_resumen = st.columns([2, 1])
 
-dia_opciones = ["Todos", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
-dia_seleccionado = st.selectbox("Día:", dia_opciones)
+with col_filtros:
+    duracion = st.slider("Duración de la reunión (minutos):", 30, 120, 60, 15)
+    dia_opciones = ["Todos", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+    dia_seleccionado = st.selectbox("Día:", dia_opciones)
+    turno = st.radio("Turno:", ["Todos", "Mañana", "Tarde"])
 
-turno = st.radio("Turno:", ["Todos", "Mañana", "Tarde"])
+with col_resumen:
+    st.markdown("**Resumen de filtros**")
+    st.write(f"- Duración: {duracion} minutos")
+    st.write(f"- Día: {dia_seleccionado}")
+    st.write(f"- Turno: {turno}")
 
-st.header("3. Búsqueda de huecos y resultados")
+st.markdown(
+    "<h3 style='color:#444444;'>3. Búsqueda de huecos y resultados</h3>",
+    unsafe_allow_html=True,
+)
 
 col_buscar, col_exportar = st.columns([2, 1])
 
@@ -80,7 +105,7 @@ with col_buscar:
             st.error("Primero debes cargar los horarios desde PDF.")
         else:
             buscador = BuscadorHuecos(datos["profesores"])
-            filtro_dia = None if dia_seleccionado == "Todos" else dia_seleccionado
+
             filtro_dia = None if dia_seleccionado == "Todos" else dia_seleccionado
 
             if turno == "Todos":
@@ -99,6 +124,7 @@ with col_buscar:
             )
 
             st.session_state["ultimo_resultado"] = huecos
+
             if not huecos:
                 st.warning("No se han encontrado huecos comunes con los parámetros seleccionados.")
             else:
@@ -112,7 +138,7 @@ with col_buscar:
                             "Hora Inicio": h.hora_inicio,
                             "Hora Fin": h.hora_fin,
                             "Profesores": ", ".join(h.profesores_disponibles),
-                            "Total": h.num_profesores,
+                            "Prof. disponibles": h.num_profesores,
                         }
                     )
 
@@ -150,7 +176,7 @@ with col_exportar:
                     "Hora Inicio": h.hora_inicio,
                     "Hora Fin": h.hora_fin,
                     "Profesores": ", ".join(h.profesores_disponibles),
-                    "Total": h.num_profesores,
+                    "Prof. disponibles": h.num_profesores,
                 }
             )
         df_excel = pd.DataFrame(filas_excel)
@@ -164,5 +190,5 @@ with col_exportar:
             data=buffer,
             file_name="huecos_comunes.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            use_container_width=True,
         )
-
