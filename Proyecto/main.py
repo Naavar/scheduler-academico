@@ -1,38 +1,61 @@
 import json
+import pdfplumber  # Necesitamos esto para abrir el archivo
 from pathlib import Path
-from extractor_pdf import extract_schedule
+# Importamos la función que SÍ existe
+from extractor_pdf import procesar_pagina
 from validacion import validate_schedule
 
 
 def resolve_pdf_path(filename: str = "HORARIO.pdf") -> Path:
-    repo_root = Path(__file__).resolve().parent.parent
-    return repo_root / "data" / filename
+    return Path(__file__).resolve().parent / "data" / filename
 
 
 def print_validation(errors: list[str]) -> None:
     if errors:
         print("\n=== VALIDACIÓN: ERRORES ===")
         for err in errors:
-            print("-", err)
+            print(f"- {err}")
     else:
         print("\n=== VALIDACIÓN: OK ===")
+
+
+def extract_single_pdf(file_path: Path):
+    with pdfplumber.open(file_path) as pdf:
+        if not pdf.pages:
+            raise ValueError("El PDF está vacío.")
+
+        # Asumimos que el horario está en la primera página
+        # Si hay más, podrías iterar sobre pdf.pages
+        print(f"Procesando: {file_path.name}")
+        return procesar_pagina(pdf.pages[0])
 
 
 def main() -> int:
     pdf_file_path = resolve_pdf_path()
 
     if not pdf_file_path.exists():
-        raise FileNotFoundError(
-            f"No se encontró el PDF en: {pdf_file_path}\n"
-            "Comprueba que existe 'data/HORARIO.pdf' en la raíz del proyecto."
-        )
+        # Intentamos buscar en la carpeta superior si falló la primera
+        # Esto es útil si ejecutas desde 'tests/' o 'Proyecto/'
+        pdf_file_path = Path(__file__).resolve().parent.parent / "data" / "HORARIO.pdf"
 
-    schedule = extract_schedule(str(pdf_file_path))
+        if not pdf_file_path.exists():
+            print(f"Error: No se encontró el PDF en: {pdf_file_path}")
+            return 1
 
-    print(json.dumps(schedule, ensure_ascii=False, indent=2))
+    try:
+        # 1. Extracción
+        schedule = extract_single_pdf(pdf_file_path)
 
-    errors = validate_schedule(schedule)
-    print_validation(errors)
+        # 2. Imprimir resultado JSON
+        print(json.dumps(schedule, ensure_ascii=False, indent=2))
+
+        # 3. Validación
+        errors = validate_schedule(schedule)
+        print_validation(errors)
+
+    except Exception as e:
+        print(f"Ocurrió un error inesperado: {e}")
+        return 1
 
     return 0
 
