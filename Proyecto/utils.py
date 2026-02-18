@@ -45,9 +45,13 @@ def sumar_55_minutos(hora_str):
     """Suma 55 minutos a una hora en formato HH:MM"""
     try:
         if not hora_str: return hora_str
-        match = re.search(r'(\d{1,2}:\d{2})', str(hora_str))
-        if not match: return hora_str
-        t = datetime.strptime(match.group(1), "%H:%M")
+        # Extraer todas las horas del string
+        horas_encontradas = re.findall(r'(\d{1,2}):(\d{2})', str(hora_str))
+        if not horas_encontradas: return hora_str
+        
+        # Usar la primera hora encontrada
+        h, m = horas_encontradas[0]
+        t = datetime.strptime(f"{h}:{m}", "%H:%M")
         return (t + timedelta(minutes=55)).strftime("%H:%M")
     except:
         return hora_str

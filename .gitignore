@@ -31,3 +31,7 @@ Proyecto/debug_respuesta.txt
 Proyecto/test_modelos.py
 README(antiguo).md
 requirements-gemini.txt
+
+# --test--
+.coverage
+htmlcov/
