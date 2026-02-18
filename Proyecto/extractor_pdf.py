@@ -104,12 +104,24 @@ def extraer_info_profesor(page):
         cabecera = page.crop((0, 0, page.width, 130))
         texto_cabecera = cabecera.extract_text()
         if not texto_cabecera: return "Desconocido", "N/A"
-        texto_unido = limpiar_texto(texto_cabecera)  # Usa función de utils
+        texto_unido = limpiar_texto(texto_cabecera)
+        
+        # Detectar formato anonimizado: "Profesor 001", "Profesor 123", etc.
+        match_anon = re.search(r"Profesor\s+(\d{3,})", texto_unido, re.IGNORECASE)
+        if match_anon:
+            numero = match_anon.group(1)
+            return f"Profesor {numero}", f"PROF{numero}"
+        
+        # Formato original: APELLIDOS, NOMBRE (CODIGO)
         match = re.search(r"([A-ZÁÉÍÓÚÑ, ]+)\s*\(([^)]+)\)", texto_unido)
         if match:
             nombre = match.group(1).strip().lstrip(",")
             return nombre, match.group(2).strip()
-        return texto_unido[:50], "N/A"
+        
+        # Fallback: generar código sintético desde el nombre
+        nombre_limpio = texto_unido[:50].strip()
+        codigo_sintetico = re.sub(r'[^A-Z0-9]', '', nombre_limpio.upper())[:10]
+        return nombre_limpio, codigo_sintetico if codigo_sintetico else "N/A"
     except Exception:
         return "Error Lectura", "ERR"
 
@@ -211,8 +223,12 @@ def procesar_pagina(page):
                     h_inicio_todas = re.findall(r'\d{1,2}:\d{2}', str(evento.get("hora_inicio", "")))
                     h_fin_todas = re.findall(r'\d{1,2}:\d{2}', str(evento.get("hora_fin", "")))
 
-                    h_inicio_limpia = h_inicio_todas[0] if h_inicio_todas else evento.get("hora_inicio", "")
-                    h_fin_limpia = h_fin_todas[-1] if h_fin_todas else evento.get("hora_fin", "")
+                    h_inicio_limpia = h_inicio_todas[0] if h_inicio_todas else ""
+                    h_fin_limpia = h_fin_todas[-1] if h_fin_todas else ""
+                    
+                    # Saltar eventos sin horas válidas
+                    if not h_inicio_limpia or not h_fin_limpia:
+                        continue
 
                     eventos_lista.append({
                         "dia": dia,
