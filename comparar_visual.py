@@ -3,7 +3,6 @@
 """Comparador Visual: PDF vs JSON lado a lado"""
 
 import json
-import pdfplumber
 import sys
 import io
 from pathlib import Path
