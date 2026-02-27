@@ -3,6 +3,9 @@ from Proyecto.utils import (
     es_color_valido,
     colores_son_iguales,
     textos_son_similares,
+    extraer_nombre_asignatura,
+    extraer_codigos_grupo,
+    clasificar_grupos,
     limpiar_texto,
     sumar_55_minutos,
     es_hora_recreo
@@ -18,9 +21,16 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(es_color_valido((0.5, 0.1, 0.1)), "Rojo oscuro debería ser válido")
 
     def test_es_color_valido_blancos(self):
-        # Colores muy claros (fondo) deben ser False (r,g,b > 0.9)
+        # Blanco puro y near-white (algún canal >= 0.99, todos > 0.94) → inválido
         self.assertFalse(es_color_valido((1, 1, 1)), "Blanco puro no debería ser válido")
-        self.assertFalse(es_color_valido((0.95, 0.95, 0.95)), "Gris muy claro no debería ser válido")
+        self.assertFalse(es_color_valido((1.0, 1.0, 0.961)), "Blanco PDF (255,255,245) no debería ser válido")
+        self.assertFalse(es_color_valido((0.97, 0.97, 1.0)), "Near-white no debería ser válido")
+
+    def test_es_color_valido_gris_claro(self):
+        # Gris claro (245,245,245 → 0.961) debe ser válido: ningún canal llega a 0.99
+        self.assertTrue(es_color_valido((0.961, 0.961, 0.961)), "Gris claro PDF (245,245,245) debería ser válido")
+        self.assertTrue(es_color_valido((0.92, 0.92, 0.92)), "Gris medio debería ser válido")
+        self.assertTrue(es_color_valido((0.95, 0.95, 0.95)), "Gris 95% debería ser válido")
 
     def test_es_color_valido_errores(self):
         # Manejo de None o formatos incorrectos
@@ -120,6 +130,121 @@ class TestUtils(unittest.TestCase):
 
     def test_no_es_recreo(self):
         self.assertFalse(es_hora_recreo("08:00 - 09:00", "Matemáticas"))
+
+    def test_extraer_nombre_asignatura_con_codigos(self):
+        """Elimina códigos de grupo y aula, dejando solo el nombre base."""
+        texto = "Aplicaciones ofimáticas 1SSP~1SSPM, 1SSP~1SSPN, 1SSP~1S A23"
+        resultado = extraer_nombre_asignatura(texto)
+        self.assertEqual(resultado, "Aplicaciones ofimáticas")
+
+    def test_extraer_nombre_asignatura_con_semi(self):
+        texto = "Aplicaciones ofimáticas 1SSP~1SSPM, 1SSP~1SSPN, 1SSP~1S SEMI2"
+        resultado = extraer_nombre_asignatura(texto)
+        self.assertEqual(resultado, "Aplicaciones ofimáticas")
+
+    def test_extraer_nombre_asignatura_vacio(self):
+        self.assertEqual(extraer_nombre_asignatura(""), "")
+        self.assertEqual(extraer_nombre_asignatura(None), "")
+
+    def test_extraer_nombre_asignatura_codigo_grupo_incompleto(self):
+        """Códigos de grupo incompletos (1CAM~) deben ser eliminados."""
+        texto = "1CAM~1CAMM, 1CAM~1CAMN, 1CAM~ B21"
+        resultado = extraer_nombre_asignatura(texto)
+        self.assertEqual(resultado, "")
+
+    def test_extraer_nombre_asignatura_con_fct(self):
+        """Códigos de sala tipo FCT-1 deben ser eliminados."""
+        texto = "Formación en centros de trabajo 2CAM~2CAMF, 2CAM~2CMFA FCT-1"
+        resultado = extraer_nombre_asignatura(texto)
+        self.assertEqual(resultado, "Formación en centros de trabajo")
+
+    def test_extraer_nombre_asignatura_solo_fct(self):
+        """Texto con solo códigos de grupo y FCT-1 debe quedar vacío."""
+        texto = "2CAM~2CAMF, 2CAM~2CMFA FCT-1"
+        resultado = extraer_nombre_asignatura(texto)
+        self.assertEqual(resultado, "")
+
+    def test_extraer_nombre_asignatura_codigo_con_guion(self):
+        """Códigos de grupo con guiones (CIB-R~CIB-R) deben ser eliminados."""
+        texto = "CIB-R~CIB-R B01"
+        resultado = extraer_nombre_asignatura(texto)
+        self.assertEqual(resultado, "")
+
+    def test_extraer_nombre_asignatura_con_guion_y_nombre(self):
+        """Nombre base se preserva con códigos con guiones."""
+        texto = "Hacking ético CIB-R~CIB-R B01"
+        resultado = extraer_nombre_asignatura(texto)
+        self.assertEqual(resultado, "Hacking ético")
+
+    # --- 8. Tests para textos_son_similares con nombres base diferentes ---
+    def test_textos_diferentes_asignaturas_mismos_grupos(self):
+        """Asignaturas con distinto nombre base pero mismos códigos de grupo
+        NO deben considerarse similares (bug PROF031)."""
+        t1 = "Aplicaciones ofimáticas 1SSP~1SSPM, 1SSP~1SSPN, 1SSP~1S A23"
+        t2 = "Sistemas operativos monopuesto 1SSP~1SSPM, 1SSP~1SSPN, 1SSP~1S B23"
+        self.assertFalse(textos_son_similares(t1, t2),
+                         "Asignaturas con nombre base diferente no deben ser similares")
+
+    def test_textos_misma_asignatura_diferente_aula(self):
+        """La misma asignatura en aulas distintas SÍ debe ser similar."""
+        t1 = "Aplicaciones ofimáticas 1SSP~1SSPM, 1SSP~1SSPN, 1SSP~1S A23"
+        t2 = "Aplicaciones ofimáticas 1SSP~1SSPM, 1SSP~1SSPN, 1SSP~1S B23"
+        self.assertTrue(textos_son_similares(t1, t2),
+                        "Misma asignatura en diferente aula debe ser similar")
+
+    # --- 9. Tests para extraer_codigos_grupo ---
+    def test_extraer_codigos_grupo_fp(self):
+        texto = "Aplicaciones ofimáticas 1SSP~1SSPM, 1SSP~1SSPN, 1SSP~1S A23"
+        resultado = extraer_codigos_grupo(texto)
+        self.assertEqual(resultado, {"1SSP"})
+
+    def test_extraer_codigos_grupo_especializacion(self):
+        texto = "Hacking ético CIB-R~CIB-R B01"
+        resultado = extraer_codigos_grupo(texto)
+        self.assertEqual(resultado, {"CIB-R"})
+
+    def test_extraer_codigos_grupo_multiples(self):
+        texto = "Formación en centros de trabajo 2DAWR~2DWRF, 2DAW~2DAWX FCT-5"
+        resultado = extraer_codigos_grupo(texto)
+        self.assertEqual(resultado, {"2DAWR", "2DAW"})
+
+    def test_extraer_codigos_grupo_vacio(self):
+        self.assertEqual(extraer_codigos_grupo(""), set())
+        self.assertEqual(extraer_codigos_grupo("GUARDIA G. TARDE"), set())
+
+    def test_clasificar_grupos_fp(self):
+        resultado = clasificar_grupos({"1DAM", "2ASI", "1SMR"})
+        self.assertIn("FP", resultado)
+        self.assertEqual(sorted(resultado["FP"]), ["1DAM", "1SMR", "2ASI"])
+
+    def test_clasificar_grupos_eso(self):
+        resultado = clasificar_grupos({"E1A", "E2B", "DIV3"})
+        self.assertIn("ESO", resultado)
+        self.assertEqual(sorted(resultado["ESO"]), ["DIV3", "E1A", "E2B"])
+
+    def test_clasificar_grupos_bachillerato(self):
+        resultado = clasificar_grupos({"B1BSO", "B2AC"})
+        self.assertIn("BACHILLERATO", resultado)
+        self.assertEqual(sorted(resultado["BACHILLERATO"]), ["B1BSO", "B2AC"])
+
+    def test_clasificar_grupos_especializacion(self):
+        resultado = clasificar_grupos({"CIB-R", "BIG-D", "PYT"})
+        self.assertIn("ESPECIALIZACION", resultado)
+        self.assertEqual(sorted(resultado["ESPECIALIZACION"]), ["BIG-D", "CIB-R", "PYT"])
+
+    def test_clasificar_grupos_mixto(self):
+        resultado = clasificar_grupos({"1DAM", "E1A", "CIB-R", "B1BSO"})
+        self.assertIn("FP", resultado)
+        self.assertIn("ESO", resultado)
+        self.assertIn("ESPECIALIZACION", resultado)
+        self.assertIn("BACHILLERATO", resultado)
+
+    def test_clasificar_grupos_ignora_administrativos(self):
+        """Códigos 1104 (CTVP, CPPL...) deben ser ignorados."""
+        resultado = clasificar_grupos({"1104", "1DAM"})
+        self.assertIn("FP", resultado)
+        self.assertEqual(resultado["FP"], ["1DAM"])
+        self.assertNotIn("1104", str(resultado))
 
 
 if __name__ == '__main__':

@@ -3,7 +3,6 @@
 """Comparador Visual: PDF vs JSON lado a lado"""
 
 import json
-import pdfplumber
 import sys
 import io
 from pathlib import Path
@@ -31,7 +30,7 @@ def generar_html_comparacion(pdf_path, json_path, output_path, paginas_a_revisar
     
     # Generar HTML
     html = """
-<!DOCTYPE html>
+<!DOCTYPE html>     
 <html>
 <head>
     <meta charset="UTF-8">
