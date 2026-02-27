@@ -31,7 +31,7 @@ def generar_html_comparacion(pdf_path, json_path, output_path, paginas_a_revisar
     
     # Generar HTML
     html = """
-<!DOCTYPE html>
+<!DOCTYPE html>     
 <html>
 <head>
     <meta charset="UTF-8">

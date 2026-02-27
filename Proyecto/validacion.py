@@ -31,7 +31,7 @@ def validate_schedule(schedule: Dict[str, Any]) -> List[str]:
 
     nombre = prof.get("nombre", "")
     codigo = prof.get("codigo", "")
-    
+
     # Aceptar nombres anonimizados (Profesor XXX) y códigos sintéticos (PROFXXX)
     if not nombre or nombre == "Desconocido":
         errors.append("Falta nombre del profesor válido")
