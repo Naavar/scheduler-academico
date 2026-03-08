@@ -6,7 +6,9 @@ import streamlit as st
 import pandas as pd
 
 from extractor_pdf import procesar_todo_automaticamente
-from config import Config
+from config import Config, todos_dias
+
+TODOS_DIAS = todos_dias
 from buscador_evaluacion import buscar_sesion_evaluacion
 
 st.set_page_config(page_title="Sesión de Evaluación", layout="wide")
@@ -25,7 +27,34 @@ def build_config_from_params(
         dias_disponibles_por_nivel={nivel: dias},
     )
 
-TODOS_DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+def resolver_recreos(profesores: list, hora_recreo_sesion: int, permitir_recreo: bool) -> set:
+    """
+    Extrae las horas de inicio reales de la sesión número `hora_recreo_sesion`
+    a partir de los eventos cargados de los PDFs, y las devuelve como set de strings.
+    Si permitir_recreo=True devuelve set vacío (no se excluye nada).
+    """
+    if permitir_recreo:
+        return set()
+
+    # Recopilar todos los puntos de inicio ordenados (sin duplicados)
+    puntos: set = set()
+    for prof in profesores:
+        for evento in prof.get("eventos", []):
+            ini = evento.get("inicio", "").strip()
+            if ini:
+                puntos.add(ini)
+
+    puntos_ordenados = sorted(puntos, key=lambda h: int(h.split(":")[0]) * 60 + int(h.split(":")[1]))
+
+    # La sesión N corresponde al (N-1)-ésimo punto de inicio
+    idx = hora_recreo_sesion - 1
+    if 0 <= idx < len(puntos_ordenados):
+        return {puntos_ordenados[idx]}
+
+    return set()
+
+
+
 
 with st.sidebar:
     st.header("⚙️ Configuración")
@@ -53,6 +82,14 @@ with st.sidebar:
             "Sesión del recreo",
             options=list(range(1, sesiones_por_dia + 1)),
             index=3,
+        )
+        duracion_minutos = st.slider(
+            "Duración de la reunión (minutos)",
+            min_value=30,
+            max_value=120,
+            value=55,
+            step=5,
+            help="El buscador encontrará un bloque contiguo libre de al menos esta duración.",
         )
 
     with st.expander("🚦 Restricciones", expanded=True):
@@ -158,18 +195,23 @@ if profesores:
 
     st.header("3. Buscar sesión de evaluación")
 
-    RECREOS = {"11:00", "14:15", "18:05"}
-
     if st.button("Buscar sesión óptima"):
         if not seleccionados:
             st.error("Selecciona al menos un profesor.")
         else:
             equipo_codigos = {codigos_por_nombre[nombre] for nombre in seleccionados}
 
+            # Recreo: calculado dinámicamente desde los horarios cargados
+            recreos = resolver_recreos(profesores, config.hora_recreo, config.permitir_recreo)
+
+            # Días con 7ª hora: si no se permite, excluir la última sesión
+            # filtrando los candidatos por sesiones_por_dia (se gestiona en buscador vía config)
             resultado = buscar_sesion_evaluacion(
                 profesores=profesores,
                 equipo_codigos=equipo_codigos,
-                recreos=RECREOS,
+                recreos=recreos,
+                dias_disponibles=dias if dias else None,
+                duracion_minutos=duracion_minutos,
             )
 
             st.session_state["resultado"] = resultado
@@ -184,7 +226,18 @@ if profesores:
         st.header("4. Resultado")
 
         if resultado.sin_solucion:
-            st.error(f"Sin solución: {resultado.explicacion}")
+            st.error(f"❌ Sin solución: {resultado.explicacion}")
+
+            if resultado.diagnostico_bloqueadores:
+                st.subheader("🔒 Profesores que bloquean más slots")
+                st.caption("Indica cuántos franjas horarias bloquea cada profesor. Los primeros son los que más dificultan encontrar un hueco común.")
+
+                filas_diag = [
+                    {"Profesor": nombre, "Slots bloqueados": num_slots}
+                    for nombre, num_slots in resultado.diagnostico_bloqueadores
+                ]
+                df_diag = pd.DataFrame(filas_diag)
+                st.dataframe(df_diag, use_container_width=True, hide_index=True)
         else:
             st.success(
                 f"✅ Slot óptimo: **{resultado.dia}** de **{resultado.hora_inicio}** a **{resultado.hora_fin}**"

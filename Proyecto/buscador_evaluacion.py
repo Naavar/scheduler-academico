@@ -126,19 +126,41 @@ def penalizacion(
 def generar_candidatos(
     equipo_codigos: Set[str],
     indices: Indices,
-) -> List[Tuple[int, int]]:
-    slots_calendario = [
-        (dia_idx, f_idx)
-        for dia_idx in range(len(DIAS_VALIDOS))
-        for f_idx in range(len(indices.franjas))
-    ]
-    return [
-        slot for slot in slots_calendario
-        if all(
-            slot not in indices.ocupado.get(cod, set())
-            for cod in equipo_codigos
-        )
-    ]
+    dias_disponibles: Optional[List[str]] = None,
+    duracion_minutos: int = 0,
+) -> List[Tuple[int, int, int]]:
+    """
+    Devuelve candidatos como (dia_idx, f_idx_inicio, f_idx_fin) donde el bloque
+    [f_idx_inicio, f_idx_fin) es contiguo, libre para todos, y cubre al menos
+    `duracion_minutos`. Si duracion_minutos=0 se trata cada franja unitaria.
+    """
+    dias_idx = (
+        [DIA_A_IDX[d] for d in dias_disponibles if d in DIA_A_IDX]
+        if dias_disponibles
+        else list(range(len(DIAS_VALIDOS)))
+    )
+
+    candidatos = []
+    n_franjas = len(indices.franjas)
+
+    for dia_idx in dias_idx:
+        for f_start in range(n_franjas):
+            minutos_acumulados = 0
+            for f_end in range(f_start, n_franjas):
+                # Comprobar que esta franja está libre para todos
+                if any((dia_idx, f_end) in indices.ocupado.get(cod, set()) for cod in equipo_codigos):
+                    break  # bloque interrumpido — no seguir extendiendo
+
+                ini_min = hora_a_minutos(indices.franjas[f_end][0])
+                fin_min = hora_a_minutos(indices.franjas[f_end][1])
+                minutos_acumulados += fin_min - ini_min
+
+                if duracion_minutos == 0 or minutos_acumulados >= duracion_minutos:
+                    candidatos.append((dia_idx, f_start, f_end))
+                    if duracion_minutos == 0:
+                        break  # modo unitario: no extender más
+
+    return candidatos
 
 
 @dataclass
@@ -160,6 +182,43 @@ class Resultado:
     peor_penalizacion: Optional[int] = None
     detalle: List[DetalleProfesor] = field(default_factory=list)
     explicacion: str = ""
+    # Lista de (nombre_profesor, slots_bloqueados) ordenada de mayor a menor
+    diagnostico_bloqueadores: List[Tuple[str, int]] = field(default_factory=list)
+
+
+def calcular_peso_rapido(
+    codigo: str,
+    dia_idx: int,
+    franja_idx: int,
+    indices: Indices,
+    penalizacion_max: int = 7,
+) -> int:
+    """Estimación rápida del peso de un candidato para un único profesor."""
+    pen, _ = penalizacion(codigo, dia_idx, franja_idx, indices, penalizacion_max)
+    return pen
+
+
+def diagnostico_sin_solucion(
+    equipo_codigos: Set[str],
+    indices: Indices,
+) -> List[Tuple[str, int]]:
+    """
+    Para cada slot del calendario, cuenta cuántos profesores del equipo lo bloquean.
+    Devuelve ranking [(codigo, num_slots_bloqueados)] de mayor a menor.
+    """
+    slots_calendario = [
+        (dia_idx, f_idx)
+        for dia_idx in range(len(DIAS_VALIDOS))
+        for f_idx in range(len(indices.franjas))
+    ]
+    diagnostico: Dict[str, int] = {}
+    for slot in slots_calendario:
+        bloqueadores = [cod for cod in equipo_codigos if slot in indices.ocupado.get(cod, set())]
+        for cod in bloqueadores:
+            diagnostico[cod] = diagnostico.get(cod, 0) + 1
+
+    ranking = sorted(diagnostico.items(), key=lambda x: -x[1])
+    return ranking
 
 
 def find_best_slot(
@@ -167,28 +226,34 @@ def find_best_slot(
     equipo_codigos: Set[str],
     indices: Indices,
     penalizacion_max: int = 7,
+    dias_disponibles: Optional[List[str]] = None,
+    duracion_minutos: int = 0,
 ) -> Resultado:
     nombre_por_codigo = {
-        p["profesor"]["codigo"]: p["profesor"]["nombre"]
+        p["profesor"]["codigo"]: p["profesor"].get("nombre", p["profesor"]["codigo"])
         for p in profesores
     }
     equipo_lista = sorted(equipo_codigos)
-    candidatos = generar_candidatos(equipo_codigos, indices)
+    candidatos = generar_candidatos(equipo_codigos, indices, dias_disponibles, duracion_minutos)
 
     if not candidatos:
+        ranking = diagnostico_sin_solucion(equipo_codigos, indices)
+        bloqueadores_detalle = [
+            (nombre_por_codigo.get(cod, cod), num_slots)
+            for cod, num_slots in ranking
+        ]
         return Resultado(
             sin_solucion=True,
             explicacion="No existe ningún slot libre común para todos los profesores.",
+            diagnostico_bloqueadores=bloqueadores_detalle,
         )
 
-    def score(slot):
-        dia_idx, f_idx = slot
-        total, peor = 0, 0
-        for cod in equipo_lista:
-            pen, _ = penalizacion(cod, dia_idx, f_idx, indices, penalizacion_max)
-            total += pen
-            peor = max(peor, pen)
-        return (total, peor, dia_idx * 100 + f_idx)
+    # --- Heurística: ordenar candidatos por coste estimado (franja de inicio) ---
+    def score(candidato):
+        dia_idx, f_start, f_end = candidato
+        total = sum(calcular_peso_rapido(cod, dia_idx, f_start, indices, penalizacion_max) for cod in equipo_lista)
+        peor  = max(calcular_peso_rapido(cod, dia_idx, f_start, indices, penalizacion_max) for cod in equipo_lista)
+        return (total, peor, dia_idx * 100 + f_start)
 
     candidatos_ordenados = sorted(candidatos, key=score)
 
@@ -197,20 +262,18 @@ def find_best_slot(
     mejor_slot = None
     mejor_detalle = []
 
-    for slot in candidatos_ordenados:
-        dia_idx, f_idx = slot
+    for candidato in candidatos_ordenados:
+        dia_idx, f_start, f_end = candidato
         suma_parcial, max_parcial = 0, 0
         detalle_actual = []
         podado = False
 
         for cod in equipo_lista:
-            pen, cercana_idx = penalizacion(cod, dia_idx, f_idx, indices, penalizacion_max)
+            pen, cercana_idx = penalizacion(cod, dia_idx, f_start, indices, penalizacion_max)
             suma_parcial += pen
             max_parcial = max(max_parcial, pen)
 
-            sesion_cercana = None
-            if cercana_idx is not None:
-                sesion_cercana = indices.franjas[cercana_idx]
+            sesion_cercana = indices.franjas[cercana_idx] if cercana_idx is not None else None
 
             detalle_actual.append(DetalleProfesor(
                 codigo=cod,
@@ -221,23 +284,21 @@ def find_best_slot(
             ))
 
             mejor_coste, mejor_peor, _ = mejor_score
-            if suma_parcial > mejor_coste:
-                podado = True
-                break
-            if suma_parcial == mejor_coste and max_parcial >= mejor_peor:
+            if suma_parcial > mejor_coste or (suma_parcial == mejor_coste and max_parcial >= mejor_peor):
                 podado = True
                 break
 
         if not podado:
-            score_actual = (suma_parcial, max_parcial, dia_idx * 100 + f_idx)
+            score_actual = (suma_parcial, max_parcial, dia_idx * 100 + f_start)
             if score_actual < mejor_score:
                 mejor_score = score_actual
-                mejor_slot = slot
+                mejor_slot = candidato
                 mejor_detalle = detalle_actual
 
     coste_final, peor_final, _ = mejor_score
-    dia_idx_final, f_idx_final = mejor_slot
-    ini, fin = indices.franjas[f_idx_final]
+    dia_idx_final, f_start_final, f_end_final = mejor_slot
+    ini = indices.franjas[f_start_final][0]
+    fin = indices.franjas[f_end_final][1]
 
     return Resultado(
         sin_solucion=False,
@@ -255,6 +316,8 @@ def buscar_sesion_evaluacion(
     equipo_codigos: Set[str],
     recreos: Set[str],
     penalizacion_max: int = 7,
+    dias_disponibles: Optional[List[str]] = None,
+    duracion_minutos: int = 0,
 ) -> Resultado:
     indices = build_indices(profesores, recreos)
-    return find_best_slot(profesores, equipo_codigos, indices, penalizacion_max)
+    return find_best_slot(profesores, equipo_codigos, indices, penalizacion_max, dias_disponibles, duracion_minutos)
