@@ -6,16 +6,42 @@ import streamlit as st
 import pandas as pd
 
 from extractor_pdf import procesar_todo_automaticamente
-from buscador_huecos import BuscadorHuecos
 from config import Config
 from buscador_evaluacion import buscar_sesion_evaluacion
 
 st.set_page_config(page_title="Sesión de Evaluación", layout="wide")
 st.title("Buscador de Sesión de Evaluación")
 
-# --- SIDEBAR ---
+def build_config_from_params(
+    nivel, dias, hora_recreo, sesiones_por_dia,
+    permitir_septima_hora, permitir_recreo, permitir_horas_no_obligatorias
+) -> Config:
+    return Config(
+        hora_recreo=hora_recreo,
+        sesiones_por_dia=sesiones_por_dia,
+        permitir_septima_hora=permitir_septima_hora,
+        permitir_recreo=permitir_recreo,
+        permitir_horas_no_obligatorias=permitir_horas_no_obligatorias,
+        dias_disponibles_por_nivel={nivel: dias},
+    )
+
+TODOS_DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+
 with st.sidebar:
     st.header("⚙️ Configuración")
+
+    with st.expander("🏫 Nivel y días", expanded=True):
+        nivel = st.selectbox(
+            "Nivel del grupo",
+            options=["ESO", "BACH", "FP", "1FP", "2FP"],
+        )
+        # TODO Sprint 1: sustituir TODOS_DIAS por config.get_dias_nivel(nivel)
+        # cuando Lucas tenga inferir_nivel() funcionando
+        dias = st.multiselect(
+            "Días disponibles para evaluación",
+            options=TODOS_DIAS,
+            default=TODOS_DIAS,
+        )
 
     with st.expander("🕐 Jornada lectiva", expanded=True):
         sesiones_por_dia = st.selectbox(
@@ -29,8 +55,12 @@ with st.sidebar:
             index=3,
         )
 
-    with st.expander("⛔ Restricciones", expanded=True):
-        permitir_septima_hora = st.checkbox("¿Permitir 7ª hora?", value=False)
+    with st.expander("🚦 Restricciones", expanded=True):
+        permitir_septima_hora = st.checkbox(
+            "¿Permitir 7ª hora?",
+            value=False,
+            help="ℹ️ Actívalo solo si el centro admite reuniones en la última sesión.",
+        )
         permitir_recreo = st.checkbox("¿Permitir recreo?", value=False)
         if permitir_recreo:
             st.warning("⚠️ El recreo es tiempo de descanso del profesorado.")
@@ -38,7 +68,9 @@ with st.sidebar:
             "¿Incluir horas fuera de permanencia?", value=False
         )
 
-    config = Config(
+    config = build_config_from_params(
+        nivel=nivel,
+        dias=dias,
         hora_recreo=hora_recreo,
         sesiones_por_dia=sesiones_por_dia,
         permitir_septima_hora=permitir_septima_hora,
