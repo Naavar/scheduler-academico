@@ -1,38 +1,84 @@
 import json
+import pdfplumber  # Necesitamos esto para abrir el archivo
 from pathlib import Path
-from extractor_pdf import extract_schedule
+# Importamos la función que SÍ existe
+from extractor_pdf import procesar_pagina
 from validacion import validate_schedule
 
 
-def resolve_pdf_path(filename: str = "HORARIO.pdf") -> Path:
-    repo_root = Path(__file__).resolve().parent.parent
-    return repo_root / "data" / filename
+def resolve_pdf_path(filename: str = "HORARIOS_25_26 - Docentes_anon.pdf") -> Path:
+    return Path(__file__).resolve().parent / "data" / filename
 
 
 def print_validation(errors: list[str]) -> None:
     if errors:
         print("\n=== VALIDACIÓN: ERRORES ===")
         for err in errors:
-            print("-", err)
+            print(f"- {err}")
     else:
         print("\n=== VALIDACIÓN: OK ===")
+
+
+def extract_all_pages_from_pdf(file_path: Path):
+    """Extrae todos los horarios de un PDF multipágina"""
+    horarios = []
+    with pdfplumber.open(file_path) as pdf:
+        if not pdf.pages:
+            raise ValueError("El PDF está vacío.")
+
+        print(f"📄 Procesando {len(pdf.pages)} páginas de: {file_path.name}")
+        for i, page in enumerate(pdf.pages, 1):
+            try:
+                horario = procesar_pagina(page)
+                errores = validate_schedule(horario)
+                
+                if errores:
+                    print(f"  ⚠️ Pág {i}: DESCARTADA - {len(errores)} errores")
+                else:
+                    horarios.append(horario)
+                    print(f"  ✓ Pág {i}: {horario['profesor']['nombre']} ({horario['profesor']['codigo']})")
+            except Exception as e:
+                print(f"  ❌ Pág {i}: Error - {str(e)}")
+    
+    return horarios
 
 
 def main() -> int:
     pdf_file_path = resolve_pdf_path()
 
     if not pdf_file_path.exists():
-        raise FileNotFoundError(
-            f"No se encontró el PDF en: {pdf_file_path}\n"
-            "Comprueba que existe 'data/HORARIO.pdf' en la raíz del proyecto."
-        )
+        pdf_file_path = Path(__file__).resolve().parent.parent / "data" / "HORARIOS_25_26 - Docentes_anon.pdf"
 
-    schedule = extract_schedule(str(pdf_file_path))
+        if not pdf_file_path.exists():
+            print(f"❌ Error: No se encontró el PDF en: {pdf_file_path}")
+            return 1
 
-    print(json.dumps(schedule, ensure_ascii=False, indent=2))
+    try:
+        # Extraer todos los horarios del PDF
+        horarios = extract_all_pages_from_pdf(pdf_file_path)
+        
+        if not horarios:
+            print("\n⚠️ No se extrajo ningún horario válido.")
+            return 1
+        
+        # Guardar resultado consolidado
+        output_path = pdf_file_path.parent / "horarios_consolidados.json"
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(horarios, f, ensure_ascii=False, indent=2)
+        
+        print(f"\n✅ Éxito: {len(horarios)} horarios extraídos")
+        print(f"💾 Guardado en: {output_path}")
+        
+        # Mostrar resumen
+        print("\n📊 Resumen:")
+        for h in horarios[:5]:  # Mostrar solo los primeros 5
+            print(f"  - {h['profesor']['nombre']} ({h['profesor']['codigo']}): {len(h['eventos'])} eventos")
+        if len(horarios) > 5:
+            print(f"  ... y {len(horarios) - 5} más")
 
-    errors = validate_schedule(schedule)
-    print_validation(errors)
+    except Exception as e:
+        print(f"❌ Error inesperado: {e}")
+        return 1
 
     return 0
 

@@ -11,8 +11,12 @@ try:
     # Importamos las herramientas desde el nuevo archivo utils.py
     from utils import (
         es_color_valido,
+        es_color_gris_claro,
         colores_son_iguales,
         textos_son_similares,
+        extraer_nombre_asignatura,
+        extraer_codigos_grupo,
+        clasificar_grupos,
         limpiar_texto,
         sumar_55_minutos,
         es_hora_recreo
@@ -40,8 +44,17 @@ def extraer_color_fondo(crop):
         else:
             crop_seguro = crop.crop((2, 2, crop.width - 2, crop.height - 2), relative=True)
 
+        area_celda = crop_seguro.width * crop_seguro.height
+        # Umbral mínimo: rects deben cubrir al menos 30% del área de la celda
+        # para ser considerados como fondo real (no bordes/decoraciones)
+        area_minima = area_celda * 0.3 if area_celda > 0 else 100
+
         rects = sorted(crop_seguro.rects, key=lambda r: r['width'] * r['height'], reverse=True)
         for rect in rects:
+            # Filtrar rects diminutos (bordes, decoraciones)
+            rect_area = rect['width'] * rect['height']
+            if rect_area < area_minima:
+                continue
             c = rect.get("non_stroking_color")
             if c and es_color_valido(c): return c  # Usa función de utils
 
@@ -104,12 +117,24 @@ def extraer_info_profesor(page):
         cabecera = page.crop((0, 0, page.width, 130))
         texto_cabecera = cabecera.extract_text()
         if not texto_cabecera: return "Desconocido", "N/A"
-        texto_unido = limpiar_texto(texto_cabecera)  # Usa función de utils
+        texto_unido = limpiar_texto(texto_cabecera)
+
+        # Detectar formato anonimizado: "Profesor 001", "Profesor 123", etc.
+        match_anon = re.search(r"Profesor\s+(\d{3,})", texto_unido, re.IGNORECASE)
+        if match_anon:
+            numero = match_anon.group(1)
+            return f"Profesor {numero}", f"PROF{numero}"
+
+        # Formato original: APELLIDOS, NOMBRE (CODIGO)
         match = re.search(r"([A-ZÁÉÍÓÚÑ, ]+)\s*\(([^)]+)\)", texto_unido)
         if match:
             nombre = match.group(1).strip().lstrip(",")
             return nombre, match.group(2).strip()
-        return texto_unido[:50], "N/A"
+
+        # Fallback: generar código sintético desde el nombre
+        nombre_limpio = texto_unido[:50].strip()
+        codigo_sintetico = re.sub(r'[^A-Z0-9]', '', nombre_limpio.upper())[:10]
+        return nombre_limpio, codigo_sintetico if codigo_sintetico else "N/A"
     except Exception:
         return "Error Lectura", "ERR"
 
@@ -135,7 +160,9 @@ def procesar_pagina(page):
 
         for dia, (x0, x1) in COLUMNAS_X.items():
             bloque_actual = None
-            for fila in filas_horas:
+            # Rastrear celdas con color sin texto para extensión hacia atrás
+            celdas_vacias_con_color = []  # [(indice_fila, color)]
+            for idx_fila, fila in enumerate(filas_horas):
                 try:
                     bbox = (x0, fila['top'], x1, fila['bottom'])
                     celda = page.crop(bbox)
@@ -149,6 +176,7 @@ def procesar_pagina(page):
                             ajustar_bloque(bloque_actual)
                             horario_interno["horario"][dia].append(bloque_actual)
                             bloque_actual = None
+                        celdas_vacias_con_color = []  # Reset tras recreo
                         continue
 
                     if not texto:
@@ -157,42 +185,99 @@ def procesar_pagina(page):
                             if bloque_actual and colores_son_iguales(bloque_actual["color"], color):
                                 bloque_actual["hora_fin"] = fila['texto_hora']
                             else:
+                                # Cerrar bloque anterior, registrar celda vacía con color
                                 if bloque_actual:
                                     ajustar_bloque(bloque_actual)
-                                    horario_interno["horario"][dia].append(bloque_actual)
-                                bloque_actual = {"asignatura": "", "hora_inicio": fila['texto_hora'],
-                                                 "hora_fin": fila['texto_hora'], "color": color, "raw_text": []}
+                                    if bloque_actual["asignatura"]:
+                                        horario_interno["horario"][dia].append(bloque_actual)
+                                    bloque_actual = None
+                                celdas_vacias_con_color.append((idx_fila, color))
                         else:
                             if bloque_actual:
                                 ajustar_bloque(bloque_actual)
-                                horario_interno["horario"][dia].append(bloque_actual)
+                                if bloque_actual["asignatura"]:
+                                    horario_interno["horario"][dia].append(bloque_actual)
                                 bloque_actual = None
+                            celdas_vacias_con_color = []  # Sin color rompe continuidad
                         continue
+
+                    # Celda CON texto: determinar hora_inicio real
+                    hora_inicio_real = fila['texto_hora']
+                    hora_inicio_ext = fila['texto_hora']  # Candidato extendido hacia atrás
+                    if not bloque_actual and celdas_vacias_con_color and color is not None:
+                        # Extensión hacia atrás: buscar celdas vacías previas contiguas
+                        # con el mismo color para encontrar el inicio candidato
+                        for i in range(len(celdas_vacias_con_color) - 1, -1, -1):
+                            idx_prev, color_prev = celdas_vacias_con_color[i]
+                            if colores_son_iguales(color_prev, color):
+                                hora_inicio_ext = filas_horas[idx_prev]['texto_hora']
+                            else:
+                                break
+                    celdas_vacias_con_color = []  # Reset tras encontrar texto
 
                     if bloque_actual:
                         debe_agrupar = False
                         # Utils
                         if colores_son_iguales(bloque_actual["color"], color):
+                            texto_act = bloque_actual.get("asignatura", "")
                             if color:
-                                texto_act = bloque_actual.get("asignatura", "")
-                                debe_agrupar = not (len(texto) < 20 and len(texto_act) < 20 and texto != texto_act)
-                            elif textos_son_similares(bloque_actual.get("asignatura", ""), texto):  # Utils
+                                if es_color_gris_claro(color):
+                                    # Gris: solo agrupar si textos son similares
+                                    debe_agrupar = textos_son_similares(texto_act, texto) or texto_act == texto
+                                else:
+                                    # Color distintivo: agrupar solo si los textos
+                                    # representan la misma asignatura.
+                                    # Si alguno no tiene nombre base reconocible
+                                    # (es continuación de texto partido entre filas),
+                                    # confiar en el color y agrupar.
+                                    base_act = extraer_nombre_asignatura(texto_act)
+                                    base_new = extraer_nombre_asignatura(texto)
+                                    if not base_act and not base_new:
+                                        # Ambos son solo códigos → comparar directamente
+                                        debe_agrupar = texto_act == texto
+                                    elif not base_act or not base_new:
+                                        # Uno es continuación del otro → confiar en color
+                                        debe_agrupar = True
+                                    else:
+                                        debe_agrupar = textos_son_similares(texto_act, texto) or texto_act == texto
+                            elif textos_son_similares(texto_act, texto):  # Utils
                                 debe_agrupar = True
 
                         if debe_agrupar:
                             bloque_actual["hora_fin"] = fila['texto_hora']
-                            if texto and texto not in bloque_actual["raw_text"]:
-                                bloque_actual["raw_text"].append(texto)
-                                bloque_actual["asignatura"] = " ".join(bloque_actual["raw_text"])
+                            if texto:
+                                # Merge con detección de solapamiento
+                                asig_actual = bloque_actual.get("asignatura", "")
+                                if not asig_actual:
+                                    bloque_actual["asignatura"] = texto
+                                elif texto not in asig_actual:
+                                    # Buscar solapamiento: sufijo de asig_actual = prefijo de texto
+                                    merged = False
+                                    for k in range(min(len(asig_actual), len(texto)), 4, -1):
+                                        if asig_actual.endswith(texto[:k]):
+                                            bloque_actual["asignatura"] = asig_actual + texto[k:]
+                                            merged = True
+                                            break
+                                    if not merged:
+                                        bloque_actual["asignatura"] = asig_actual + " " + texto
                         else:
                             if bloque_actual["asignatura"]:
+                                # Para gris: revertir extensión si bloque no creció
+                                # Para colores: siempre mantener extensión
+                                if es_color_gris_claro(bloque_actual.get("color")):
+                                    h_texto = bloque_actual.get("hora_inicio_texto", "")
+                                    h_fin = bloque_actual.get("hora_fin", "")
+                                    if h_texto and h_texto == h_fin:
+                                        bloque_actual["hora_inicio"] = h_texto
                                 ajustar_bloque(bloque_actual)
                                 horario_interno["horario"][dia].append(bloque_actual)
-                            bloque_actual = {"asignatura": texto, "hora_inicio": fila['texto_hora'],
+                            bloque_actual = {"asignatura": texto, "hora_inicio": hora_inicio_ext,
+                                             "hora_inicio_texto": hora_inicio_real,
                                              "hora_fin": fila['texto_hora'], "color": color,
                                              "raw_text": [texto] if texto else []}
                     else:
-                        bloque_actual = {"asignatura": texto, "hora_inicio": fila['texto_hora'],
+                        bloque_actual = {"asignatura": texto, "hora_inicio": hora_inicio_ext,
+                                         "hora_inicio_texto": hora_inicio_real,
                                          "hora_fin": fila['texto_hora'],
                                          "color": color, "raw_text": [texto] if texto else []}
 
@@ -200,6 +285,12 @@ def procesar_pagina(page):
                     continue
 
             if bloque_actual and bloque_actual["asignatura"]:
+                # Para gris: revertir extensión si no creció. Colores: siempre mantener.
+                if es_color_gris_claro(bloque_actual.get("color")):
+                    h_texto = bloque_actual.get("hora_inicio_texto", "")
+                    h_fin = bloque_actual.get("hora_fin", "")
+                    if h_texto and h_texto == h_fin:
+                        bloque_actual["hora_inicio"] = h_texto
                 ajustar_bloque(bloque_actual)
                 horario_interno["horario"][dia].append(bloque_actual)
 
@@ -208,11 +299,20 @@ def procesar_pagina(page):
         for dia in COLUMNAS_X:
             for evento in horario_interno["horario"][dia]:
                 try:
+                    # Saltar eventos sin asignatura (placeholders de celdas grises vacías)
+                    asig = evento.get("asignatura", "")
+                    if not asig:
+                        continue
+
                     h_inicio_todas = re.findall(r'\d{1,2}:\d{2}', str(evento.get("hora_inicio", "")))
                     h_fin_todas = re.findall(r'\d{1,2}:\d{2}', str(evento.get("hora_fin", "")))
 
-                    h_inicio_limpia = h_inicio_todas[0] if h_inicio_todas else evento.get("hora_inicio", "")
-                    h_fin_limpia = h_fin_todas[-1] if h_fin_todas else evento.get("hora_fin", "")
+                    h_inicio_limpia = h_inicio_todas[0] if h_inicio_todas else ""
+                    h_fin_limpia = h_fin_todas[-1] if h_fin_todas else ""
+
+                    # Saltar eventos sin horas válidas
+                    if not h_inicio_limpia or not h_fin_limpia:
+                        continue
 
                     eventos_lista.append({
                         "dia": dia,
@@ -223,11 +323,18 @@ def procesar_pagina(page):
                 except Exception:
                     continue
 
+        # Extraer y clasificar grupos del profesor
+        todos_los_prefijos = set()
+        for evento in eventos_lista:
+            todos_los_prefijos.update(extraer_codigos_grupo(evento.get("asignatura", "")))
+        grupos_clasificados = clasificar_grupos(todos_los_prefijos)
+
         return {
             "profesor": {
                 "nombre": horario_interno["profesor"],
                 "codigo": horario_interno["codigo"]
             },
+            "grupos": grupos_clasificados,
             "eventos": eventos_lista
         }
 

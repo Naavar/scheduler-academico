@@ -1,0 +1,10 @@
+[run]
+omit =
+    # Ignorar scripts de entrada y demos
+    Proyecto/main.py
+    Proyecto/app.py
+    Proyecto/demo_profiling.py
+    Proyecto/generador_datos.py
+    Proyecto/test_modelos.py
+    # Ignorar archivos __init__
+    */__init__.py

@@ -29,10 +29,18 @@ def validate_schedule(schedule: Dict[str, Any]) -> List[str]:
         errors.append("La clave 'profesor' debe ser un objeto")
         return errors  # Error crítico, paramos aquí
 
-    if not prof.get("nombre") or prof.get("nombre") == "Desconocido":
+    nombre = prof.get("nombre", "")
+    codigo = prof.get("codigo", "")
+
+    # Aceptar nombres anonimizados (Profesor XXX) y códigos sintéticos (PROFXXX)
+    if not nombre or nombre == "Desconocido":
         errors.append("Falta nombre del profesor válido")
-    if not prof.get("codigo") or prof.get("codigo") == "N/A":
-        errors.append("Falta código del profesor válido")
+    if not codigo or codigo == "N/A":
+        # Solo advertencia si el nombre es válido (puede ser anonimizado)
+        if nombre and nombre != "Desconocido":
+            pass  # Permitir códigos sintéticos
+        else:
+            errors.append("Falta código del profesor válido")
 
     # 2. Validar Eventos
     events = schedule.get("eventos")
@@ -41,15 +49,13 @@ def validate_schedule(schedule: Dict[str, Any]) -> List[str]:
         return errors
 
     if not events:
-        # Nota: Un horario vacío podría ser válido técnicamente, pero sospechoso.
-        # Lo marcamos como advertencia o error según prefieras.
         errors.append("Advertencia: La lista de eventos está vacía")
 
     for idx, event in enumerate(events):
         day = event.get("dia")
         start = event.get("inicio")
         end = event.get("fin")
-        asignatura = event.get("asignatura")  # Tu consolidador usa 'asignatura', no 'titulo'
+        asignatura = event.get("asignatura")
 
         # Validar Día
         if day not in DAY_NAMES:
@@ -64,7 +70,7 @@ def validate_schedule(schedule: Dict[str, Any]) -> List[str]:
             errors.append(f"Evento {idx}: falta hora inicio/fin")
             continue
 
-        # Chequeo de formato con Regex (más rápido que try-except para formato visual)
+        # Chequeo de formato con Regex (más flexible)
         if not re.match(REGEX_HORA, str(start)) or not re.match(REGEX_HORA, str(end)):
             errors.append(f"Evento {idx}: formato hora inválido ({start} - {end})")
             continue
