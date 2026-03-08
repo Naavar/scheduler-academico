@@ -6,11 +6,47 @@ import streamlit as st
 import pandas as pd
 
 from extractor_pdf import procesar_todo_automaticamente
+from buscador_huecos import BuscadorHuecos
+from config import Config
 from buscador_evaluacion import buscar_sesion_evaluacion
 
 st.set_page_config(page_title="Sesión de Evaluación", layout="wide")
 st.title("Buscador de Sesión de Evaluación")
 
+# --- SIDEBAR ---
+with st.sidebar:
+    st.header("⚙️ Configuración")
+
+    with st.expander("🕐 Jornada lectiva", expanded=True):
+        sesiones_por_dia = st.selectbox(
+            "Sesiones por día",
+            options=[5, 6, 7, 8],
+            index=2,
+        )
+        hora_recreo = st.selectbox(
+            "Sesión del recreo",
+            options=list(range(1, sesiones_por_dia + 1)),
+            index=3,
+        )
+
+    with st.expander("⛔ Restricciones", expanded=True):
+        permitir_septima_hora = st.checkbox("¿Permitir 7ª hora?", value=False)
+        permitir_recreo = st.checkbox("¿Permitir recreo?", value=False)
+        if permitir_recreo:
+            st.warning("⚠️ El recreo es tiempo de descanso del profesorado.")
+        permitir_horas_no_obligatorias = st.checkbox(
+            "¿Incluir horas fuera de permanencia?", value=False
+        )
+
+    config = Config(
+        hora_recreo=hora_recreo,
+        sesiones_por_dia=sesiones_por_dia,
+        permitir_septima_hora=permitir_septima_hora,
+        permitir_recreo=permitir_recreo,
+        permitir_horas_no_obligatorias=permitir_horas_no_obligatorias,
+    )
+
+st.title("Sistema de Búsqueda de Huecos en Horarios")
 # ---------------------------------------------------------------------------
 # ESTADO
 # ---------------------------------------------------------------------------
