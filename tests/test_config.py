@@ -92,7 +92,7 @@ def test_sesiones_por_dia_cero_lanza_error():
 
 def test_sesiones_por_dia_excesivo_lanza_error():
     with pytest.raises(ValueError):
-        Config(sesiones_por_dia=15)
+        Config(sesiones_por_dia=21)
 
 def test_hora_recreo_igual_a_sesiones_es_valido():
     c = Config(hora_recreo=7, sesiones_por_dia=7)
