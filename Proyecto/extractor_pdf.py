@@ -7,9 +7,8 @@ from pathlib import Path
 
 # --- IMPORTS PROPIOS ---
 try:
-    from validacion import validate_schedule
-    # Importamos las herramientas desde el nuevo archivo utils.py
-    from utils import (
+    from Proyecto.validacion import validate_schedule
+    from Proyecto.utils import (
         es_color_valido,
         es_color_gris_claro,
         colores_son_iguales,
@@ -21,9 +20,23 @@ try:
         sumar_55_minutos,
         es_hora_recreo
     )
-except ImportError as e:
-    print(f"❌ ERROR CRÍTICO: Falta un archivo necesario ({e}). Asegúrate de tener 'utils.py' y 'validacion.py'.")
-    exit()
+except ImportError:
+    try:
+        from validacion import validate_schedule
+        from utils import (
+            es_color_valido,
+            es_color_gris_claro,
+            colores_son_iguales,
+            textos_son_similares,
+            extraer_nombre_asignatura,
+            extraer_codigos_grupo,
+            clasificar_grupos,
+            limpiar_texto,
+            sumar_55_minutos,
+            es_hora_recreo
+        )
+    except ImportError as e:
+        raise ImportError(f"Falta un archivo necesario ({e}). Asegúrate de tener 'utils.py' y 'validacion.py'.") from e
 
 # --- CONFIGURACIÓN ---
 COLUMNAS_X = {
