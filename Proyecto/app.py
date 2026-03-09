@@ -149,6 +149,12 @@ if "profesores" not in st.session_state:
 if "resultados_por_curso" not in st.session_state:
     st.session_state["resultados_por_curso"] = {}
 
+if "cargando_pdf" not in st.session_state:
+    st.session_state["cargando_pdf"] = False
+
+if "mensaje_carga_pdf" not in st.session_state:
+    st.session_state["mensaje_carga_pdf"] = None
+
 # ---------------------------------------------------------------------------
 # PASO 1: CARGAR PDF
 # ---------------------------------------------------------------------------
@@ -161,17 +167,27 @@ archivos_pdf = st.file_uploader(
     accept_multiple_files=True,
 )
 
-if st.button("Cargar horarios desde PDF"):
+mensaje_carga_pdf = st.session_state.pop("mensaje_carga_pdf", None)
+if mensaje_carga_pdf:
+    tipo_mensaje, texto_mensaje = mensaje_carga_pdf
+    getattr(st, tipo_mensaje)(texto_mensaje)
+
+if st.button("Cargar horarios desde PDF", disabled=st.session_state["cargando_pdf"]):
+    st.session_state["cargando_pdf"] = True
+    st.rerun()
+
+if st.session_state["cargando_pdf"]:
     if not archivos_pdf:
-        st.error("Selecciona al menos un PDF.")
+        st.session_state["mensaje_carga_pdf"] = ("error", "Selecciona al menos un PDF.")
     else:
         try:
-            with tempfile.TemporaryDirectory() as tmpdir:
-                for archivo in archivos_pdf:
-                    ruta = os.path.join(tmpdir, archivo.name)
-                    with open(ruta, "wb") as f:
-                        f.write(archivo.getbuffer())
-                horarios = procesar_todo_automaticamente(tmpdir)
+            with st.spinner("Procesando PDFs..."):
+                with tempfile.TemporaryDirectory() as tmpdir:
+                    for archivo in archivos_pdf:
+                        ruta = os.path.join(tmpdir, archivo.name)
+                        with open(ruta, "wb") as f:
+                            f.write(archivo.getbuffer())
+                    horarios = procesar_todo_automaticamente(tmpdir)
 
             profesores = [
                 {"profesor": e["profesor"], "eventos": e["eventos"]}
@@ -180,14 +196,25 @@ if st.button("Cargar horarios desde PDF"):
             ]
 
             if not profesores:
-                st.error("No se pudo extraer ningún horario válido.")
+                st.session_state["mensaje_carga_pdf"] = (
+                    "error",
+                    "No se pudo extraer ningún horario válido.",
+                )
             else:
                 st.session_state["profesores"] = profesores
                 st.session_state["resultado"] = None
-                st.success(f"{len(profesores)} profesores cargados correctamente.")
-
+                st.session_state["mensaje_carga_pdf"] = (
+                    "success",
+                    f"{len(profesores)} profesores cargados correctamente.",
+                )
         except Exception as e:
-            st.error(f"Error al procesar los PDFs: {e}")
+            st.session_state["mensaje_carga_pdf"] = (
+                "error",
+                f"Error al procesar los PDFs: {e}",
+            )
+
+    st.session_state["cargando_pdf"] = False
+    st.rerun()
 
 # ---------------------------------------------------------------------------
 # PASO 2: SELECCIONAR EQUIPO POR CURSO
@@ -353,6 +380,9 @@ if profesores:
                     for fila in filas:
                         filas_excel.append({
                             "Curso": curso,
+                            "Hueco encontrado": (
+                                f"{resultado.dia} {resultado.hora_inicio} - {resultado.hora_fin}"
+                            ),
                             "Día": resultado.dia,
                             "Hora inicio": resultado.hora_inicio,
                             "Hora fin": resultado.hora_fin,
