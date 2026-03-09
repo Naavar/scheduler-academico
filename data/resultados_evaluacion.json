@@ -1,0 +1,6403 @@
+[
+  {
+    "nivel": "BACHILLERATO",
+    "curso": "B1ACI",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 20,
+    "peor_penalizacion": 3,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF007",
+        "nombre": "Profesor 007",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF015",
+        "nombre": "Profesor 015",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF026",
+        "nombre": "Profesor 026",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF034",
+        "nombre": "Profesor 034",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF056",
+        "nombre": "Profesor 056",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF065",
+        "nombre": "Profesor 065",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF066",
+        "nombre": "Profesor 066",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF078",
+        "nombre": "Profesor 078",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF082",
+        "nombre": "Profesor 082",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF099",
+        "nombre": "Profesor 099",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF101",
+        "nombre": "Profesor 101",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF114",
+        "nombre": "Profesor 114",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF124",
+        "nombre": "Profesor 124",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF129",
+        "nombre": "Profesor 129",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "BACHILLERATO",
+    "curso": "B1BSO",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 29,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF007",
+        "nombre": "Profesor 007",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF015",
+        "nombre": "Profesor 015",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF016",
+        "nombre": "Profesor 016",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF024",
+        "nombre": "Profesor 024",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF026",
+        "nombre": "Profesor 026",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF027",
+        "nombre": "Profesor 027",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF034",
+        "nombre": "Profesor 034",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF054",
+        "nombre": "Profesor 054",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF064",
+        "nombre": "Profesor 064",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF065",
+        "nombre": "Profesor 065",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF078",
+        "nombre": "Profesor 078",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF088",
+        "nombre": "Profesor 088",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF099",
+        "nombre": "Profesor 099",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF112",
+        "nombre": "Profesor 112",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF114",
+        "nombre": "Profesor 114",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF129",
+        "nombre": "Profesor 129",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF132",
+        "nombre": "Profesor 132",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "BACHILLERATO",
+    "curso": "B2AC",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 19,
+    "peor_penalizacion": 3,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF016",
+        "nombre": "Profesor 016",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF022",
+        "nombre": "Profesor 022",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF024",
+        "nombre": "Profesor 024",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF026",
+        "nombre": "Profesor 026",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF027",
+        "nombre": "Profesor 027",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF032",
+        "nombre": "Profesor 032",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF034",
+        "nombre": "Profesor 034",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF040",
+        "nombre": "Profesor 040",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF056",
+        "nombre": "Profesor 056",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF065",
+        "nombre": "Profesor 065",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF101",
+        "nombre": "Profesor 101",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF125",
+        "nombre": "Profesor 125",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF130",
+        "nombre": "Profesor 130",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "BACHILLERATO",
+    "curso": "B2BSO",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 38,
+    "peor_penalizacion": 8,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF016",
+        "nombre": "Profesor 016",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF022",
+        "nombre": "Profesor 022",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF024",
+        "nombre": "Profesor 024",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF027",
+        "nombre": "Profesor 027",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF034",
+        "nombre": "Profesor 034",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF039",
+        "nombre": "Profesor 039",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF040",
+        "nombre": "Profesor 040",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF046",
+        "nombre": "Profesor 046",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF065",
+        "nombre": "Profesor 065",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF079",
+        "nombre": "Profesor 079",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF112",
+        "nombre": "Profesor 112",
+        "penalizacion": 8,
+        "sesion_mas_cercana": null,
+        "tiene_eventos_ese_dia": false
+      },
+      {
+        "codigo": "PROF114",
+        "nombre": "Profesor 114",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF119",
+        "nombre": "Profesor 119",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF125",
+        "nombre": "Profesor 125",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF130",
+        "nombre": "Profesor 130",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "DIV3",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "15:10",
+    "hora_fin": "16:15",
+    "coste_total": 24,
+    "peor_penalizacion": 3,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF007",
+        "nombre": "Profesor 007",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF034",
+        "nombre": "Profesor 034",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF040",
+        "nombre": "Profesor 040",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF065",
+        "nombre": "Profesor 065",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF066",
+        "nombre": "Profesor 066",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF077",
+        "nombre": "Profesor 077",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF078",
+        "nombre": "Profesor 078",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF079",
+        "nombre": "Profesor 079",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF084",
+        "nombre": "Profesor 084",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF099",
+        "nombre": "Profesor 099",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF112",
+        "nombre": "Profesor 112",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "DIV4",
+    "sin_solucion": false,
+    "dia": "Miércoles",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 21,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF001",
+        "nombre": "Profesor 001",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF009",
+        "nombre": "Profesor 009",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF016",
+        "nombre": "Profesor 016",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF022",
+        "nombre": "Profesor 022",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF026",
+        "nombre": "Profesor 026",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF082",
+        "nombre": "Profesor 082",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF098",
+        "nombre": "Profesor 098",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF099",
+        "nombre": "Profesor 099",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF114",
+        "nombre": "Profesor 114",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E1A",
+    "sin_solucion": false,
+    "dia": "Miércoles",
+    "hora_inicio": "15:10",
+    "hora_fin": "16:15",
+    "coste_total": 31,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF009",
+        "nombre": "Profesor 009",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF023",
+        "nombre": "Profesor 023",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF034",
+        "nombre": "Profesor 034",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF046",
+        "nombre": "Profesor 046",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF084",
+        "nombre": "Profesor 084",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF088",
+        "nombre": "Profesor 088",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF098",
+        "nombre": "Profesor 098",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF117",
+        "nombre": "Profesor 117",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF122",
+        "nombre": "Profesor 122",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF126",
+        "nombre": "Profesor 126",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E1B",
+    "sin_solucion": false,
+    "dia": "Miércoles",
+    "hora_inicio": "16:15",
+    "hora_fin": "17:10",
+    "coste_total": 29,
+    "peor_penalizacion": 7,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF009",
+        "nombre": "Profesor 009",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF017",
+        "nombre": "Profesor 017",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF046",
+        "nombre": "Profesor 046",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF066",
+        "nombre": "Profesor 066",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF084",
+        "nombre": "Profesor 084",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF098",
+        "nombre": "Profesor 098",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF101",
+        "nombre": "Profesor 101",
+        "penalizacion": 7,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF117",
+        "nombre": "Profesor 117",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF122",
+        "nombre": "Profesor 122",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF132",
+        "nombre": "Profesor 132",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E1C",
+    "sin_solucion": false,
+    "dia": "Miércoles",
+    "hora_inicio": "17:10",
+    "hora_fin": "18:05",
+    "coste_total": 24,
+    "peor_penalizacion": 8,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF007",
+        "nombre": "Profesor 007",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF009",
+        "nombre": "Profesor 009",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF017",
+        "nombre": "Profesor 017",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF046",
+        "nombre": "Profesor 046",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF066",
+        "nombre": "Profesor 066",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF077",
+        "nombre": "Profesor 077",
+        "penalizacion": 8,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF088",
+        "nombre": "Profesor 088",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF122",
+        "nombre": "Profesor 122",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF126",
+        "nombre": "Profesor 126",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E2A",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "15:10",
+    "hora_fin": "16:15",
+    "coste_total": 34,
+    "peor_penalizacion": 8,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF004",
+        "nombre": "Profesor 004",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF008",
+        "nombre": "Profesor 008",
+        "penalizacion": 8,
+        "sesion_mas_cercana": {
+          "inicio": "9:10",
+          "fin": "10:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF017",
+        "nombre": "Profesor 017",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF056",
+        "nombre": "Profesor 056",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF064",
+        "nombre": "Profesor 064",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF088",
+        "nombre": "Profesor 088",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF098",
+        "nombre": "Profesor 098",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF099",
+        "nombre": "Profesor 099",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF119",
+        "nombre": "Profesor 119",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF124",
+        "nombre": "Profesor 124",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E2B",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "15:10",
+    "hora_fin": "16:15",
+    "coste_total": 50,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF022",
+        "nombre": "Profesor 022",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF023",
+        "nombre": "Profesor 023",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF034",
+        "nombre": "Profesor 034",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF040",
+        "nombre": "Profesor 040",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF042",
+        "nombre": "Profesor 042",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF046",
+        "nombre": "Profesor 046",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF047",
+        "nombre": "Profesor 047",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF056",
+        "nombre": "Profesor 056",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF064",
+        "nombre": "Profesor 064",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF098",
+        "nombre": "Profesor 098",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF099",
+        "nombre": "Profesor 099",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF101",
+        "nombre": "Profesor 101",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF110",
+        "nombre": "Profesor 110",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF117",
+        "nombre": "Profesor 117",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF124",
+        "nombre": "Profesor 124",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF129",
+        "nombre": "Profesor 129",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E2C",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "16:15",
+    "hora_fin": "17:10",
+    "coste_total": 35,
+    "peor_penalizacion": 10,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF017",
+        "nombre": "Profesor 017",
+        "penalizacion": 10,
+        "sesion_mas_cercana": {
+          "inicio": "9:10",
+          "fin": "10:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF023",
+        "nombre": "Profesor 023",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF024",
+        "nombre": "Profesor 024",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF032",
+        "nombre": "Profesor 032",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF039",
+        "nombre": "Profesor 039",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF040",
+        "nombre": "Profesor 040",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF047",
+        "nombre": "Profesor 047",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF056",
+        "nombre": "Profesor 056",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF064",
+        "nombre": "Profesor 064",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF078",
+        "nombre": "Profesor 078",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF098",
+        "nombre": "Profesor 098",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF117",
+        "nombre": "Profesor 117",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E2D",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "17:10",
+    "hora_fin": "18:05",
+    "coste_total": 37,
+    "peor_penalizacion": 8,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF022",
+        "nombre": "Profesor 022",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF023",
+        "nombre": "Profesor 023",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF024",
+        "nombre": "Profesor 024",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF034",
+        "nombre": "Profesor 034",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF039",
+        "nombre": "Profesor 039",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF040",
+        "nombre": "Profesor 040",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF042",
+        "nombre": "Profesor 042",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF043",
+        "nombre": "Profesor 043",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF047",
+        "nombre": "Profesor 047",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF056",
+        "nombre": "Profesor 056",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF064",
+        "nombre": "Profesor 064",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF088",
+        "nombre": "Profesor 088",
+        "penalizacion": 8,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF098",
+        "nombre": "Profesor 098",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF099",
+        "nombre": "Profesor 099",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF101",
+        "nombre": "Profesor 101",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF124",
+        "nombre": "Profesor 124",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF129",
+        "nombre": "Profesor 129",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E3A",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "16:15",
+    "hora_fin": "17:10",
+    "coste_total": 38,
+    "peor_penalizacion": 8,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF004",
+        "nombre": "Profesor 004",
+        "penalizacion": 7,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF007",
+        "nombre": "Profesor 007",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF008",
+        "nombre": "Profesor 008",
+        "penalizacion": 8,
+        "sesion_mas_cercana": null,
+        "tiene_eventos_ese_dia": false
+      },
+      {
+        "codigo": "PROF023",
+        "nombre": "Profesor 023",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF026",
+        "nombre": "Profesor 026",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF027",
+        "nombre": "Profesor 027",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF032",
+        "nombre": "Profesor 032",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF034",
+        "nombre": "Profesor 034",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF040",
+        "nombre": "Profesor 040",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF043",
+        "nombre": "Profesor 043",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF065",
+        "nombre": "Profesor 065",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF066",
+        "nombre": "Profesor 066",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF074",
+        "nombre": "Profesor 074",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF084",
+        "nombre": "Profesor 084",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF112",
+        "nombre": "Profesor 112",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E3B",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "18:05",
+    "hora_fin": "19:30",
+    "coste_total": 41,
+    "peor_penalizacion": 9,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF001",
+        "nombre": "Profesor 001",
+        "penalizacion": 7,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF004",
+        "nombre": "Profesor 004",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF007",
+        "nombre": "Profesor 007",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF008",
+        "nombre": "Profesor 008",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF013",
+        "nombre": "Profesor 013",
+        "penalizacion": 9,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF026",
+        "nombre": "Profesor 026",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF027",
+        "nombre": "Profesor 027",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF032",
+        "nombre": "Profesor 032",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF040",
+        "nombre": "Profesor 040",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF054",
+        "nombre": "Profesor 054",
+        "penalizacion": 8,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF066",
+        "nombre": "Profesor 066",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF074",
+        "nombre": "Profesor 074",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF084",
+        "nombre": "Profesor 084",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E3C",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "19:30",
+    "hora_fin": "20:25",
+    "coste_total": 35,
+    "peor_penalizacion": 10,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF001",
+        "nombre": "Profesor 001",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF004",
+        "nombre": "Profesor 004",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF007",
+        "nombre": "Profesor 007",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF022",
+        "nombre": "Profesor 022",
+        "penalizacion": 9,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF026",
+        "nombre": "Profesor 026",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF027",
+        "nombre": "Profesor 027",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF032",
+        "nombre": "Profesor 032",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF047",
+        "nombre": "Profesor 047",
+        "penalizacion": 10,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF054",
+        "nombre": "Profesor 054",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF065",
+        "nombre": "Profesor 065",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF066",
+        "nombre": "Profesor 066",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF084",
+        "nombre": "Profesor 084",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF099",
+        "nombre": "Profesor 099",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E4A",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "15:10",
+    "hora_fin": "16:15",
+    "coste_total": 53,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF004",
+        "nombre": "Profesor 004",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF009",
+        "nombre": "Profesor 009",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF016",
+        "nombre": "Profesor 016",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF017",
+        "nombre": "Profesor 017",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF026",
+        "nombre": "Profesor 026",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF054",
+        "nombre": "Profesor 054",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF076",
+        "nombre": "Profesor 076",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF084",
+        "nombre": "Profesor 084",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF098",
+        "nombre": "Profesor 098",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF099",
+        "nombre": "Profesor 099",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF112",
+        "nombre": "Profesor 112",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF114",
+        "nombre": "Profesor 114",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF117",
+        "nombre": "Profesor 117",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF119",
+        "nombre": "Profesor 119",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF122",
+        "nombre": "Profesor 122",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF124",
+        "nombre": "Profesor 124",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESO",
+    "curso": "E4B",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "16:15",
+    "hora_fin": "17:10",
+    "coste_total": 17,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF004",
+        "nombre": "Profesor 004",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF009",
+        "nombre": "Profesor 009",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF016",
+        "nombre": "Profesor 016",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF017",
+        "nombre": "Profesor 017",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF026",
+        "nombre": "Profesor 026",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF041",
+        "nombre": "Profesor 041",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF054",
+        "nombre": "Profesor 054",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF076",
+        "nombre": "Profesor 076",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF084",
+        "nombre": "Profesor 084",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF098",
+        "nombre": "Profesor 098",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF099",
+        "nombre": "Profesor 099",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF112",
+        "nombre": "Profesor 112",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF114",
+        "nombre": "Profesor 114",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF117",
+        "nombre": "Profesor 117",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF119",
+        "nombre": "Profesor 119",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF122",
+        "nombre": "Profesor 122",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF124",
+        "nombre": "Profesor 124",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESPECIALIZACION",
+    "curso": "BIG-D",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "14:25",
+    "hora_fin": "15:20",
+    "coste_total": 9,
+    "peor_penalizacion": 3,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF003",
+        "nombre": "Profesor 003",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF006",
+        "nombre": "Profesor 006",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF019",
+        "nombre": "Profesor 019",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF104",
+        "nombre": "Profesor 104",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESPECIALIZACION",
+    "curso": "CIB-R",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 5,
+    "peor_penalizacion": 3,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF020",
+        "nombre": "Profesor 020",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF068",
+        "nombre": "Profesor 068",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF115",
+        "nombre": "Profesor 115",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESPECIALIZACION",
+    "curso": "PYT",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "14:25",
+    "hora_fin": "15:20",
+    "coste_total": 6,
+    "peor_penalizacion": 2,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF028",
+        "nombre": "Profesor 028",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF044",
+        "nombre": "Profesor 044",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF090",
+        "nombre": "Profesor 090",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "ESPECIALIZACION",
+    "curso": "VIR-V",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "20:25",
+    "hora_fin": "21:20",
+    "coste_total": 3,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF035",
+        "nombre": "Profesor 035",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "19:30",
+          "fin": "20:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF090",
+        "nombre": "Profesor 090",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "19:30",
+          "fin": "20:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF097",
+        "nombre": "Profesor 097",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "19:30",
+          "fin": "20:25"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1AFB",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "13:20",
+    "hora_fin": "14:15",
+    "coste_total": 33,
+    "peor_penalizacion": 8,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF005",
+        "nombre": "Profesor 005",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF050",
+        "nombre": "Profesor 050",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF061",
+        "nombre": "Profesor 061",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF073",
+        "nombre": "Profesor 073",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF086",
+        "nombre": "Profesor 086",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF087",
+        "nombre": "Profesor 087",
+        "penalizacion": 8,
+        "sesion_mas_cercana": null,
+        "tiene_eventos_ese_dia": false
+      },
+      {
+        "codigo": "PROF127",
+        "nombre": "Profesor 127",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF130",
+        "nombre": "Profesor 130",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:15",
+          "fin": "14:25"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1AFI",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 9,
+    "peor_penalizacion": 3,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF021",
+        "nombre": "Profesor 021",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF036",
+        "nombre": "Profesor 036",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF061",
+        "nombre": "Profesor 061",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF063",
+        "nombre": "Profesor 063",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF073",
+        "nombre": "Profesor 073",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF129",
+        "nombre": "Profesor 129",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1ASI",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "15:10",
+    "hora_fin": "16:15",
+    "coste_total": 30,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF038",
+        "nombre": "Profesor 038",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF051",
+        "nombre": "Profesor 051",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF057",
+        "nombre": "Profesor 057",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF092",
+        "nombre": "Profesor 092",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF104",
+        "nombre": "Profesor 104",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF115",
+        "nombre": "Profesor 115",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF125",
+        "nombre": "Profesor 125",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF129",
+        "nombre": "Profesor 129",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1CAM",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 13,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF070",
+        "nombre": "Profesor 070",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF081",
+        "nombre": "Profesor 081",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF083",
+        "nombre": "Profesor 083",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF093",
+        "nombre": "Profesor 093",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF105",
+        "nombre": "Profesor 105",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF108",
+        "nombre": "Profesor 108",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1CAV",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "14:25",
+    "hora_fin": "15:20",
+    "coste_total": 20,
+    "peor_penalizacion": 8,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF055",
+        "nombre": "Profesor 055",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF057",
+        "nombre": "Profesor 057",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF081",
+        "nombre": "Profesor 081",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF130",
+        "nombre": "Profesor 130",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF134",
+        "nombre": "Profesor 134",
+        "penalizacion": 8,
+        "sesion_mas_cercana": null,
+        "tiene_eventos_ese_dia": false
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1DAM",
+    "sin_solucion": false,
+    "dia": "Miércoles",
+    "hora_inicio": "17:10",
+    "hora_fin": "18:05",
+    "coste_total": 26,
+    "peor_penalizacion": 7,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF013",
+        "nombre": "Profesor 013",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF028",
+        "nombre": "Profesor 028",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF038",
+        "nombre": "Profesor 038",
+        "penalizacion": 7,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF096",
+        "nombre": "Profesor 096",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF113",
+        "nombre": "Profesor 113",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF125",
+        "nombre": "Profesor 125",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF132",
+        "nombre": "Profesor 132",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1DAS",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 19,
+    "peor_penalizacion": 8,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF055",
+        "nombre": "Profesor 055",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF059",
+        "nombre": "Profesor 059",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF063",
+        "nombre": "Profesor 063",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF083",
+        "nombre": "Profesor 083",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF093",
+        "nombre": "Profesor 093",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF105",
+        "nombre": "Profesor 105",
+        "penalizacion": 8,
+        "sesion_mas_cercana": null,
+        "tiene_eventos_ese_dia": false
+      },
+      {
+        "codigo": "PROF126",
+        "nombre": "Profesor 126",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1DAW",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "13:20",
+    "hora_fin": "14:15",
+    "coste_total": 25,
+    "peor_penalizacion": 6,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF033",
+        "nombre": "Profesor 033",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF068",
+        "nombre": "Profesor 068",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF090",
+        "nombre": "Profesor 090",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF096",
+        "nombre": "Profesor 096",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF127",
+        "nombre": "Profesor 127",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF128",
+        "nombre": "Profesor 128",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF130",
+        "nombre": "Profesor 130",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:15",
+          "fin": "14:25"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1ELC",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 20,
+    "peor_penalizacion": 7,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF011",
+        "nombre": "Profesor 011",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF013",
+        "nombre": "Profesor 013",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF025",
+        "nombre": "Profesor 025",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF085",
+        "nombre": "Profesor 085",
+        "penalizacion": 7,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF111",
+        "nombre": "Profesor 111",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF127",
+        "nombre": "Profesor 127",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF131",
+        "nombre": "Profesor 131",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF134",
+        "nombre": "Profesor 134",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1FPB",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "20:25",
+    "hora_fin": "21:20",
+    "coste_total": 43,
+    "peor_penalizacion": 12,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF003",
+        "nombre": "Profesor 003",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "19:30",
+          "fin": "20:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF013",
+        "nombre": "Profesor 013",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF020",
+        "nombre": "Profesor 020",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF024",
+        "nombre": "Profesor 024",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF048",
+        "nombre": "Profesor 048",
+        "penalizacion": 12,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF098",
+        "nombre": "Profesor 098",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF119",
+        "nombre": "Profesor 119",
+        "penalizacion": 12,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF129",
+        "nombre": "Profesor 129",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1GAD",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 11,
+    "peor_penalizacion": 3,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF013",
+        "nombre": "Profesor 013",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF021",
+        "nombre": "Profesor 021",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF036",
+        "nombre": "Profesor 036",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF047",
+        "nombre": "Profesor 047",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF060",
+        "nombre": "Profesor 060",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF061",
+        "nombre": "Profesor 061",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF073",
+        "nombre": "Profesor 073",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1IDM",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 12,
+    "peor_penalizacion": 4,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF045",
+        "nombre": "Profesor 045",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF063",
+        "nombre": "Profesor 063",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF067",
+        "nombre": "Profesor 067",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF095",
+        "nombre": "Profesor 095",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF121",
+        "nombre": "Profesor 121",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF126",
+        "nombre": "Profesor 126",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1IDV",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 15,
+    "peor_penalizacion": 4,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF018",
+        "nombre": "Profesor 018",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF029",
+        "nombre": "Profesor 029",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF057",
+        "nombre": "Profesor 057",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF116",
+        "nombre": "Profesor 116",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF121",
+        "nombre": "Profesor 121",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF127",
+        "nombre": "Profesor 127",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1ITE",
+    "sin_solucion": false,
+    "dia": "Miércoles",
+    "hora_inicio": "15:20",
+    "hora_fin": "16:15",
+    "coste_total": 13,
+    "peor_penalizacion": 4,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF011",
+        "nombre": "Profesor 011",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF013",
+        "nombre": "Profesor 013",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF025",
+        "nombre": "Profesor 025",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF069",
+        "nombre": "Profesor 069",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF111",
+        "nombre": "Profesor 111",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF120",
+        "nombre": "Profesor 120",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF129",
+        "nombre": "Profesor 129",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1PRD",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "14:25",
+    "hora_fin": "15:20",
+    "coste_total": 20,
+    "peor_penalizacion": 4,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF013",
+        "nombre": "Profesor 013",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF062",
+        "nombre": "Profesor 062",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF095",
+        "nombre": "Profesor 095",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF116",
+        "nombre": "Profesor 116",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF123",
+        "nombre": "Profesor 123",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF126",
+        "nombre": "Profesor 126",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1RAD",
+    "sin_solucion": false,
+    "dia": "Miércoles",
+    "hora_inicio": "13:20",
+    "hora_fin": "14:15",
+    "coste_total": 16,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF018",
+        "nombre": "Profesor 018",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF029",
+        "nombre": "Profesor 029",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF030",
+        "nombre": "Profesor 030",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF057",
+        "nombre": "Profesor 057",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF116",
+        "nombre": "Profesor 116",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF121",
+        "nombre": "Profesor 121",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF127",
+        "nombre": "Profesor 127",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1SMR",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 11,
+    "peor_penalizacion": 4,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF019",
+        "nombre": "Profesor 019",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF035",
+        "nombre": "Profesor 035",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF051",
+        "nombre": "Profesor 051",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF097",
+        "nombre": "Profesor 097",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF108",
+        "nombre": "Profesor 108",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF132",
+        "nombre": "Profesor 132",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1SMV",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "9:10",
+    "hora_fin": "10:05",
+    "coste_total": 40,
+    "peor_penalizacion": 9,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF019",
+        "nombre": "Profesor 019",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF035",
+        "nombre": "Profesor 035",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "14:15",
+          "fin": "14:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF044",
+        "nombre": "Profesor 044",
+        "penalizacion": 7,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF090",
+        "nombre": "Profesor 090",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF094",
+        "nombre": "Profesor 094",
+        "penalizacion": 9,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF097",
+        "nombre": "Profesor 097",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF108",
+        "nombre": "Profesor 108",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF127",
+        "nombre": "Profesor 127",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF128",
+        "nombre": "Profesor 128",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1SSP",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "13:20",
+    "hora_fin": "14:15",
+    "coste_total": 14,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF031",
+        "nombre": "Profesor 031",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF090",
+        "nombre": "Profesor 090",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF094",
+        "nombre": "Profesor 094",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF103",
+        "nombre": "Profesor 103",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF108",
+        "nombre": "Profesor 108",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:15",
+          "fin": "14:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF127",
+        "nombre": "Profesor 127",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "1STI",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 17,
+    "peor_penalizacion": 7,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF006",
+        "nombre": "Profesor 006",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF011",
+        "nombre": "Profesor 011",
+        "penalizacion": 7,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF025",
+        "nombre": "Profesor 025",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF107",
+        "nombre": "Profesor 107",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF111",
+        "nombre": "Profesor 111",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF129",
+        "nombre": "Profesor 129",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF131",
+        "nombre": "Profesor 131",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2AFI",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "14:25",
+    "hora_fin": "15:20",
+    "coste_total": 19,
+    "peor_penalizacion": 4,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF005",
+        "nombre": "Profesor 005",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF037",
+        "nombre": "Profesor 037",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF061",
+        "nombre": "Profesor 061",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF086",
+        "nombre": "Profesor 086",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF087",
+        "nombre": "Profesor 087",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF107",
+        "nombre": "Profesor 107",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF127",
+        "nombre": "Profesor 127",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2AFIB",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "12:25",
+    "hora_fin": "13:20",
+    "coste_total": 6,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF050",
+        "nombre": "Profesor 050",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF061",
+        "nombre": "Profesor 061",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF086",
+        "nombre": "Profesor 086",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF087",
+        "nombre": "Profesor 087",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF127",
+        "nombre": "Profesor 127",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF130",
+        "nombre": "Profesor 130",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2AFIR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "15:20",
+    "hora_fin": "16:15",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF005",
+        "nombre": "Profesor 005",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2ASI",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "16:15",
+    "hora_fin": "17:10",
+    "coste_total": 13,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF015",
+        "nombre": "Profesor 015",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF051",
+        "nombre": "Profesor 051",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF063",
+        "nombre": "Profesor 063",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF092",
+        "nombre": "Profesor 092",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF104",
+        "nombre": "Profesor 104",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF115",
+        "nombre": "Profesor 115",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF125",
+        "nombre": "Profesor 125",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2ASIR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "9:10",
+    "hora_fin": "10:05",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF015",
+        "nombre": "Profesor 015",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2CAM",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "11:00",
+    "hora_fin": "12:25",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF070",
+        "nombre": "Profesor 070",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2CAV",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "15:20",
+    "hora_fin": "16:15",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF055",
+        "nombre": "Profesor 055",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2DAM",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "15:20",
+    "hora_fin": "16:15",
+    "coste_total": 17,
+    "peor_penalizacion": 8,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF015",
+        "nombre": "Profesor 015",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF028",
+        "nombre": "Profesor 028",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF080",
+        "nombre": "Profesor 080",
+        "penalizacion": 8,
+        "sesion_mas_cercana": null,
+        "tiene_eventos_ese_dia": false
+      },
+      {
+        "codigo": "PROF125",
+        "nombre": "Profesor 125",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF130",
+        "nombre": "Profesor 130",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF133",
+        "nombre": "Profesor 133",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2DAMR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF080",
+        "nombre": "Profesor 080",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2DAS",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "8:15",
+    "hora_fin": "9:10",
+    "coste_total": 26,
+    "peor_penalizacion": 11,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF059",
+        "nombre": "Profesor 059",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF063",
+        "nombre": "Profesor 063",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "9:10",
+          "fin": "10:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF083",
+        "nombre": "Profesor 083",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "9:10",
+          "fin": "10:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF093",
+        "nombre": "Profesor 093",
+        "penalizacion": 8,
+        "sesion_mas_cercana": {
+          "inicio": "14:15",
+          "fin": "14:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF134",
+        "nombre": "Profesor 134",
+        "penalizacion": 11,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2DASR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "11:30",
+    "hora_fin": "12:25",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF083",
+        "nombre": "Profesor 083",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2DAW",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "10:05",
+    "hora_fin": "11:00",
+    "coste_total": 34,
+    "peor_penalizacion": 6,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF003",
+        "nombre": "Profesor 003",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF020",
+        "nombre": "Profesor 020",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF052",
+        "nombre": "Profesor 052",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF068",
+        "nombre": "Profesor 068",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF100",
+        "nombre": "Profesor 100",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF128",
+        "nombre": "Profesor 128",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF130",
+        "nombre": "Profesor 130",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2DAWR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "20:25",
+    "hora_fin": "21:20",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF068",
+        "nombre": "Profesor 068",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "19:30",
+          "fin": "20:25"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2GAD",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "15:20",
+    "hora_fin": "16:15",
+    "coste_total": 21,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF021",
+        "nombre": "Profesor 021",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF036",
+        "nombre": "Profesor 036",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF037",
+        "nombre": "Profesor 037",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF047",
+        "nombre": "Profesor 047",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "19:30",
+          "fin": "20:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF060",
+        "nombre": "Profesor 060",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF073",
+        "nombre": "Profesor 073",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF107",
+        "nombre": "Profesor 107",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2GADR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF060",
+        "nombre": "Profesor 060",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2IDM",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 11,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF045",
+        "nombre": "Profesor 045",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF057",
+        "nombre": "Profesor 057",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF067",
+        "nombre": "Profesor 067",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF109",
+        "nombre": "Profesor 109",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2IDMR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF109",
+        "nombre": "Profesor 109",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2IDV",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "10:05",
+    "hora_fin": "11:00",
+    "coste_total": 41,
+    "peor_penalizacion": 12,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF010",
+        "nombre": "Profesor 010",
+        "penalizacion": 8,
+        "sesion_mas_cercana": null,
+        "tiene_eventos_ese_dia": false
+      },
+      {
+        "codigo": "PROF045",
+        "nombre": "Profesor 045",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF057",
+        "nombre": "Profesor 057",
+        "penalizacion": 6,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF067",
+        "nombre": "Profesor 067",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "14:15",
+          "fin": "14:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF071",
+        "nombre": "Profesor 071",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF095",
+        "nombre": "Profesor 095",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "14:15",
+          "fin": "14:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF116",
+        "nombre": "Profesor 116",
+        "penalizacion": 12,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2IDVR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "9:10",
+    "hora_fin": "10:05",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF071",
+        "nombre": "Profesor 071",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2IFO",
+    "sin_solucion": false,
+    "dia": "Miércoles",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 8,
+    "peor_penalizacion": 3,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF007",
+        "nombre": "Profesor 007",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF043",
+        "nombre": "Profesor 043",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF048",
+        "nombre": "Profesor 048",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF075",
+        "nombre": "Profesor 075",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF122",
+        "nombre": "Profesor 122",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF129",
+        "nombre": "Profesor 129",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2IFOR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF075",
+        "nombre": "Profesor 075",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2ITE",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 10,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF006",
+        "nombre": "Profesor 006",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF057",
+        "nombre": "Profesor 057",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF069",
+        "nombre": "Profesor 069",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF091",
+        "nombre": "Profesor 091",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2ITER",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "9:10",
+    "hora_fin": "10:05",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF091",
+        "nombre": "Profesor 091",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2PRD",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "13:20",
+    "hora_fin": "14:15",
+    "coste_total": 23,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF029",
+        "nombre": "Profesor 029",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF030",
+        "nombre": "Profesor 030",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF062",
+        "nombre": "Profesor 062",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF072",
+        "nombre": "Profesor 072",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "16:15",
+          "fin": "17:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF095",
+        "nombre": "Profesor 095",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:15",
+          "fin": "14:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF121",
+        "nombre": "Profesor 121",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:15",
+          "fin": "14:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF123",
+        "nombre": "Profesor 123",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF130",
+        "nombre": "Profesor 130",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2PRDR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "12:25",
+    "hora_fin": "13:20",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF030",
+        "nombre": "Profesor 030",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2RAD",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "14:15",
+    "hora_fin": "15:10",
+    "coste_total": 14,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF010",
+        "nombre": "Profesor 010",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF018",
+        "nombre": "Profesor 018",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF071",
+        "nombre": "Profesor 071",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF072",
+        "nombre": "Profesor 072",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF089",
+        "nombre": "Profesor 089",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF108",
+        "nombre": "Profesor 108",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2RADR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "9:10",
+    "hora_fin": "10:05",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF089",
+        "nombre": "Profesor 089",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "10:05",
+          "fin": "11:00"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2SMBR",
+    "sin_solucion": false,
+    "dia": "Martes",
+    "hora_inicio": "18:05",
+    "hora_fin": "19:30",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF014",
+        "nombre": "Profesor 014",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2SMR",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "14:25",
+    "hora_fin": "15:20",
+    "coste_total": 10,
+    "peor_penalizacion": 2,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF014",
+        "nombre": "Profesor 014",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF031",
+        "nombre": "Profesor 031",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF033",
+        "nombre": "Profesor 033",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF092",
+        "nombre": "Profesor 092",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF107",
+        "nombre": "Profesor 107",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2SMRB",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "14:25",
+    "hora_fin": "15:20",
+    "coste_total": 15,
+    "peor_penalizacion": 4,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF014",
+        "nombre": "Profesor 014",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF033",
+        "nombre": "Profesor 033",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF044",
+        "nombre": "Profesor 044",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF092",
+        "nombre": "Profesor 092",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF094",
+        "nombre": "Profesor 094",
+        "penalizacion": 4,
+        "sesion_mas_cercana": {
+          "inicio": "17:10",
+          "fin": "18:05"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF107",
+        "nombre": "Profesor 107",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2SMRR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "15:20",
+    "hora_fin": "16:15",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF094",
+        "nombre": "Profesor 094",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "15:10",
+          "fin": "15:20"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2SSP",
+    "sin_solucion": false,
+    "dia": "Jueves",
+    "hora_inicio": "14:25",
+    "hora_fin": "15:20",
+    "coste_total": 9,
+    "peor_penalizacion": 3,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF100",
+        "nombre": "Profesor 100",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF103",
+        "nombre": "Profesor 103",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "12:25",
+          "fin": "13:20"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF108",
+        "nombre": "Profesor 108",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF113",
+        "nombre": "Profesor 113",
+        "penalizacion": 2,
+        "sesion_mas_cercana": {
+          "inicio": "15:20",
+          "fin": "16:15"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2SSPR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "19:30",
+    "hora_fin": "20:25",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF100",
+        "nombre": "Profesor 100",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "18:35",
+          "fin": "19:30"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2STI",
+    "sin_solucion": false,
+    "dia": "Viernes",
+    "hora_inicio": "15:10",
+    "hora_fin": "16:15",
+    "coste_total": 12,
+    "peor_penalizacion": 5,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF006",
+        "nombre": "Profesor 006",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF091",
+        "nombre": "Profesor 091",
+        "penalizacion": 3,
+        "sesion_mas_cercana": {
+          "inicio": "13:20",
+          "fin": "14:15"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF107",
+        "nombre": "Profesor 107",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF120",
+        "nombre": "Profesor 120",
+        "penalizacion": 5,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF126",
+        "nombre": "Profesor 126",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      },
+      {
+        "codigo": "PROF131",
+        "nombre": "Profesor 131",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "14:25",
+          "fin": "15:10"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  },
+  {
+    "nivel": "FP",
+    "curso": "2STIR",
+    "sin_solucion": false,
+    "dia": "Lunes",
+    "hora_inicio": "12:25",
+    "hora_fin": "13:20",
+    "coste_total": 1,
+    "peor_penalizacion": 1,
+    "es_recreo": false,
+    "es_septima": false,
+    "explicacion": "",
+    "diagnostico_bloqueadores": [],
+    "detalle": [
+      {
+        "codigo": "PROF120",
+        "nombre": "Profesor 120",
+        "penalizacion": 1,
+        "sesion_mas_cercana": {
+          "inicio": "11:30",
+          "fin": "12:25"
+        },
+        "tiene_eventos_ese_dia": true
+      }
+    ]
+  }
+]
