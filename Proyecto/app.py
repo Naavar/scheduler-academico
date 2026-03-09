@@ -345,8 +345,7 @@ if profesores:
                         filas.append({
                             "Profesor": d.nombre,
                             "Penalización": d.penalizacion,
-                            "Sesión más cercana": cercana,
-                            "Tiene eventos ese día": "Sí" if d.tiene_eventos_ese_dia else "No",
+                            "Sesión más cercana": cercana
                         })
                     df = pd.DataFrame(filas)
                     st.dataframe(df, use_container_width=True, hide_index=True)
