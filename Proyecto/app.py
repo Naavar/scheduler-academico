@@ -9,7 +9,7 @@ import pandas as pd
 from extractor_pdf import procesar_todo_automaticamente
 from config import Config, todos_dias
 
-todos_dias = todos_dias
+TODOS_DIAS = todos_dias
 from buscador_evaluacion import buscar_sesion_evaluacion
 
 # ---------------------------------------------------------------------------
@@ -17,7 +17,6 @@ from buscador_evaluacion import buscar_sesion_evaluacion
 # ---------------------------------------------------------------------------
 
 def _encontrar_json() -> str:
-    """Busca horarios_consolidados.json en ../data/ relativo al script."""
     base = os.path.dirname(os.path.abspath(__file__))
     candidatos = [
         os.path.join(base, "..", "data", "horarios_consolidados.json"),
@@ -29,13 +28,9 @@ def _encontrar_json() -> str:
             return os.path.normpath(ruta)
     return os.path.normpath(candidatos[0])
 
+
 @st.cache_data
 def cargar_datos_desde_json(path: str):
-    """
-    Devuelve (niveles_ordenados, grupos_por_nivel, grupos_por_codigo) del JSON consolidado.
-    - grupos_por_nivel:  {nivel: [curso, ...]}
-    - grupos_por_codigo: {codigo_profesor: {nivel: [curso, ...]}}
-    """
     try:
         with open(path, encoding="utf-8") as f:
             datos = json.load(f)
@@ -55,78 +50,49 @@ def cargar_datos_desde_json(path: str):
         st.warning(f"⚠️ No se pudo cargar `{path}` ({e}). Usando niveles por defecto.")
         return ["ESO", "BACH", "FP"], {}, {}
 
+
 NIVELES_DISPONIBLES, GRUPOS_POR_NIVEL, GRUPOS_POR_CODIGO = cargar_datos_desde_json(_encontrar_json())
 
 st.set_page_config(page_title="Sesión de Evaluación", layout="wide")
 st.title("Buscador de Sesión de Evaluación")
 
+
 def build_config_from_params(
-    nivel, dias, hora_recreo, sesiones_por_dia,
+    nivel, dias, hora_recreo,
     permitir_septima_hora, permitir_recreo, permitir_horas_no_obligatorias
 ) -> Config:
     return Config(
         hora_recreo=hora_recreo,
-        sesiones_por_dia=sesiones_por_dia,
+        sesiones_por_dia=7,
         permitir_septima_hora=permitir_septima_hora,
         permitir_recreo=permitir_recreo,
         permitir_horas_no_obligatorias=permitir_horas_no_obligatorias,
         dias_disponibles_por_nivel={nivel: dias},
     )
 
-def resolver_recreos(profesores: list, sesiones_recreo: list, permitir_recreo: bool) -> set:
-    """
-    Extrae las horas de inicio reales de las sesiones indicadas en `sesiones_recreo`
-    a partir de los eventos cargados de los PDFs, y las devuelve como set de strings.
-    Si permitir_recreo=True devuelve set vacío (no se excluye nada).
-    """
-    if permitir_recreo:
-        return set()
 
-    # Recopilar todos los puntos de inicio ordenados (sin duplicados)
-    puntos: set = set()
-    for prof in profesores:
-        for evento in prof.get("eventos", []):
-            ini = evento.get("inicio", "").strip()
-            if ini:
-                puntos.add(ini)
-
-    puntos_ordenados = sorted(puntos, key=lambda h: int(h.split(":")[0]) * 60 + int(h.split(":")[1]))
-
-    # Cada sesión N corresponde al (N-1)-ésimo punto de inicio
-    resultado = set()
-    for sesion in sesiones_recreo:
-        idx = sesion - 1
-        if 0 <= idx < len(puntos_ordenados):
-            resultado.add(puntos_ordenados[idx])
-    return resultado
-
-
-
+# ---------------------------------------------------------------------------
+# SIDEBAR
+# ---------------------------------------------------------------------------
 
 with st.sidebar:
     st.header("⚙️ Configuración")
 
     with st.expander("🏫 Nivel y días", expanded=True):
-        nivel = st.selectbox(
-            "Nivel del grupo",
-            options=NIVELES_DISPONIBLES,
-        )
+        nivel = st.selectbox("Nivel del grupo", options=NIVELES_DISPONIBLES)
         grupos_del_nivel = GRUPOS_POR_NIVEL.get(nivel, [])
 
         col_cb, col_btn = st.columns([3, 1])
         with col_cb:
             seleccionar_todos_cursos = st.checkbox(
-                "Seleccionar todos los cursos",
-                value=True,
-                key="cb_todos_cursos",
-                help="Marca todos por defecto. Luego puedes quitar los que no quieras.",
+                "Seleccionar todos los cursos", value=True, key="cb_todos_cursos",
+                help="Marca todos por defecto.",
             )
         with col_btn:
-            if st.button("Limpiar", key="btn_limpiar_cursos", help="Deseleccionar todos los cursos"):
+            if st.button("Limpiar", key="btn_limpiar_cursos"):
                 st.session_state["cursos_sel"] = []
                 st.rerun()
 
-        # Sincronizar session_state con el checkbox
         if seleccionar_todos_cursos:
             st.session_state["cursos_sel"] = grupos_del_nivel
 
@@ -137,34 +103,24 @@ with st.sidebar:
             "Cursos",
             options=grupos_del_nivel,
             default=st.session_state["cursos_sel"],
-            help="Puedes añadir o quitar cursos individualmente.",
         )
         st.session_state["cursos_sel"] = cursos
-        # TODO Sprint 1: sustituir todos_dias por config.get_dias_nivel(nivel)
-        # cuando Lucas tenga inferir_nivel() funcionando
+
         dias = st.multiselect(
             "Días disponibles para evaluación",
-            options=todos_dias,
-            default=todos_dias,
+            options=TODOS_DIAS,
+            default=TODOS_DIAS,
         )
 
     duracion_minutos = st.slider(
         "⏱️ Duración de la reunión (minutos)",
-        min_value=30,
-        max_value=120,
-        value=55,
-        step=5,
-        help="El buscador encontrará un bloque contiguo libre de al menos esta duración.",
+        min_value=30, max_value=120, value=55, step=5,
     )
-    sesiones_por_dia = 15
-    sesiones_recreo = [4, 8, 13]  # Sesiones de recreo hardcodeadas
+
+    sesiones_recreo = [4]
 
     with st.expander("🚦 Restricciones", expanded=True):
-        permitir_septima_hora = st.checkbox(
-            "¿Permitir 7ª hora?",
-            value=False,
-            help="ℹ️ Actívalo solo si el centro admite reuniones en la última sesión.",
-        )
+        permitir_septima_hora = st.checkbox("¿Permitir 7ª hora?", value=False)
         permitir_recreo = st.checkbox("¿Permitir recreo?", value=False)
         if permitir_recreo:
             st.warning("⚠️ El recreo es tiempo de descanso del profesorado.")
@@ -176,13 +132,13 @@ with st.sidebar:
         nivel=nivel,
         dias=dias,
         hora_recreo=sesiones_recreo[0] if sesiones_recreo else 4,
-        sesiones_por_dia=sesiones_por_dia,
         permitir_septima_hora=permitir_septima_hora,
         permitir_recreo=permitir_recreo,
         permitir_horas_no_obligatorias=permitir_horas_no_obligatorias,
     )
 
 st.title("Sistema de Búsqueda de Huecos en Horarios")
+
 # ---------------------------------------------------------------------------
 # ESTADO
 # ---------------------------------------------------------------------------
@@ -190,8 +146,8 @@ st.title("Sistema de Búsqueda de Huecos en Horarios")
 if "profesores" not in st.session_state:
     st.session_state["profesores"] = []
 
-if "resultado" not in st.session_state:
-    st.session_state["resultado"] = None
+if "resultados_por_curso" not in st.session_state:
+    st.session_state["resultados_por_curso"] = {}
 
 # ---------------------------------------------------------------------------
 # PASO 1: CARGAR PDF
@@ -234,66 +190,62 @@ if st.button("Cargar horarios desde PDF"):
             st.error(f"Error al procesar los PDFs: {e}")
 
 # ---------------------------------------------------------------------------
-# PASO 2: SELECCIONAR EQUIPO
+# PASO 2: SELECCIONAR EQUIPO POR CURSO
 # ---------------------------------------------------------------------------
 
 profesores = st.session_state["profesores"]
 
+
+def profesores_de_curso(curso_sel, nivel_sel):
+    nombres, codigos = [], {}
+    for p in profesores:
+        codigo = p["profesor"]["codigo"]
+        cursos_prof = set(GRUPOS_POR_CODIGO.get(codigo, {}).get(nivel_sel, []))
+        if curso_sel in cursos_prof:
+            nombre = p["profesor"].get("nombre", codigo)
+            nombres.append(nombre)
+            codigos[nombre] = codigo
+    return nombres, codigos
+
+
 if profesores:
-    st.header("2. Seleccionar equipo educativo")
-
-    nombres_disponibles = [
-        p["profesor"].get("nombre", p["profesor"].get("codigo", "SIN_NOMBRE"))
-        for p in profesores
-    ]
-    codigos_por_nombre = {
-        p["profesor"].get("nombre", p["profesor"].get("codigo", "SIN_NOMBRE")): p["profesor"]["codigo"]
-        for p in profesores
-    }
-
-    # Preseleccionar profesores que impartan en el nivel y cursos elegidos en el sidebar
-    def profesores_del_nivel_y_cursos(nivel_sel, cursos_sel):
-        cursos_set = set(cursos_sel)
-        preseleccionados = []
-        for p in profesores:
-            codigo = p["profesor"]["codigo"]
-            grupos_prof = GRUPOS_POR_CODIGO.get(codigo, {})
-            cursos_prof = set(grupos_prof.get(nivel_sel, []))
-            if cursos_prof & cursos_set:  # intersección: da clase en algún curso seleccionado
-                preseleccionados.append(
-                    p["profesor"].get("nombre", p["profesor"].get("codigo", "SIN_NOMBRE"))
-                )
-        return preseleccionados
-
-    default_seleccionados = profesores_del_nivel_y_cursos(nivel, cursos)
-
-    col_cb2, col_btn2 = st.columns([3, 1])
-    with col_cb2:
-        seleccionar_todos_profs = st.checkbox(
-            "Seleccionar todos los profesores del nivel",
-            value=True,
-            key="cb_todos_profs",
-            help="Marca todos por defecto. Luego puedes quitar los que no quieras.",
-        )
-    with col_btn2:
-        if st.button("Limpiar", key="btn_limpiar_profs", help="Deseleccionar todos los profesores"):
-            st.session_state["profs_sel"] = []
-            st.rerun()
-
-    # Sincronizar session_state con el checkbox
-    if seleccionar_todos_profs:
-        st.session_state["profs_sel"] = default_seleccionados
-
-    if "profs_sel" not in st.session_state:
-        st.session_state["profs_sel"] = []
-
-    seleccionados = st.multiselect(
-        "Profesores del equipo:",
-        options=nombres_disponibles,
-        default=st.session_state["profs_sel"],
-        help="Preseleccionados según nivel y cursos. Puedes añadir o quitar individualmente.",
+    st.header("2. Equipo educativo por curso")
+    st.caption(
+        "Profesores preseleccionados automáticamente por curso. "
+        "Puedes añadir o quitar individualmente."
     )
-    st.session_state["profs_sel"] = seleccionados
+
+    equipos_por_curso = {}
+    for curso in cursos:
+        nombres_curso, _ = profesores_de_curso(curso, nivel)
+        key_curso = f"equipo_{curso}"
+
+        if key_curso not in st.session_state:
+            st.session_state[key_curso] = nombres_curso
+
+        nombres_disponibles_todos = [
+            p["profesor"].get("nombre", p["profesor"].get("codigo", "SIN_NOMBRE"))
+            for p in profesores
+        ]
+
+        with st.expander(
+            f"📋 {curso} — {len(st.session_state[key_curso])} profesores",
+            expanded=False,
+        ):
+            col_sel, col_btn = st.columns([3, 1])
+            with col_sel:
+                seleccionados_curso = st.multiselect(
+                    "Profesores:",
+                    options=nombres_disponibles_todos,
+                    default=st.session_state[key_curso],
+                    key=f"ms_{curso}",
+                )
+            with col_btn:
+                if st.button("Resetear", key=f"reset_{curso}"):
+                    st.session_state[key_curso] = nombres_curso
+                    st.rerun()
+            st.session_state[key_curso] = seleccionados_curso
+            equipos_por_curso[curso] = seleccionados_curso
 
     # ---------------------------------------------------------------------------
     # PASO 3: BUSCAR
@@ -301,86 +253,122 @@ if profesores:
 
     st.header("3. Buscar sesión de evaluación")
 
-    if st.button("Buscar sesión óptima"):
-        if not seleccionados:
-            st.error("Selecciona al menos un profesor.")
+    st.info(
+        "ℹ️ Los cursos se procesan en orden. Si un profesor comparte cursos "
+        "(ej. da clase a 2BACH-A y 2BACH-B), el slot asignado al primer curso "
+        "se bloquea automáticamente antes de buscar el del siguiente, "
+        "evitando que el profesor coincida en dos reuniones a la vez."
+    )
+
+    if st.button("Buscar sesión óptima para cada curso"):
+        if not cursos:
+            st.error("Selecciona al menos un curso en el sidebar.")
         else:
-            equipo_codigos = {codigos_por_nombre[nombre] for nombre in seleccionados}
+            codigos_por_nombre = {
+                p["profesor"].get("nombre", p["profesor"].get("codigo", "SIN_NOMBRE")): p["profesor"]["codigo"]
+                for p in profesores
+            }
 
-            # Recreo: calculado dinámicamente desde los horarios cargados
-            recreos = resolver_recreos(profesores, sesiones_recreo, config.permitir_recreo)
+            resultados_por_curso = {}
 
-            # Días con 7ª hora: si no se permite, excluir la última sesión
-            # filtrando los candidatos por sesiones_por_dia (se gestiona en buscador vía config)
-            resultado = buscar_sesion_evaluacion(
-                profesores=profesores,
-                equipo_codigos=equipo_codigos,
-                recreos=recreos,
-                dias_disponibles=dias if dias else None,
-                duracion_minutos=duracion_minutos,
-            )
+            for curso in cursos:
+                nombres_sel = st.session_state.get(f"equipo_{curso}", [])
+                if not nombres_sel:
+                    continue
 
-            st.session_state["resultado"] = resultado
+                equipo_codigos = {
+                    codigos_por_nombre[n]
+                    for n in nombres_sel
+                    if n in codigos_por_nombre
+                }
 
-    # ---------------------------------------------------------------------------
-    # PASO 4: MOSTRAR RESULTADO
-    # ---------------------------------------------------------------------------
-
-    resultado = st.session_state["resultado"]
-
-    if resultado is not None:
-        st.header("4. Resultado")
-
-        if resultado.sin_solucion:
-            st.error(f"❌ Sin solución: {resultado.explicacion}")
-
-            if resultado.diagnostico_bloqueadores:
-                st.subheader("🔒 Profesores que bloquean más slots")
-                st.caption("Indica cuántos franjas horarias bloquea cada profesor. Los primeros son los que más dificultan encontrar un hueco común.")
-
-                filas_diag = [
-                    {"Profesor": nombre, "Slots bloqueados": num_slots}
-                    for nombre, num_slots in resultado.diagnostico_bloqueadores
-                ]
-                df_diag = pd.DataFrame(filas_diag)
-                st.dataframe(df_diag, use_container_width=True, hide_index=True)
-        else:
-            st.success(
-                f"✅ Slot óptimo: **{resultado.dia}** de **{resultado.hora_inicio}** a **{resultado.hora_fin}**"
-            )
-
-            col1, col2 = st.columns(2)
-            with col1:
-                st.metric("Coste total", resultado.coste_total)
-            with col2:
-                st.metric("Peor penalización", resultado.peor_penalizacion)
-
-            st.subheader("Detalle por profesor")
-
-            filas = []
-            for d in resultado.detalle:
-                cercana = (
-                    f"{d.sesion_ocupada_mas_cercana[0]} - {d.sesion_ocupada_mas_cercana[1]}"
-                    if d.sesion_ocupada_mas_cercana
-                    else "—"
+                # ── CLAVE: pasar los resultados ya asignados ──────────────
+                # El dict crece curso a curso. Cuando se busca 2BACH-B,
+                # ya contiene el resultado de 2BACH-A y bloquea sus slots para evitar solapamiento.
+                resultado = buscar_sesion_evaluacion(
+                    profesores=profesores,
+                    equipo_codigos=equipo_codigos,
+                    config=config,
+                    dias_disponibles=dias if dias else None,
+                    duracion_minutos=duracion_minutos,
+                    resultados_previos=resultados_por_curso,  # ← anti-solapamiento automático
                 )
-                filas.append({
-                    "Profesor": d.nombre,
-                    "Penalización": d.penalizacion,
-                    "Sesión más cercana": cercana
-                })
+                resultados_por_curso[curso] = resultado
 
-            df = pd.DataFrame(filas)
-            st.dataframe(df, use_container_width=True, hide_index=True)
+            st.session_state["resultados_por_curso"] = resultados_por_curso
 
-            # Exportar
+    # ---------------------------------------------------------------------------
+    # PASO 4: MOSTRAR RESULTADOS
+    # ---------------------------------------------------------------------------
+
+    resultados_por_curso = st.session_state.get("resultados_por_curso", {})
+
+    if resultados_por_curso:
+        st.header("4. Resultados por curso")
+
+        filas_excel = []
+
+        for curso, resultado in resultados_por_curso.items():
+            if resultado.sin_solucion:
+                with st.expander(f"❌ {curso} — Sin solución", expanded=False):
+                    st.error(resultado.explicacion)
+                    if resultado.diagnostico_bloqueadores:
+                        st.subheader("🔒 Profesores que bloquean más slots")
+                        df_diag = pd.DataFrame([
+                            {"Profesor": n, "Slots bloqueados": s}
+                            for n, s in resultado.diagnostico_bloqueadores
+                        ])
+                        st.dataframe(df_diag, use_container_width=True, hide_index=True)
+            else:
+                avisos = []
+                if resultado.es_septima: avisos.append("⚠️ 7ª hora")
+                if resultado.es_recreo:  avisos.append("⚠️ Recreo")
+                aviso_str = "  " + " · ".join(avisos) if avisos else ""
+
+                label = (
+                    f"✅ {curso} — {resultado.dia} · "
+                    f"{resultado.hora_inicio} a {resultado.hora_fin}{aviso_str}"
+                )
+                with st.expander(label, expanded=False):
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.metric("Coste total", resultado.coste_total)
+                    with col2:
+                        st.metric("Peor penalización", resultado.peor_penalizacion)
+
+                    filas = []
+                    for d in resultado.detalle:
+                        cercana = (
+                            f"{d.sesion_ocupada_mas_cercana[0]} - {d.sesion_ocupada_mas_cercana[1]}"
+                            if d.sesion_ocupada_mas_cercana else "—"
+                        )
+                        filas.append({
+                            "Profesor": d.nombre,
+                            "Penalización": d.penalizacion,
+                            "Sesión más cercana": cercana,
+                            "Tiene eventos ese día": "Sí" if d.tiene_eventos_ese_dia else "No",
+                        })
+                    df = pd.DataFrame(filas)
+                    st.dataframe(df, use_container_width=True, hide_index=True)
+
+                    for fila in filas:
+                        filas_excel.append({
+                            "Curso": curso,
+                            "Día": resultado.dia,
+                            "Hora inicio": resultado.hora_inicio,
+                            "Hora fin": resultado.hora_fin,
+                            **fila,
+                        })
+
+        if filas_excel:
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
-                df.to_excel(writer, index=False, sheet_name="Evaluación")
+                pd.DataFrame(filas_excel).to_excel(
+                    writer, index=False, sheet_name="Evaluación"
+                )
             buffer.seek(0)
-
             st.download_button(
-                label="Exportar a Excel",
+                label="📥 Exportar todos los resultados a Excel",
                 data=buffer,
                 file_name="sesion_evaluacion.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
