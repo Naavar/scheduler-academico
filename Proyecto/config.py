@@ -17,9 +17,9 @@ class Config:
             raise ValueError(
                 f"hora_recreo={self.hora_recreo} debe estar entre 1 y {self.sesiones_por_dia}"
             )
-        if not (1 <= self.sesiones_por_dia <= 10):
+        if not (1 <= self.sesiones_por_dia <= 20):
             raise ValueError(
-                f"sesiones_por_dia={self.sesiones_por_dia} debe estar entre 1 y 10"
+                f"sesiones_por_dia={self.sesiones_por_dia} debe estar entre 1 y 20"
             )
 
     def get_dias_nivel(self, nivel: str) -> list[str]:
