@@ -207,3 +207,14 @@ def clasificar_grupos(prefijos):
 
     # Eliminar categorías vacías
     return {k: v for k, v in resultado.items() if v}
+    
+def es_hora_comida(texto_hora):
+    """Detecta si un intervalo corresponde a la hora de comer (14:25-15:20).
+    Nunca debe usarse para reuniones de evaluación.
+    """
+    try:
+        if "14:25" in str(texto_hora):
+            return True
+    except:
+        pass
+    return False
