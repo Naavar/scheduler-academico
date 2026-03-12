@@ -11,23 +11,32 @@ try:
     from buscador_evaluacion import Resultado, buscar_sesion_evaluacion
     from config import Config
     from validacion import validate_schedule
+    from constants import (
+        DEFAULT_PDF_NAME,
+        DEFAULT_JSON_NAME,
+        DEFAULT_RESULTS_NAME,
+        DEFAULT_CONFIG_NAME,
+        NIVEL_CONFIG_ALIAS,
+        DURACION_MINUTOS,
+    )
 except ImportError:
     from Proyecto.buscador_evaluacion import Resultado, buscar_sesion_evaluacion
     from Proyecto.config import Config
     from Proyecto.validacion import validate_schedule
+    from Proyecto.constants import (
+        DEFAULT_PDF_NAME,
+        DEFAULT_JSON_NAME,
+        DEFAULT_RESULTS_NAME,
+        DEFAULT_CONFIG_NAME,
+        NIVEL_CONFIG_ALIAS,
+        DURACION_MINUTOS,
+    )
 
 
 PROJECT_DIR = Path(__file__).resolve().parent
 REPO_DIR = PROJECT_DIR.parent
 DATA_DIR = REPO_DIR / "data"
 LOGS_DIR = REPO_DIR / "logs"
-DEFAULT_PDF_NAME = "HORARIOS_25_26 - Docentes_anon.pdf"
-DEFAULT_JSON_NAME = "horarios_consolidados.json"
-DEFAULT_RESULTS_NAME = "resultados_evaluacion.json"
-DEFAULT_CONFIG_NAME = "config.json"
-NIVEL_CONFIG_ALIAS = {
-    "BACHILLERATO": "BACH",
-}
 
 
 def get_extractor_dependencies():
@@ -96,7 +105,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--duracion-minutos",
         type=int,
-        default=55,
+        default=DURACION_MINUTOS,
         help="Duración mínima de la sesión de evaluación.",
     )
     parser.add_argument(

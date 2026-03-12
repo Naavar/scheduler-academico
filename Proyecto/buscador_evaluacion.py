@@ -33,6 +33,19 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set, Tuple
 
+from constants import (
+    DIAS_VALIDOS,
+    DIA_A_IDX,
+    ESPECIALIZACION_PREFIJOS,
+    MINUTOS_POR_HORA,
+    PENALIZACION_MAX,
+    PESO_SIN_SESIONES,
+    PESO_SEPTIMA_HORA,
+    PESO_RECREO,
+    PESO_HORA_NO_OBLIGATORIA,
+    SCORE_DESEMPATE_MULTIPLICADOR,
+)
+
 try:
     from config import Config
 except ImportError:
@@ -43,12 +56,7 @@ from utils import (
     es_hora_recreo,             # detecta intervalos de recreo (11:00-11:30, 18:05-18:35)
     es_hora_comida,             # detecta hora de comer (14:25-15:20) → excluida siempre
     limpiar_texto,              # limpia textos de artefactos PDF
-    _ESPECIALIZACION_PREFIJOS,  # set de ciclos conocidos: BIG-D, CIB-R, VIR-V, PYT
 )
-
-
-DIAS_VALIDOS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
-DIA_A_IDX = {d: i for i, d in enumerate(DIAS_VALIDOS)}
 
 
 # ===========================================================================
@@ -136,8 +144,8 @@ def _deducir_curso(grupo: str, nivel: str) -> str:
 
     elif nivel == "ESPECIALIZACION":
         # Cada prefijo de especialización es su propio ciclo independiente
-        # _ESPECIALIZACION_PREFIJOS viene de utils.py: {"BIG-D","CIB-R","VIR-V","PYT"}
-        if grupo in _ESPECIALIZACION_PREFIJOS:
+        # ESPECIALIZACION_PREFIJOS viene de utils.py: {"BIG-D","CIB-R","VIR-V","PYT"}
+        if grupo in ESPECIALIZACION_PREFIJOS:
             return grupo
         # Grupo desconocido → agrupar bajo "Otros" para no perderlo
         return "Otros"
@@ -208,11 +216,11 @@ def cargar_json(ruta: str) -> List[dict]:
 
 def hora_a_minutos(h: str) -> int:
     hh, mm = h.strip().split(":")
-    return int(hh) * 60 + int(mm)
+    return int(hh) * MINUTOS_POR_HORA + int(mm)
 
 
 def minutos_a_hora(m: int) -> str:
-    return f"{m // 60}:{m % 60:02d}"
+    return f"{m // MINUTOS_POR_HORA}:{m % MINUTOS_POR_HORA:02d}"
 
 
 # ===========================================================================
@@ -376,8 +384,12 @@ def build_indices(profesores: List[dict], recreos: Set[str], config=None) -> Ind
 # ===========================================================================
 
 def calcular_peso_base(franjas_dia: List[int], franja_idx: int) -> int:
+    """
+    Peso base = distancia mínima al evento más cercano ese día.
+    Si no tiene sesiones → PESO_SIN_SESIONES.
+    """
     if not franjas_dia:
-        return 8
+        return PESO_SIN_SESIONES
     pos = bisect.bisect_left(franjas_dia, franja_idx)
     mejor = float("inf")
     if pos < len(franjas_dia):
@@ -394,6 +406,14 @@ def calcular_peso(
     indices: Indices,
     config=None,
 ) -> int:
+    """
+    Tabla de pesos:
+      - Sin sesiones ese día         → base = PESO_SIN_SESIONES
+      - Distancia a sesión cercana   → base = distancia
+      - 7ª hora (permitida)          → +PESO_SEPTIMA_HORA
+      - Recreo (permitido)           → +PESO_RECREO
+      - Hora no obligatoria          → +PESO_HORA_NO_OBLIGATORIA
+    """
     franjas_dia = indices.ocupado_por_dia.get(codigo, {}).get(dia_idx, [])
     peso = calcular_peso_base(franjas_dia, franja_idx)
 
@@ -401,16 +421,16 @@ def calcular_peso(
         return peso
 
     if config.permitir_septima_hora and franja_idx == config.sesiones_por_dia - 1:
-        peso += 2
+        peso += PESO_SEPTIMA_HORA
 
     recreo_idx = _indice_recreo(indices, config)
     if config.permitir_recreo and recreo_idx is not None and franja_idx == recreo_idx:
-        peso += 3
+        peso += PESO_RECREO
 
     if config.permitir_horas_no_obligatorias:
         ini_min = hora_a_minutos(indices.franjas[franja_idx][0])
         if ini_min in _horas_no_obligatorias(codigo, indices):
-            peso += 2
+            peso += PESO_HORA_NO_OBLIGATORIA
 
     return peso
 
@@ -515,7 +535,7 @@ def find_best_slot(
     equipo_codigos: Set[str],
     indices: Indices,
     config=None,
-    penalizacion_max: int = 8,
+    penalizacion_max: int = PENALIZACION_MAX,
     dias_disponibles: Optional[List[str]] = None,
     duracion_minutos: int = 0,
 ) -> Resultado:
@@ -540,7 +560,7 @@ def find_best_slot(
         dia_idx, f_start, _ = c
         total = sum(calcular_peso(cod, dia_idx, f_start, indices, config) for cod in equipo_lista)
         peor  = max(calcular_peso(cod, dia_idx, f_start, indices, config) for cod in equipo_lista)
-        return (total, peor, dia_idx * 100 + f_start)
+        return (total, peor, dia_idx * SCORE_DESEMPATE_MULTIPLICADOR + f_start)
 
     candidatos_ordenados = sorted(candidatos, key=score_estimado)
     INF = float("inf")
@@ -584,7 +604,7 @@ def find_best_slot(
                 break
 
         if not podado:
-            score_actual = (suma_parcial, max_parcial, dia_idx * 100 + f_start)
+            score_actual = (suma_parcial, max_parcial, dia_idx * SCORE_DESEMPATE_MULTIPLICADOR + f_start)
             if score_actual < mejor_score:
                 mejor_score = score_actual
                 mejor_slot = candidato
@@ -917,7 +937,7 @@ def buscar_sesion_evaluacion(
     profesores: List[dict],
     equipo_codigos: Set[str],
     config=None,
-    penalizacion_max: int = 8,
+    penalizacion_max: int = PENALIZACION_MAX,
     dias_disponibles: Optional[List[str]] = None,
     duracion_minutos: int = 0,
     resultados_previos: Optional[Dict[str, "Resultado"]] = None,
