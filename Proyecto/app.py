@@ -8,6 +8,13 @@ import pandas as pd
 
 from extractor_pdf import procesar_todo_automaticamente
 from config import Config, todos_dias
+from constants import (
+    NIVELES_DEFAULT,
+    SESIONES_POR_DIA,
+    DURACION_MINUTOS,
+    DEFAULT_EXPORT_EXCEL_NAME,
+    EXPORT_SHEET_NAME,
+)
 
 TODOS_DIAS = todos_dias
 from buscador_evaluacion import buscar_sesion_evaluacion
@@ -45,10 +52,10 @@ def cargar_datos_desde_json(path: str):
                 grupos_por_nivel.setdefault(nivel, set()).update(cursos)
         niveles = sorted(grupos_por_nivel.keys())
         grupos_por_nivel = {n: sorted(g) for n, g in grupos_por_nivel.items()}
-        return (niveles or ["ESO", "BACH", "FP"]), grupos_por_nivel, grupos_por_codigo
+        return (niveles or NIVELES_DEFAULT), grupos_por_nivel, grupos_por_codigo
     except (FileNotFoundError, json.JSONDecodeError) as e:
         st.warning(f"⚠️ No se pudo cargar `{path}` ({e}). Usando niveles por defecto.")
-        return ["ESO", "BACH", "FP"], {}, {}
+        return NIVELES_DEFAULT, {}, {}
 
 
 NIVELES_DISPONIBLES, GRUPOS_POR_NIVEL, GRUPOS_POR_CODIGO = cargar_datos_desde_json(_encontrar_json())
@@ -57,13 +64,13 @@ st.set_page_config(page_title="Sesión de Evaluación", layout="wide")
 st.title("Buscador de Sesión de Evaluación")
 
 
+
 def build_config_from_params(
-    nivel, dias, hora_recreo,
+    nivel, dias,
     permitir_septima_hora, permitir_recreo, permitir_horas_no_obligatorias
 ) -> Config:
     return Config(
-        hora_recreo=hora_recreo,
-        sesiones_por_dia=7,
+        sesiones_por_dia=SESIONES_POR_DIA,
         permitir_septima_hora=permitir_septima_hora,
         permitir_recreo=permitir_recreo,
         permitir_horas_no_obligatorias=permitir_horas_no_obligatorias,
@@ -117,8 +124,6 @@ with st.sidebar:
         min_value=30, max_value=120, value=55, step=5,
     )
 
-    sesiones_recreo = [4]
-
     with st.expander("🚦 Restricciones", expanded=True):
         permitir_septima_hora = st.checkbox("¿Permitir 7ª hora?", value=False)
         permitir_recreo = st.checkbox("¿Permitir recreo?", value=False)
@@ -131,7 +136,6 @@ with st.sidebar:
     config = build_config_from_params(
         nivel=nivel,
         dias=dias,
-        hora_recreo=sesiones_recreo[0] if sesiones_recreo else 4,
         permitir_septima_hora=permitir_septima_hora,
         permitir_recreo=permitir_recreo,
         permitir_horas_no_obligatorias=permitir_horas_no_obligatorias,
@@ -282,16 +286,13 @@ if profesores:
                     if n in codigos_por_nombre
                 }
 
-                # ── CLAVE: pasar los resultados ya asignados ──────────────
-                # El dict crece curso a curso. Cuando se busca 2BACH-B,
-                # ya contiene el resultado de 2BACH-A y bloquea sus slots para evitar solapamiento.
                 resultado = buscar_sesion_evaluacion(
                     profesores=profesores,
                     equipo_codigos=equipo_codigos,
                     config=config,
                     dias_disponibles=dias if dias else None,
                     duracion_minutos=duracion_minutos,
-                    resultados_previos=resultados_por_curso,  # ← anti-solapamiento automático
+                    resultados_previos=resultados_por_curso,
                 )
                 resultados_por_curso[curso] = resultado
 
@@ -364,12 +365,12 @@ if profesores:
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
                 pd.DataFrame(filas_excel).to_excel(
-                    writer, index=False, sheet_name="Evaluación"
+                    writer, index=False, sheet_name=EXPORT_SHEET_NAME
                 )
             buffer.seek(0)
             st.download_button(
                 label="📥 Exportar todos los resultados a Excel",
                 data=buffer,
-                file_name="sesion_evaluacion.xlsx",
+                file_name=DEFAULT_EXPORT_EXCEL_NAME,
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             )
