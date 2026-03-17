@@ -27,8 +27,6 @@ EXPORT_SHEET_NAME = "Evaluación"
 # CONFIGURACIÓN DE HORARIOS
 # =============================================================================
 
-SESIONES_POR_DIA = 7
-HORA_RECREO = 4
 DURACION_MINUTOS = 55
 MAX_SESIONES_POR_DIA = 20
 MINUTOS_POR_HORA = 60
