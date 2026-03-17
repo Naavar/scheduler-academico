@@ -9,22 +9,23 @@ from constants import (
 
 @dataclass
 class Config:
-    hora_recreo: int = HORA_RECREO
-    sesiones_por_dia: int = SESIONES_POR_DIA
+    horas_recreo: list = field(default_factory=lambda: [4, 9, 13])
+    sesiones_por_dia: int = 16
     permitir_septima_hora: bool = False
     permitir_recreo: bool = False
     permitir_horas_no_obligatorias: bool = False
     dias_disponibles_por_nivel: dict = field(default_factory=dict)
 
     def __post_init__(self):
-        if not (1 <= self.hora_recreo <= self.sesiones_por_dia):
-            raise ValueError(
-                f"hora_recreo={self.hora_recreo} debe estar entre 1 y {self.sesiones_por_dia}"
-            )
-        if not (1 <= self.sesiones_por_dia <= MAX_SESIONES_POR_DIA):
+        if not (1 <= self.sesiones_por_dia <= 20):
             raise ValueError(
                 f"sesiones_por_dia={self.sesiones_por_dia} debe estar entre 1 y {MAX_SESIONES_POR_DIA}"
             )
+        for h in self.horas_recreo:
+            if not (1 <= h <= self.sesiones_por_dia):
+                raise ValueError(
+                    f"hora_recreo={h} debe estar entre 1 y {self.sesiones_por_dia}"
+                )
 
     def get_dias_nivel(self, nivel: str) -> list[str]:
         return self.dias_disponibles_por_nivel.get(nivel, DIAS_VALIDOS)
