@@ -1,6 +1,33 @@
 import re
 from datetime import datetime, timedelta
 
+from constants import (
+    COLOR_UMBRAL_BLANCO_MIN,
+    COLOR_UMBRAL_BLANCO_PURO,
+    COLOR_UMBRAL_GRIS_MIN,
+    COLOR_UMBRAL_VARIACION_MAX,
+    DURACION_MINUTOS,
+    RECREO_MANANA,
+    RECREO_TARDE,
+    RECREO_KEYWORD,
+    SIMILITUD_MIN_RATIO,
+    SIMILITUD_MIN_LONGITUD,
+    ESPECIALIZACION_PREFIJOS,
+    CODIGO_ADMINISTRATIVO_IGNORAR,
+    NIVEL_ESO,
+    NIVEL_BACHILLERATO,
+    NIVEL_FP,
+    NIVEL_ESPECIALIZACION,
+    REGEX_CODIGO_GRUPO,
+    REGEX_PREFIJO_GRUPO,
+    REGEX_CODIGO_AULA,
+    REGEX_SEMI,
+    REGEX_SALA_LAB,
+    REGEX_ESO,
+    REGEX_DIV,
+    REGEX_BACH,
+)
+
 def es_color_valido(color):
     """Filtra colores de fondo (blancos puros).
 
@@ -13,7 +40,7 @@ def es_color_valido(color):
     try:
         r, g, b = color
         # Es fondo blanco si todos los canales son muy altos Y alguno es ~1.0
-        if min(r, g, b) > 0.94 and max(r, g, b) > 0.99:
+        if min(r, g, b) > COLOR_UMBRAL_BLANCO_MIN and max(r, g, b) > COLOR_UMBRAL_BLANCO_PURO:
             return False
         return True
     except:
@@ -29,7 +56,7 @@ def es_color_gris_claro(color):
     try:
         r, g, b = color
         # Gris: todos los canales > 0.9 y variación < 0.05
-        return min(r, g, b) > 0.9 and (max(r, g, b) - min(r, g, b)) < 0.05
+        return min(r, g, b) > COLOR_UMBRAL_GRIS_MIN and (max(r, g, b) - min(r, g, b)) < COLOR_UMBRAL_VARIACION_MAX
     except:
         return False
 
@@ -38,7 +65,7 @@ def colores_son_iguales(c1, c2):
     if c1 is None and c2 is None: return True
     if c1 is None or c2 is None: return False
     try:
-        return all(abs(a - b) < 0.05 for a, b in zip(c1, c2))
+        return all(abs(a - b) < COLOR_UMBRAL_VARIACION_MAX for a, b in zip(c1, c2))
     except:
         return False
 
@@ -56,13 +83,13 @@ def extraer_nombre_asignatura(texto):
     if not texto:
         return ""
     # Eliminar códigos de grupo (completos e incompletos): 1SSP~1SSPM, CIB-R~CIB-R, 1CAM~
-    limpio = re.sub(r'\b[\w-]+~[\w-]*', '', texto)
+    limpio = re.sub(REGEX_CODIGO_GRUPO, '', texto)
     # Eliminar códigos de aula como A23, B23, C14
-    limpio = re.sub(r'\b[A-Z]\d{2}\b', '', limpio)
+    limpio = re.sub(REGEX_CODIGO_AULA, '', limpio)
     # Eliminar códigos tipo SEMI1, SEMI2
-    limpio = re.sub(r'\bSEMI\d*\b', '', limpio)
+    limpio = re.sub(REGEX_SEMI, '', limpio)
     # Eliminar códigos tipo FCT-1, FCT-2 (sala/laboratorio)
-    limpio = re.sub(r'\b[A-Z]{2,}-\d+\b', '', limpio)
+    limpio = re.sub(REGEX_SALA_LAB, '', limpio)
     # Limpiar comas, puntos y espacios extra
     limpio = re.sub(r'[,\s]+', ' ', limpio).strip()
     return limpio
@@ -91,13 +118,13 @@ def textos_son_similares(texto1, texto2):
             if base1_norm != base2_norm:
                 return False
 
-        if len(t1) < 20 or len(t2) < 20: return False
+        if len(t1) < SIMILITUD_MIN_LONGITUD or len(t2) < SIMILITUD_MIN_LONGITUD: return False
         min_len = min(len(t1), len(t2))
-        if min_len >= 20 and t1[:20] == t2[:20]:
+        if min_len >= SIMILITUD_MIN_LONGITUD and t1[:SIMILITUD_MIN_LONGITUD] == t2[:SIMILITUD_MIN_LONGITUD]:
             palabras1, palabras2 = set(t1.split()), set(t2.split())
             comunes = palabras1 & palabras2
             total = palabras1 | palabras2
-            return (len(comunes) / len(total)) >= 0.7 if total else False
+            return (len(comunes) / len(total)) >= SIMILITUD_MIN_RATIO if total else False
     except:
         return False
     return False
@@ -120,7 +147,7 @@ def sumar_55_minutos(hora_str):
         # Usar la primera hora encontrada
         h, m = horas_encontradas[0]
         t = datetime.strptime(f"{h}:{m}", "%H:%M")
-        return (t + timedelta(minutes=55)).strftime("%H:%M")
+        return (t + timedelta(minutes=DURACION_MINUTOS)).strftime("%H:%M")
     except:
         return hora_str
 
@@ -129,9 +156,9 @@ def es_hora_recreo(texto_hora, texto_celda=""):
     try:
         hora = str(texto_hora).lower()
         contenido = str(texto_celda).lower().strip()
-        if "11:00" in hora and "11:30" in hora: return True
-        if "18:05" in hora and "18:35" in hora: return True
-        if contenido == "recreo": return True
+        if RECREO_MANANA[0] in hora and RECREO_MANANA[1] in hora: return True
+        if RECREO_TARDE[0] in hora and RECREO_TARDE[1] in hora: return True
+        if contenido == RECREO_KEYWORD: return True
         if hora.startswith('[') and hora.endswith(']'):
             coords = hora[1:-1].split('-')
             if len(coords) == 2 and (float(coords[1]) - float(coords[0])) < 25: return True
@@ -144,7 +171,6 @@ def es_hora_recreo(texto_hora, texto_celda=""):
 # ==============================================================================
 
 # Códigos conocidos de cursos de especialización
-_ESPECIALIZACION_PREFIJOS = {"BIG-D", "CIB-R", "VIR-V", "PYT"}
 
 
 def extraer_codigos_grupo(texto):
@@ -160,7 +186,7 @@ def extraer_codigos_grupo(texto):
     if not texto:
         return set()
     # Buscar todos los patrones XXX~YYY o XXX~ (incompletos)
-    matches = re.findall(r'\b([\w-]+)~[\w-]*', texto)
+    matches = re.findall(REGEX_PREFIJO_GRUPO, texto)
     return set(matches)
 
 
@@ -181,29 +207,40 @@ def clasificar_grupos(prefijos):
         Solo se incluyen categorías con al menos un grupo.
     """
     resultado = {
-        "ESO": [],
-        "BACHILLERATO": [],
-        "FP": [],
-        "ESPECIALIZACION": [],
+        NIVEL_ESO: [],
+        NIVEL_BACHILLERATO: [],
+        NIVEL_FP: [],
+        NIVEL_ESPECIALIZACION: [],
     }
 
     for prefijo in sorted(prefijos):
         # Saltar códigos administrativos (1104~CTVP, etc.)
-        if prefijo == "1104":
+        if prefijo == CODIGO_ADMINISTRATIVO_IGNORAR:
             continue
 
         # Cursos de especialización (lista cerrada)
-        if prefijo in _ESPECIALIZACION_PREFIJOS:
-            resultado["ESPECIALIZACION"].append(prefijo)
+        if prefijo in ESPECIALIZACION_PREFIJOS:
+            resultado[NIVEL_ESPECIALIZACION].append(prefijo)
         # ESO: E1A, E2B, E3C, E4D, DIV3, DIV4
-        elif re.match(r'^E[1-4][A-Z]$', prefijo) or re.match(r'^DIV[34]$', prefijo):
-            resultado["ESO"].append(prefijo)
+        elif re.match(REGEX_ESO, prefijo) or re.match(REGEX_DIV, prefijo):
+            resultado[NIVEL_ESO].append(prefijo)
         # Bachillerato: B1..., B2...
-        elif re.match(r'^B[12]', prefijo):
-            resultado["BACHILLERATO"].append(prefijo)
+        elif re.match(REGEX_BACH, prefijo):
+            resultado[NIVEL_BACHILLERATO].append(prefijo)
         # FP: todo lo demás (1DAM, 2ASI, 1SMR, 1FPB, etc.)
         else:
-            resultado["FP"].append(prefijo)
+            resultado[NIVEL_FP].append(prefijo)
 
     # Eliminar categorías vacías
     return {k: v for k, v in resultado.items() if v}
+    
+def es_hora_comida(texto_hora):
+    """Detecta si un intervalo corresponde a la hora de comer (14:25-15:20).
+    Nunca debe usarse para reuniones de evaluación.
+    """
+    try:
+        if "14:25" in str(texto_hora):
+            return True
+    except:
+        pass
+    return False

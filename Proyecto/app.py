@@ -7,9 +7,17 @@ import streamlit as st
 import pandas as pd
 
 from extractor_pdf import procesar_todo_automaticamente
-from config import Config, todos_dias
-
-TODOS_DIAS = todos_dias
+from config import Config
+from constants import (
+    DIAS_VALIDOS,
+    DEFAULT_JSON_NAME,
+    DEFAULT_EXPORT_EXCEL_NAME,
+    EXPORT_SHEET_NAME,
+    SESIONES_POR_DIA,
+    HORA_RECREO,
+    DURACION_MINUTOS,
+    NIVELES_DEFAULT,
+)
 from buscador_evaluacion import buscar_sesion_evaluacion
 
 # ---------------------------------------------------------------------------
@@ -19,9 +27,9 @@ from buscador_evaluacion import buscar_sesion_evaluacion
 def _encontrar_json() -> str:
     base = os.path.dirname(os.path.abspath(__file__))
     candidatos = [
-        os.path.join(base, "..", "data", "horarios_consolidados.json"),
-        os.path.join(os.getcwd(), "..", "data", "horarios_consolidados.json"),
-        os.path.join(os.getcwd(), "data", "horarios_consolidados.json"),
+        os.path.join(base, "..", "data", DEFAULT_JSON_NAME),
+        os.path.join(os.getcwd(), "..", "data", DEFAULT_JSON_NAME),
+        os.path.join(os.getcwd(), "data", DEFAULT_JSON_NAME),
     ]
     for ruta in candidatos:
         if os.path.isfile(ruta):
@@ -45,10 +53,10 @@ def cargar_datos_desde_json(path: str):
                 grupos_por_nivel.setdefault(nivel, set()).update(cursos)
         niveles = sorted(grupos_por_nivel.keys())
         grupos_por_nivel = {n: sorted(g) for n, g in grupos_por_nivel.items()}
-        return (niveles or ["ESO", "BACH", "FP"]), grupos_por_nivel, grupos_por_codigo
+        return (niveles or NIVELES_DEFAULT), grupos_por_nivel, grupos_por_codigo
     except (FileNotFoundError, json.JSONDecodeError) as e:
         st.warning(f"⚠️ No se pudo cargar `{path}` ({e}). Usando niveles por defecto.")
-        return ["ESO", "BACH", "FP"], {}, {}
+        return NIVELES_DEFAULT, {}, {}
 
 
 NIVELES_DISPONIBLES, GRUPOS_POR_NIVEL, GRUPOS_POR_CODIGO = cargar_datos_desde_json(_encontrar_json())
@@ -63,7 +71,7 @@ def build_config_from_params(
 ) -> Config:
     return Config(
         hora_recreo=hora_recreo,
-        sesiones_por_dia=7,
+        sesiones_por_dia=SESIONES_POR_DIA,
         permitir_septima_hora=permitir_septima_hora,
         permitir_recreo=permitir_recreo,
         permitir_horas_no_obligatorias=permitir_horas_no_obligatorias,
@@ -108,16 +116,16 @@ with st.sidebar:
 
         dias = st.multiselect(
             "Días disponibles para evaluación",
-            options=TODOS_DIAS,
-            default=TODOS_DIAS,
+            options=DIAS_VALIDOS,
+            default=DIAS_VALIDOS,
         )
 
     duracion_minutos = st.slider(
         "⏱️ Duración de la reunión (minutos)",
-        min_value=30, max_value=120, value=55, step=5,
+        min_value=30, max_value=120, value=DURACION_MINUTOS, step=5,
     )
 
-    sesiones_recreo = [4]
+    sesiones_recreo = [HORA_RECREO]
 
     with st.expander("🚦 Restricciones", expanded=True):
         permitir_septima_hora = st.checkbox("¿Permitir 7ª hora?", value=False)
@@ -131,7 +139,7 @@ with st.sidebar:
     config = build_config_from_params(
         nivel=nivel,
         dias=dias,
-        hora_recreo=sesiones_recreo[0] if sesiones_recreo else 4,
+        hora_recreo=sesiones_recreo[0] if sesiones_recreo else HORA_RECREO,
         permitir_septima_hora=permitir_septima_hora,
         permitir_recreo=permitir_recreo,
         permitir_horas_no_obligatorias=permitir_horas_no_obligatorias,
@@ -149,6 +157,12 @@ if "profesores" not in st.session_state:
 if "resultados_por_curso" not in st.session_state:
     st.session_state["resultados_por_curso"] = {}
 
+if "cargando_pdf" not in st.session_state:
+    st.session_state["cargando_pdf"] = False
+
+if "mensaje_carga_pdf" not in st.session_state:
+    st.session_state["mensaje_carga_pdf"] = None
+
 # ---------------------------------------------------------------------------
 # PASO 1: CARGAR PDF
 # ---------------------------------------------------------------------------
@@ -161,17 +175,27 @@ archivos_pdf = st.file_uploader(
     accept_multiple_files=True,
 )
 
-if st.button("Cargar horarios desde PDF"):
+mensaje_carga_pdf = st.session_state.pop("mensaje_carga_pdf", None)
+if mensaje_carga_pdf:
+    tipo_mensaje, texto_mensaje = mensaje_carga_pdf
+    getattr(st, tipo_mensaje)(texto_mensaje)
+
+if st.button("Cargar horarios desde PDF", disabled=st.session_state["cargando_pdf"]):
+    st.session_state["cargando_pdf"] = True
+    st.rerun()
+
+if st.session_state["cargando_pdf"]:
     if not archivos_pdf:
-        st.error("Selecciona al menos un PDF.")
+        st.session_state["mensaje_carga_pdf"] = ("error", "Selecciona al menos un PDF.")
     else:
         try:
-            with tempfile.TemporaryDirectory() as tmpdir:
-                for archivo in archivos_pdf:
-                    ruta = os.path.join(tmpdir, archivo.name)
-                    with open(ruta, "wb") as f:
-                        f.write(archivo.getbuffer())
-                horarios = procesar_todo_automaticamente(tmpdir)
+            with st.spinner("Procesando PDFs..."):
+                with tempfile.TemporaryDirectory() as tmpdir:
+                    for archivo in archivos_pdf:
+                        ruta = os.path.join(tmpdir, archivo.name)
+                        with open(ruta, "wb") as f:
+                            f.write(archivo.getbuffer())
+                    horarios = procesar_todo_automaticamente(tmpdir)
 
             profesores = [
                 {"profesor": e["profesor"], "eventos": e["eventos"]}
@@ -180,14 +204,25 @@ if st.button("Cargar horarios desde PDF"):
             ]
 
             if not profesores:
-                st.error("No se pudo extraer ningún horario válido.")
+                st.session_state["mensaje_carga_pdf"] = (
+                    "error",
+                    "No se pudo extraer ningún horario válido.",
+                )
             else:
                 st.session_state["profesores"] = profesores
                 st.session_state["resultado"] = None
-                st.success(f"{len(profesores)} profesores cargados correctamente.")
-
+                st.session_state["mensaje_carga_pdf"] = (
+                    "success",
+                    f"{len(profesores)} profesores cargados correctamente.",
+                )
         except Exception as e:
-            st.error(f"Error al procesar los PDFs: {e}")
+            st.session_state["mensaje_carga_pdf"] = (
+                "error",
+                f"Error al procesar los PDFs: {e}",
+            )
+
+    st.session_state["cargando_pdf"] = False
+    st.rerun()
 
 # ---------------------------------------------------------------------------
 # PASO 2: SELECCIONAR EQUIPO POR CURSO
@@ -345,8 +380,7 @@ if profesores:
                         filas.append({
                             "Profesor": d.nombre,
                             "Penalización": d.penalizacion,
-                            "Sesión más cercana": cercana,
-                            "Tiene eventos ese día": "Sí" if d.tiene_eventos_ese_dia else "No",
+                            "Sesión más cercana": cercana
                         })
                     df = pd.DataFrame(filas)
                     st.dataframe(df, use_container_width=True, hide_index=True)
@@ -354,6 +388,9 @@ if profesores:
                     for fila in filas:
                         filas_excel.append({
                             "Curso": curso,
+                            "Hueco encontrado": (
+                                f"{resultado.dia} {resultado.hora_inicio} - {resultado.hora_fin}"
+                            ),
                             "Día": resultado.dia,
                             "Hora inicio": resultado.hora_inicio,
                             "Hora fin": resultado.hora_fin,
@@ -364,12 +401,12 @@ if profesores:
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
                 pd.DataFrame(filas_excel).to_excel(
-                    writer, index=False, sheet_name="Evaluación"
+                    writer, index=False, sheet_name=EXPORT_SHEET_NAME
                 )
             buffer.seek(0)
             st.download_button(
                 label="📥 Exportar todos los resultados a Excel",
                 data=buffer,
-                file_name="sesion_evaluacion.xlsx",
+                file_name=DEFAULT_EXPORT_EXCEL_NAME,
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             )

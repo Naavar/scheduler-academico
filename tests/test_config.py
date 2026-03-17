@@ -2,16 +2,17 @@ import json
 import os
 import tempfile
 import pytest
-from Proyecto.config import Config, todos_dias
+from Proyecto.config import Config
+from Proyecto.constants import DIAS_VALIDOS, HORA_RECREO, SESIONES_POR_DIA, MAX_SESIONES_POR_DIA
 
 
 # --- Valores por defecto ---
 
 def test_hora_recreo_default():
-    assert Config().hora_recreo == 4
+    assert Config().hora_recreo == HORA_RECREO
 
 def test_sesiones_por_dia_default():
-    assert Config().sesiones_por_dia == 7
+    assert Config().sesiones_por_dia == SESIONES_POR_DIA
 
 def test_permitir_septima_hora_default():
     assert Config().permitir_septima_hora is False
@@ -92,7 +93,7 @@ def test_sesiones_por_dia_cero_lanza_error():
 
 def test_sesiones_por_dia_excesivo_lanza_error():
     with pytest.raises(ValueError):
-        Config(sesiones_por_dia=15)
+        Config(sesiones_por_dia=MAX_SESIONES_POR_DIA + 1)
 
 def test_hora_recreo_igual_a_sesiones_es_valido():
     c = Config(hora_recreo=7, sesiones_por_dia=7)
@@ -102,7 +103,7 @@ def test_hora_recreo_igual_a_sesiones_es_valido():
 # --- get_dias_nivel ---
 
 def test_get_dias_nivel_devuelve_todos_si_no_existe():
-    assert Config().get_dias_nivel("ESO") == todos_dias
+    assert Config().get_dias_nivel("ESO") == DIAS_VALIDOS
 
 def test_get_dias_nivel_devuelve_los_configurados():
     c = Config(dias_disponibles_por_nivel={"ESO": ["Lunes", "Martes"]})
