@@ -54,7 +54,6 @@ except ImportError:
 from utils import (
     clasificar_grupos,          # filtra grupos por nivel (ESO/FP/BACH/ESPECIALIZACION)
     es_hora_recreo,             # detecta intervalos de recreo (11:00-11:30, 18:05-18:35)
-    es_hora_comida,             # detecta hora de comer (14:25-15:20) → excluida siempre
     limpiar_texto,              # limpia textos de artefactos PDF
 )
 
@@ -420,11 +419,10 @@ def calcular_peso(
     if config is None:
         return peso
 
-    if config.permitir_septima_hora and franja_idx == config.sesiones_por_dia - 1:
+    if config.permitir_septima_hora and franja_idx in _indices_septima(indices, config):
         peso += PESO_SEPTIMA_HORA
 
-    recreo_idx = _indice_recreo(indices, config)
-    if config.permitir_recreo and recreo_idx is not None and franja_idx == recreo_idx:
+    if config.permitir_recreo and franja_idx in _indices_recreo(indices, config):
         peso += PESO_RECREO
 
     if config.permitir_horas_no_obligatorias:
@@ -435,11 +433,28 @@ def calcular_peso(
     return peso
 
 
-def _indice_recreo(indices: Indices, config) -> Optional[int]:
+def _indices_recreo(indices: Indices, config) -> Set[int]:
+    """Devuelve los índices de franja que caen dentro de algún recreo."""
     if config is None:
-        return None
-    recreo_pos = config.hora_recreo - 1
-    return recreo_pos if 0 <= recreo_pos < len(indices.franjas) else None
+        return set()
+    result = set()
+    for (ini_str, fin_str) in getattr(config, "recreos", []):
+        ini_min = hora_a_minutos(ini_str)
+        fin_min = hora_a_minutos(fin_str)
+        for idx, (f_ini, f_fin) in enumerate(indices.franjas):
+            if hora_a_minutos(f_ini) >= ini_min and hora_a_minutos(f_fin) <= fin_min:
+                result.add(idx)
+    return result
+
+
+def _indices_septima(indices: Indices, config) -> Set[int]:
+    """Devuelve el índice de franja correspondiente a la séptima hora."""
+    if config is None:
+        return set()
+    idx = config.septima_hora_idx
+    if 0 <= idx < len(indices.franjas):
+        return {idx}
+    return set()
 
 
 def _horas_no_obligatorias(codigo: str, indices: Indices) -> Set[int]:
@@ -457,6 +472,7 @@ def generar_candidatos(
     indices: Indices,
     dias_disponibles: Optional[List[str]] = None,
     duracion_minutos: int = 0,
+    config=None,
 ) -> List[Tuple[int, int, int]]:
     dias_idx = (
         [DIA_A_IDX[d] for d in dias_disponibles if d in DIA_A_IDX]
@@ -464,13 +480,24 @@ def generar_candidatos(
         else list(range(len(DIAS_VALIDOS)))
     )
 
+    franjas_prohibidas: Set[int] = set()
+    if config is not None:
+        if not config.permitir_septima_hora:
+            franjas_prohibidas.update(_indices_septima(indices, config))
+        if not config.permitir_recreo:
+            franjas_prohibidas |= _indices_recreo(indices, config)
+
     candidatos = []
     n_franjas = len(indices.franjas)
 
     for dia_idx in dias_idx:
         for f_start in range(n_franjas):
+            if f_start in franjas_prohibidas:
+                continue
             minutos_acumulados = 0
             for f_end in range(f_start, n_franjas):
+                if f_end in franjas_prohibidas:
+                    break
                 if any(indices.esta_ocupado(cod, dia_idx, f_end) for cod in equipo_codigos):
                     break
                 ini_min = hora_a_minutos(indices.franjas[f_end][0])
@@ -544,7 +571,7 @@ def find_best_slot(
         for p in profesores
     }
     equipo_lista = sorted(equipo_codigos)
-    candidatos = generar_candidatos(equipo_codigos, indices, dias_disponibles, duracion_minutos)
+    candidatos = generar_candidatos(equipo_codigos, indices, dias_disponibles, duracion_minutos, config)
 
     if not candidatos:
         ranking = diagnostico_sin_solucion(equipo_codigos, indices)
@@ -618,9 +645,8 @@ def find_best_slot(
 
     es_recreo = es_septima = False
     if config:
-        recreo_idx = _indice_recreo(indices, config)
-        es_recreo  = config.permitir_recreo and recreo_idx == f_start_final
-        es_septima = config.permitir_septima_hora and f_start_final == config.sesiones_por_dia - 1
+        es_recreo  = config.permitir_recreo and f_start_final in _indices_recreo(indices, config)
+        es_septima = config.permitir_septima_hora and f_start_final in _indices_septima(indices, config)
 
     return Resultado(
         sin_solucion=False,
@@ -703,9 +729,8 @@ def _construir_resultado_desde_candidato(
 
     es_recreo = es_septima = False
     if config:
-        recreo_idx = _indice_recreo(indices, config)
-        es_recreo  = config.permitir_recreo and recreo_idx == f_start
-        es_septima = config.permitir_septima_hora and f_start == config.sesiones_por_dia - 1
+        es_recreo  = config.permitir_recreo and f_start in _indices_recreo(indices, config)
+        es_septima = config.permitir_septima_hora and f_start in _indices_septima(indices, config)
 
     return Resultado(
         sin_solucion=False,
@@ -767,7 +792,7 @@ def backtracking_grupos(
 
     # Generar candidatos válidos dado el estado actual del índice
     candidatos = generar_candidatos(
-        grupo_actual["equipo"], indices, dias_disponibles, duracion_minutos
+        grupo_actual["equipo"], indices, dias_disponibles, duracion_minutos, config
     )
 
     if not candidatos:
@@ -879,7 +904,7 @@ class SesionEvaluacion:
             grupos = sorted(
                 grupos,
                 key=lambda g: len(generar_candidatos(
-                    g["equipo"], self.indices, dias_disponibles, duracion_minutos
+                    g["equipo"], self.indices, dias_disponibles, duracion_minutos, self.config
                 ))
             )
 

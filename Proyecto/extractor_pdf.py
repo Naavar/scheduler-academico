@@ -7,8 +7,9 @@ from pathlib import Path
 
 # --- IMPORTS PROPIOS ---
 try:
-    from Proyecto.validacion import validate_schedule
-    from Proyecto.utils import (
+    from validacion import validate_schedule
+    # Importamos las herramientas desde el nuevo archivo utils.py
+    from utils import (
         es_color_valido,
         es_color_gris_claro,
         colores_son_iguales,
@@ -20,55 +21,16 @@ try:
         sumar_55_minutos,
         es_hora_recreo
     )
-    from Proyecto.constants import (
-        COLUMNAS_X,
-        COLUMNA_HORAS_X,
-        CABECERA_ALTURA,
-        Y_INICIO_TABLA,
-        MIN_ANCHO_LINEA,
-        MIN_SEPARACION_LINEAS,
-        ALTO_FILA_DEFAULT,
-        MIN_CROP_SIZE,
-        CROP_INSET,
-        COLOR_AREA_MIN_RATIO,
-        NOMBRE_DESCONOCIDO,
-        CODIGO_NO_DISPONIBLE,
-        DEFAULT_JSON_NAME,
-        REGEX_HORA_BUSCAR,
-    )
-except ImportError:
-    try:
-        from validacion import validate_schedule
-        from utils import (
-            es_color_valido,
-            es_color_gris_claro,
-            colores_son_iguales,
-            textos_son_similares,
-            extraer_nombre_asignatura,
-            extraer_codigos_grupo,
-            clasificar_grupos,
-            limpiar_texto,
-            sumar_55_minutos,
-            es_hora_recreo
-        )
-        from constants import (
-            COLUMNAS_X,
-            COLUMNA_HORAS_X,
-            CABECERA_ALTURA,
-            Y_INICIO_TABLA,
-            MIN_ANCHO_LINEA,
-            MIN_SEPARACION_LINEAS,
-            ALTO_FILA_DEFAULT,
-            MIN_CROP_SIZE,
-            CROP_INSET,
-            COLOR_AREA_MIN_RATIO,
-            NOMBRE_DESCONOCIDO,
-            CODIGO_NO_DISPONIBLE,
-            DEFAULT_JSON_NAME,
-            REGEX_HORA_BUSCAR,
-        )
-    except ImportError as e:
-        raise ImportError(f"Falta un archivo necesario ({e}). Asegúrate de tener 'utils.py', 'validacion.py' y 'constants.py'.") from e
+except ImportError as e:
+    print(f"❌ ERROR CRÍTICO: Falta un archivo necesario ({e}). Asegúrate de tener 'utils.py' y 'validacion.py'.")
+    exit()
+
+# --- CONFIGURACIÓN ---
+COLUMNAS_X = {
+    "Lunes": (80, 175), "Martes": (175, 270), "Miércoles": (270, 365),
+    "Jueves": (365, 460), "Viernes": (460, 555),
+}
+COLUMNA_HORAS_X = (0, 80)
 
 
 # ==============================================================================
@@ -77,15 +39,15 @@ except ImportError:
 
 def extraer_color_fondo(crop):
     try:
-        if crop.width < MIN_CROP_SIZE or crop.height < MIN_CROP_SIZE:
+        if crop.width < 6 or crop.height < 6:
             crop_seguro = crop
         else:
-            crop_seguro = crop.crop((CROP_INSET, CROP_INSET, crop.width - CROP_INSET, crop.height - CROP_INSET), relative=True)
+            crop_seguro = crop.crop((2, 2, crop.width - 2, crop.height - 2), relative=True)
 
         area_celda = crop_seguro.width * crop_seguro.height
-        # Umbral mínimo: rects deben cubrir al menos COLOR_AREA_MIN_RATIO del área de la celda
+        # Umbral mínimo: rects deben cubrir al menos 30% del área de la celda
         # para ser considerados como fondo real (no bordes/decoraciones)
-        area_minima = area_celda * COLOR_AREA_MIN_RATIO if area_celda > 0 else 100
+        area_minima = area_celda * 0.3 if area_celda > 0 else 100
 
         rects = sorted(crop_seguro.rects, key=lambda r: r['width'] * r['height'], reverse=True)
         for rect in rects:
@@ -109,18 +71,19 @@ def extraer_color_fondo(crop):
 def obtener_filas_horas(page):
     try:
         filas = []
-        lineas = sorted([l['top'] for l in page.lines if l['width'] > MIN_ANCHO_LINEA])
+        Y_INICIO_TABLA = 145
+        lineas = sorted([l['top'] for l in page.lines if l['width'] > 50])
 
         lineas_filtradas = []
         if lineas:
             lineas_validas = [y for y in lineas if y > Y_INICIO_TABLA]
             if not lineas_validas: return []
-            lineas_filtradas.append(Y_INICIO_TABLA + CROP_INSET)
+            lineas_filtradas.append(Y_INICIO_TABLA + 2)
             for y in lineas_validas:
-                if abs(y - lineas_filtradas[-1]) > MIN_SEPARACION_LINEAS: lineas_filtradas.append(y)
+                if abs(y - lineas_filtradas[-1]) > 5: lineas_filtradas.append(y)
 
         if lineas_filtradas:
-            ultima_altura = ALTO_FILA_DEFAULT
+            ultima_altura = 35
             if len(lineas_filtradas) >= 2:
                 ultima_altura = lineas_filtradas[-1] - lineas_filtradas[-2]
             lineas_filtradas.append(lineas_filtradas[-1] + ultima_altura)
@@ -135,7 +98,7 @@ def obtener_filas_horas(page):
             texto_limpio = " ".join(texto.split()) if texto else ""
 
             if texto_limpio:
-                horas = re.findall(REGEX_HORA_BUSCAR, texto_limpio)
+                horas = re.findall(r'\d{1,2}:\d{2}', texto_limpio)
                 horas_unicas = []
                 for hora in horas:
                     if not horas_unicas or hora != horas_unicas[-1]: horas_unicas.append(hora)
@@ -151,9 +114,9 @@ def obtener_filas_horas(page):
 
 def extraer_info_profesor(page):
     try:
-        cabecera = page.crop((0, 0, page.width, CABECERA_ALTURA))
+        cabecera = page.crop((0, 0, page.width, 130))
         texto_cabecera = cabecera.extract_text()
-        if not texto_cabecera: return NOMBRE_DESCONOCIDO, CODIGO_NO_DISPONIBLE
+        if not texto_cabecera: return "Desconocido", "N/A"
         texto_unido = limpiar_texto(texto_cabecera)
 
         # Detectar formato anonimizado: "Profesor 001", "Profesor 123", etc.
@@ -171,7 +134,7 @@ def extraer_info_profesor(page):
         # Fallback: generar código sintético desde el nombre
         nombre_limpio = texto_unido[:50].strip()
         codigo_sintetico = re.sub(r'[^A-Z0-9]', '', nombre_limpio.upper())[:10]
-        return nombre_limpio, codigo_sintetico if codigo_sintetico else CODIGO_NO_DISPONIBLE
+        return nombre_limpio, codigo_sintetico if codigo_sintetico else "N/A"
     except Exception:
         return "Error Lectura", "ERR"
 
@@ -187,7 +150,7 @@ def ajustar_bloque(bloque):
 
 
 def procesar_pagina(page):
-    horario_interno = {"profesor": NOMBRE_DESCONOCIDO, "codigo": CODIGO_NO_DISPONIBLE, "horario": {dia: [] for dia in COLUMNAS_X}}
+    horario_interno = {"profesor": "Desconocido", "codigo": "N/A", "horario": {dia: [] for dia in COLUMNAS_X}}
 
     try:
         horario_interno["profesor"], horario_interno["codigo"] = extraer_info_profesor(page)
@@ -341,8 +304,8 @@ def procesar_pagina(page):
                     if not asig:
                         continue
 
-                    h_inicio_todas = re.findall(REGEX_HORA_BUSCAR, str(evento.get("hora_inicio", "")))
-                    h_fin_todas = re.findall(REGEX_HORA_BUSCAR, str(evento.get("hora_fin", "")))
+                    h_inicio_todas = re.findall(r'\d{1,2}:\d{2}', str(evento.get("hora_inicio", "")))
+                    h_fin_todas = re.findall(r'\d{1,2}:\d{2}', str(evento.get("hora_fin", "")))
 
                     h_inicio_limpia = h_inicio_todas[0] if h_inicio_todas else ""
                     h_fin_limpia = h_fin_todas[-1] if h_fin_todas else ""
@@ -438,7 +401,7 @@ if __name__ == "__main__":
         horarios_consolidados = procesar_todo_automaticamente(carpeta_data)
 
         if horarios_consolidados:
-            ruta_salida = os.path.join(carpeta_data, DEFAULT_JSON_NAME)
+            ruta_salida = os.path.join(carpeta_data, "horarios_consolidados.json")
             try:
                 with open(ruta_salida, 'w', encoding='utf-8') as f:
                     json.dump(horarios_consolidados, f, indent=4, ensure_ascii=False)

@@ -7,17 +7,16 @@ import streamlit as st
 import pandas as pd
 
 from extractor_pdf import procesar_todo_automaticamente
-from config import Config
+from config import Config, todos_dias
 from constants import (
-    DIAS_VALIDOS,
-    DEFAULT_JSON_NAME,
+    NIVELES_DEFAULT,
+    SESIONES_POR_DIA,
+    DURACION_MINUTOS,
     DEFAULT_EXPORT_EXCEL_NAME,
     EXPORT_SHEET_NAME,
-    SESIONES_POR_DIA,
-    HORA_RECREO,
-    DURACION_MINUTOS,
-    NIVELES_DEFAULT,
 )
+
+TODOS_DIAS = todos_dias
 from buscador_evaluacion import buscar_sesion_evaluacion
 
 # ---------------------------------------------------------------------------
@@ -27,9 +26,9 @@ from buscador_evaluacion import buscar_sesion_evaluacion
 def _encontrar_json() -> str:
     base = os.path.dirname(os.path.abspath(__file__))
     candidatos = [
-        os.path.join(base, "..", "data", DEFAULT_JSON_NAME),
-        os.path.join(os.getcwd(), "..", "data", DEFAULT_JSON_NAME),
-        os.path.join(os.getcwd(), "data", DEFAULT_JSON_NAME),
+        os.path.join(base, "..", "data", "horarios_consolidados.json"),
+        os.path.join(os.getcwd(), "..", "data", "horarios_consolidados.json"),
+        os.path.join(os.getcwd(), "data", "horarios_consolidados.json"),
     ]
     for ruta in candidatos:
         if os.path.isfile(ruta):
@@ -65,12 +64,12 @@ st.set_page_config(page_title="Sesión de Evaluación", layout="wide")
 st.title("Buscador de Sesión de Evaluación")
 
 
+
 def build_config_from_params(
-    nivel, dias, hora_recreo,
+    nivel, dias,
     permitir_septima_hora, permitir_recreo, permitir_horas_no_obligatorias
 ) -> Config:
     return Config(
-        hora_recreo=hora_recreo,
         sesiones_por_dia=SESIONES_POR_DIA,
         permitir_septima_hora=permitir_septima_hora,
         permitir_recreo=permitir_recreo,
@@ -116,16 +115,14 @@ with st.sidebar:
 
         dias = st.multiselect(
             "Días disponibles para evaluación",
-            options=DIAS_VALIDOS,
-            default=DIAS_VALIDOS,
+            options=TODOS_DIAS,
+            default=TODOS_DIAS,
         )
 
     duracion_minutos = st.slider(
         "⏱️ Duración de la reunión (minutos)",
-        min_value=30, max_value=120, value=DURACION_MINUTOS, step=5,
+        min_value=30, max_value=120, value=55, step=5,
     )
-
-    sesiones_recreo = [HORA_RECREO]
 
     with st.expander("🚦 Restricciones", expanded=True):
         permitir_septima_hora = st.checkbox("¿Permitir 7ª hora?", value=False)
@@ -139,7 +136,6 @@ with st.sidebar:
     config = build_config_from_params(
         nivel=nivel,
         dias=dias,
-        hora_recreo=sesiones_recreo[0] if sesiones_recreo else HORA_RECREO,
         permitir_septima_hora=permitir_septima_hora,
         permitir_recreo=permitir_recreo,
         permitir_horas_no_obligatorias=permitir_horas_no_obligatorias,
@@ -157,12 +153,6 @@ if "profesores" not in st.session_state:
 if "resultados_por_curso" not in st.session_state:
     st.session_state["resultados_por_curso"] = {}
 
-if "cargando_pdf" not in st.session_state:
-    st.session_state["cargando_pdf"] = False
-
-if "mensaje_carga_pdf" not in st.session_state:
-    st.session_state["mensaje_carga_pdf"] = None
-
 # ---------------------------------------------------------------------------
 # PASO 1: CARGAR PDF
 # ---------------------------------------------------------------------------
@@ -175,27 +165,17 @@ archivos_pdf = st.file_uploader(
     accept_multiple_files=True,
 )
 
-mensaje_carga_pdf = st.session_state.pop("mensaje_carga_pdf", None)
-if mensaje_carga_pdf:
-    tipo_mensaje, texto_mensaje = mensaje_carga_pdf
-    getattr(st, tipo_mensaje)(texto_mensaje)
-
-if st.button("Cargar horarios desde PDF", disabled=st.session_state["cargando_pdf"]):
-    st.session_state["cargando_pdf"] = True
-    st.rerun()
-
-if st.session_state["cargando_pdf"]:
+if st.button("Cargar horarios desde PDF"):
     if not archivos_pdf:
-        st.session_state["mensaje_carga_pdf"] = ("error", "Selecciona al menos un PDF.")
+        st.error("Selecciona al menos un PDF.")
     else:
         try:
-            with st.spinner("Procesando PDFs..."):
-                with tempfile.TemporaryDirectory() as tmpdir:
-                    for archivo in archivos_pdf:
-                        ruta = os.path.join(tmpdir, archivo.name)
-                        with open(ruta, "wb") as f:
-                            f.write(archivo.getbuffer())
-                    horarios = procesar_todo_automaticamente(tmpdir)
+            with tempfile.TemporaryDirectory() as tmpdir:
+                for archivo in archivos_pdf:
+                    ruta = os.path.join(tmpdir, archivo.name)
+                    with open(ruta, "wb") as f:
+                        f.write(archivo.getbuffer())
+                horarios = procesar_todo_automaticamente(tmpdir)
 
             profesores = [
                 {"profesor": e["profesor"], "eventos": e["eventos"]}
@@ -204,25 +184,14 @@ if st.session_state["cargando_pdf"]:
             ]
 
             if not profesores:
-                st.session_state["mensaje_carga_pdf"] = (
-                    "error",
-                    "No se pudo extraer ningún horario válido.",
-                )
+                st.error("No se pudo extraer ningún horario válido.")
             else:
                 st.session_state["profesores"] = profesores
                 st.session_state["resultado"] = None
-                st.session_state["mensaje_carga_pdf"] = (
-                    "success",
-                    f"{len(profesores)} profesores cargados correctamente.",
-                )
-        except Exception as e:
-            st.session_state["mensaje_carga_pdf"] = (
-                "error",
-                f"Error al procesar los PDFs: {e}",
-            )
+                st.success(f"{len(profesores)} profesores cargados correctamente.")
 
-    st.session_state["cargando_pdf"] = False
-    st.rerun()
+        except Exception as e:
+            st.error(f"Error al procesar los PDFs: {e}")
 
 # ---------------------------------------------------------------------------
 # PASO 2: SELECCIONAR EQUIPO POR CURSO
@@ -317,16 +286,13 @@ if profesores:
                     if n in codigos_por_nombre
                 }
 
-                # ── CLAVE: pasar los resultados ya asignados ──────────────
-                # El dict crece curso a curso. Cuando se busca 2BACH-B,
-                # ya contiene el resultado de 2BACH-A y bloquea sus slots para evitar solapamiento.
                 resultado = buscar_sesion_evaluacion(
                     profesores=profesores,
                     equipo_codigos=equipo_codigos,
                     config=config,
                     dias_disponibles=dias if dias else None,
                     duracion_minutos=duracion_minutos,
-                    resultados_previos=resultados_por_curso,  # ← anti-solapamiento automático
+                    resultados_previos=resultados_por_curso,
                 )
                 resultados_por_curso[curso] = resultado
 
@@ -380,7 +346,8 @@ if profesores:
                         filas.append({
                             "Profesor": d.nombre,
                             "Penalización": d.penalizacion,
-                            "Sesión más cercana": cercana
+                            "Sesión más cercana": cercana,
+                            "Tiene eventos ese día": "Sí" if d.tiene_eventos_ese_dia else "No",
                         })
                     df = pd.DataFrame(filas)
                     st.dataframe(df, use_container_width=True, hide_index=True)
@@ -388,9 +355,6 @@ if profesores:
                     for fila in filas:
                         filas_excel.append({
                             "Curso": curso,
-                            "Hueco encontrado": (
-                                f"{resultado.dia} {resultado.hora_inicio} - {resultado.hora_fin}"
-                            ),
                             "Día": resultado.dia,
                             "Hora inicio": resultado.hora_inicio,
                             "Hora fin": resultado.hora_fin,

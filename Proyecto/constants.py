@@ -27,8 +27,8 @@ EXPORT_SHEET_NAME = "Evaluación"
 # CONFIGURACIÓN DE HORARIOS
 # =============================================================================
 
-SESIONES_POR_DIA = 7
-HORA_RECREO = 4
+SESIONES_POR_DIA = 16
+SEPTIMA_HORA_IDX = 10
 DURACION_MINUTOS = 55
 MAX_SESIONES_POR_DIA = 20
 MINUTOS_POR_HORA = 60
@@ -105,8 +105,10 @@ COLOR_AREA_MIN_RATIO = 0.3
 # =============================================================================
 
 RECREO_MANANA = ("11:00", "11:30")
+RECREO_MEDIODIA = ("14:15", "14:25")
 RECREO_TARDE = ("18:05", "18:35")
 RECREO_KEYWORD = "recreo"
+RECREOS_DEFAULT = [RECREO_MANANA, RECREO_MEDIODIA, RECREO_TARDE]
 
 # =============================================================================
 # SIMILITUD DE TEXTOS
