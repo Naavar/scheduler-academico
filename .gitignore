@@ -24,6 +24,10 @@ Thumbs.db
 # --- Cache de herramientas ---
 .pytest_cache/
 .mypy_cache/
+.coverage
+
+  # --- Claude Code ---
+  .claude/
 
 # --- Temporales / debug del proyecto ---
 Proyecto/_tmp_extract/

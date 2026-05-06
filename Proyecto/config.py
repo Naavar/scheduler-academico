@@ -1,13 +1,21 @@
 from dataclasses import dataclass, field, asdict
 import json
-
-from constants import (
-    DIAS_VALIDOS,
-    SESIONES_POR_DIA,
-    RECREOS_DEFAULT,
-    SEPTIMA_HORA_IDX,
-    MAX_SESIONES_POR_DIA,
-)
+try:
+    from Proyecto.constants import (
+        DIAS_VALIDOS,
+        SESIONES_POR_DIA,
+        RECREOS_DEFAULT,
+        SEPTIMA_HORA_IDX,
+        MAX_SESIONES_POR_DIA,
+    )
+except ImportError:
+    from constants import (
+        DIAS_VALIDOS,
+        SESIONES_POR_DIA,
+        RECREOS_DEFAULT,
+        SEPTIMA_HORA_IDX,
+        MAX_SESIONES_POR_DIA,
+    )
 
 todos_dias = DIAS_VALIDOS  # alias de compatibilidad para otros módulos que importen esto
 

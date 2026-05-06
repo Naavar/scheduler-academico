@@ -2,13 +2,22 @@ from __future__ import annotations
 import re
 from typing import Any, List, Dict
 
-from constants import (
-    DIAS_VALIDOS,
-    REGEX_HORA,
-    MINUTOS_POR_HORA,
-    NOMBRE_DESCONOCIDO,
-    CODIGO_NO_DISPONIBLE,
-)
+try:
+    from Proyecto.constants import (
+        DIAS_VALIDOS,
+        REGEX_HORA,
+        MINUTOS_POR_HORA,
+        NOMBRE_DESCONOCIDO,
+        CODIGO_NO_DISPONIBLE,
+    )
+except ImportError:
+    from constants import (
+        DIAS_VALIDOS,
+        REGEX_HORA,
+        MINUTOS_POR_HORA,
+        NOMBRE_DESCONOCIDO,
+        CODIGO_NO_DISPONIBLE,
+    )
 
 
 def hhmm_to_minutes(hhmm: str) -> int:
