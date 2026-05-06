@@ -33,29 +33,44 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set, Tuple
 
-from constants import (
-    DIAS_VALIDOS,
-    DIA_A_IDX,
-    ESPECIALIZACION_PREFIJOS,
-    MINUTOS_POR_HORA,
-    PENALIZACION_MAX,
-    PESO_SIN_SESIONES,
-    PESO_SEPTIMA_HORA,
-    PESO_RECREO,
-    PESO_HORA_NO_OBLIGATORIA,
-    SCORE_DESEMPATE_MULTIPLICADOR,
-)
-
 try:
-    from config import Config
+    from Proyecto.constants import (
+        DIAS_VALIDOS,
+        DIA_A_IDX,
+        ESPECIALIZACION_PREFIJOS,
+        MINUTOS_POR_HORA,
+        PENALIZACION_MAX,
+        PESO_SIN_SESIONES,
+        PESO_SEPTIMA_HORA,
+        PESO_RECREO,
+        PESO_HORA_NO_OBLIGATORIA,
+        SCORE_DESEMPATE_MULTIPLICADOR,
+    )
+    from Proyecto.config import Config
+    from Proyecto.utils import (
+        clasificar_grupos,
+        es_hora_recreo,
+        limpiar_texto,
+    )
 except ImportError:
-    Config = None  # type: ignore
-
-from utils import (
-    clasificar_grupos,          # filtra grupos por nivel (ESO/FP/BACH/ESPECIALIZACION)
-    es_hora_recreo,             # detecta intervalos de recreo (11:00-11:30, 18:05-18:35)
-    limpiar_texto,              # limpia textos de artefactos PDF
-)
+    from constants import (
+        DIAS_VALIDOS,
+        DIA_A_IDX,
+        ESPECIALIZACION_PREFIJOS,
+        MINUTOS_POR_HORA,
+        PENALIZACION_MAX,
+        PESO_SIN_SESIONES,
+        PESO_SEPTIMA_HORA,
+        PESO_RECREO,
+        PESO_HORA_NO_OBLIGATORIA,
+        SCORE_DESEMPATE_MULTIPLICADOR,
+    )
+    from config import Config
+    from utils import (
+        clasificar_grupos,
+        es_hora_recreo,
+        limpiar_texto,
+    )
 
 
 # ===========================================================================

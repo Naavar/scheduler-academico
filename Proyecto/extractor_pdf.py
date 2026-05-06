@@ -7,9 +7,8 @@ from pathlib import Path
 
 # --- IMPORTS PROPIOS ---
 try:
-    from validacion import validate_schedule
-    # Importamos las herramientas desde el nuevo archivo utils.py
-    from utils import (
+    from Proyecto.validacion import validate_schedule
+    from Proyecto.utils import (
         es_color_valido,
         es_color_gris_claro,
         colores_son_iguales,
@@ -21,9 +20,23 @@ try:
         sumar_55_minutos,
         es_hora_recreo
     )
-except ImportError as e:
-    print(f"❌ ERROR CRÍTICO: Falta un archivo necesario ({e}). Asegúrate de tener 'utils.py' y 'validacion.py'.")
-    exit()
+except ImportError:
+    try:
+        from validacion import validate_schedule
+        from utils import (
+            es_color_valido,
+            es_color_gris_claro,
+            colores_son_iguales,
+            textos_son_similares,
+            extraer_nombre_asignatura,
+            extraer_codigos_grupo,
+            clasificar_grupos,
+            limpiar_texto,
+            sumar_55_minutos,
+            es_hora_recreo
+        )
+    except ImportError as e:
+        raise ImportError(f"Falta un archivo necesario ({e}). Asegúrate de tener 'utils.py' y 'validacion.py'.") from e
 
 # --- CONFIGURACIÓN ---
 COLUMNAS_X = {
@@ -66,7 +79,6 @@ def extraer_color_fondo(crop):
     except Exception:
         pass
     return None
-
 
 def obtener_filas_horas(page):
     try:
@@ -111,7 +123,6 @@ def obtener_filas_horas(page):
         print(f"      ⚠️ Error detectando filas: {e}")
         return []
 
-
 def extraer_info_profesor(page):
     try:
         cabecera = page.crop((0, 0, page.width, 130))
@@ -138,7 +149,6 @@ def extraer_info_profesor(page):
     except Exception:
         return "Error Lectura", "ERR"
 
-
 def ajustar_bloque(bloque):
     try:
         if bloque and bloque.get("hora_inicio") == bloque.get("hora_fin"):
@@ -148,10 +158,8 @@ def ajustar_bloque(bloque):
         pass
     return bloque
 
-
 def procesar_pagina(page):
     horario_interno = {"profesor": "Desconocido", "codigo": "N/A", "horario": {dia: [] for dia in COLUMNAS_X}}
-
     try:
         horario_interno["profesor"], horario_interno["codigo"] = extraer_info_profesor(page)
         filas_horas = obtener_filas_horas(page)
@@ -160,7 +168,6 @@ def procesar_pagina(page):
 
         for dia, (x0, x1) in COLUMNAS_X.items():
             bloque_actual = None
-            # Rastrear celdas con color sin texto para extensión hacia atrás
             celdas_vacias_con_color = []  # [(indice_fila, color)]
             for idx_fila, fila in enumerate(filas_horas):
                 try:
